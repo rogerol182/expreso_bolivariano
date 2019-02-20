@@ -1,23 +1,39 @@
 operations:
-  GetConnection:
+  GetTokenConnection:
     httpMethod: "POST"
     uri: "authentication/V1/Authentication/UserLogin"
-    summary: "Gets the available Posts. It's possible to define a limit and a sorting order."
+    summary: "Get api token"
     parameters:
       content-type:
         location: "header"
         default: "application/json"
-      client-header-info:
-        location: "header"
-        default: "{'ClientIP':'0.0.0.0', 'ClientInfo':'Cliente WPF'}"  
-      userName:
-        location: "body"
-        description: "user for the Connection"
-        type: "string"
+      UserName:
+        location: "json"
+        description: "userName for Connection"
         required: true
-        #default: 5
+        type: "string"
       Password:
-        location: "body"
-        description: "password for the Connection"
-        type: "string"
+        location: "json"
+        description: "password for Connection"
         required: true
+        type: "string"
+    responseModel: "apiToken"
+models:
+  apiToken:
+    type: "object"
+    location: "json"
+    properties:
+      statusName:
+        location: "json"
+        type: "string"
+      data:
+        type: "object"
+        location: "json"
+        properties:
+          token:
+            location: "json"
+            type: "string"
+          expires:
+            location: "json"
+            type: "string"
+      
