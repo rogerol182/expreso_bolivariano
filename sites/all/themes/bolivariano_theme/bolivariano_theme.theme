@@ -1,0 +1,11 @@
+<?php
+
+/**
+ * Implements hook_preprocess_page().
+ */
+function bolivariano_theme_preprocess_page(&$variables) {
+	$variables['account_name'] = Drupal::currentUser()->getAccountName();
+
+	$variables['basepath'] = Drupal::request()->getRequestUri();
+  
+}

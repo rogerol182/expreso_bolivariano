@@ -1,0 +1,27 @@
+<?php
+/**
+* @file
+* Module file for Forcontu Hello
+* Este módulo crea una página estática con un mensaje de bienvenida.
+*/
+
+/**
+* Implements hook_theme().
+*/
+/*
+function forcontu_pages_theme($existing, $type, $theme, $path) {
+return [
+	'forcontu_pages_simple' => [
+		'variables' => array('events' => NULL),
+		'template' => 'forcontu-pages',
+		],
+	];
+}*/
+
+function forcuntu_pages_theme($existing, $type, $theme, $path) {
+  return [
+    'my_template' => [
+      'variables' => ['test_var' => NULL],
+    ],
+  ];
+}

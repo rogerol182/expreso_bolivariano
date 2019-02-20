@@ -1,0 +1,94 @@
+{# Header #} 
+{# Header #} 
+	{% if page.header %} 
+		{% block header %} 
+			<header class="header">
+			{{ page.header}}
+			<nav class="navbar navbar-expand-lg header__wrapper">
+
+				{{ page.site_branding}}
+				<button class="navbar-toggler header__btntoggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown">
+                <span class="navbar-toggler-icon header__toggler"></span>
+                <span class="navbar-toggler-icon header__toggler"></span>
+                <span class="navbar-toggler-icon header__toggler"></span>
+            	</button>
+	            <div class="collapse navbar-collapse header__items" id="navbarNavDropdown">
+	            	{{ page.main_menu}}
+	            	<div class="header__login">
+	            	{% if logged_in %}
+                	 <div class="logged">
+                            <p class="header__user"><a href="/user">{{ account_name }}</a></p>
+                            <div class="mobile-only">
+                                <a href="">
+                                    <div class="header__close-session">
+                                        <img src="{{ base_path ~ directory }}/images/home/morral.png" alt="cerrar">
+                                        <hr>
+                                        <p>Cerrar sesión</p>
+                                    </div>
+                                </a>
+                            </div>
+                    </div>
+                    <div class="header__actions">
+                        <a class="header__loginactions" href="#">
+                            <span class="header__linkuser">Puntos</span> 
+                            <span class="header__icon header__icon--points"></span>
+                            <span class="header__linkuser ml-2">1700</span> 
+                        </a>
+                        <a class="header__loginactions" href="#"><span class="header__linkuser">Reservas</span> <span class="header__icon header__icon--booking">2</span></a>
+                        <div class="logged">
+                                <div class="desktop-only">
+                                    <a href="">
+                                        <div class="header__close-session">
+                                            <img src="{{ base_path ~ directory }}/images/misc/close.png" alt="cerrar">
+                                            <hr>
+                                            <p>Cerrar sesión</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                    </div>
+		            {% else %}
+		             
+	                    <div class="notlogged">
+	                        <a href="#login"><button>Iniciar sesión</button></a>
+	                        <a href="#login"><button>Registrarse</button></a>
+	                    </div> 
+	                    
+	                 
+		            {% endif %}
+					</div>  
+	            </div>
+	            
+			</nav> 
+ 			</header>
+		{% endblock %}
+		{% if is_front %}
+		<div></div>
+        {% else %}
+        <div class="wrapper__breadcrump">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col col-lg-6 ">
+                        <span>  {{ title }} </span> 
+                    </div>
+                    <div class="col col-lg-12">
+                        <ul>
+                            <li><a href="">Inicio</a></li>
+                            <li class="active"><a href="">{{ basepath }}</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %} 
+{% endif %}
+	{# Banner #}
+	<div class="row searcher__wrapper">
+		{{ page.banner }}
+	</div>
+	{# End Banner #} 
+    {# Banner #}
+    <div class="row searcher__wrapper">
+        {{ page.first_promotion }}
+    </div>
+    {# End Banner #} 

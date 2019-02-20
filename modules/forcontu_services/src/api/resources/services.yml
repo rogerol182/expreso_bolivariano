@@ -1,0 +1,23 @@
+operations:
+  GetConnection:
+    httpMethod: "POST"
+    uri: "authentication/V1/Authentication/UserLogin"
+    summary: "Gets the available Posts. It's possible to define a limit and a sorting order."
+    parameters:
+      content-type:
+        location: "header"
+        default: "application/json"
+      client-header-info:
+        location: "header"
+        default: "{'ClientIP':'0.0.0.0', 'ClientInfo':'Cliente WPF'}"  
+      userName:
+        location: "body"
+        description: "user for the Connection"
+        type: "string"
+        required: true
+        #default: 5
+      Password:
+        location: "body"
+        description: "password for the Connection"
+        type: "string"
+        required: true

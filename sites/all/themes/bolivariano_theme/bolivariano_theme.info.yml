@@ -1,0 +1,34 @@
+name: Bolivariano Theme
+type: theme
+description: 'Theme Bolivariano para web principal'
+package: custom
+# version: VERSION
+# core: 8.x
+libraries:
+  - bolivariano_theme/global-styling
+regions:
+  header: 'Header'
+  site_branding: 'Site Branding'
+  main_menu: 'Main Navigation'
+  user_menu: 'User Navigation'
+  breadcrumb: 'Breadcrumb' 
+  banner: 'Banner'
+  first_promotion: 'First Promotions'
+  banner_promotion: 'Banner Promotions'
+  newsletter: 'Newsletter'
+  social_facebook: 'Social Facebook'
+  social_twitter: 'Social Twitter'
+  social_instagram: 'Social Instagram'
+  payments_banner: 'Payment Banner'
+  map: 'Map'
+  app_promotion: 'App Promotion'
+  footer_one: 'Footer One'
+  footer_two: 'Footer Two'
+  footer_three: 'Footer Three'
+  footer_four: 'Footer Four'
+  footer_social: 'Footer Social'
+# Information added by Drupal.org packaging script on 2019-01-02
+version: '1.0'
+core: '8.x'
+project: 'drupal'
+datestamp: 1546467643
