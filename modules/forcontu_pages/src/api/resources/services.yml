@@ -1,0 +1,39 @@
+operations:
+  GetTokenConnection:
+    httpMethod: "POST"
+    uri: "authentication/V1/Authentication/UserLogin"
+    summary: "Get api token"
+    parameters:
+      content-type:
+        location: "header"
+        default: "application/json"
+      UserName:
+        location: "json"
+        description: "userName for Connection"
+        required: true
+        type: "string"
+      Password:
+        location: "json"
+        description: "password for Connection"
+        required: true
+        type: "string"
+    responseModel: "apiToken"
+models:
+  apiToken:
+    type: "object"
+    location: "json"
+    properties:
+      statusName:
+        location: "json"
+        type: "string"
+      data:
+        type: "object"
+        location: "json"
+        properties:
+          token:
+            location: "json"
+            type: "string"
+          expires:
+            location: "json"
+            type: "string"
+      

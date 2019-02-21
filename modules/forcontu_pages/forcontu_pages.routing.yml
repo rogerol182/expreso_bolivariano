@@ -15,3 +15,12 @@ forcontu_pages.user:
     _title: 'User Arguments'  
   requirements:
     _permission: 'access arguments page'
+
+
+forcontu_pages.services:
+  path: '/forcontu/pages/services'
+  defaults:
+    _controller: '\Drupal\forcontu_pages\Controller\ForcontuPagesController::services'
+    _title: 'Get Token'
+  requirements:
+    _permission: 'access content'

@@ -4,19 +4,69 @@
 * Contains \Drupal\forcontu_pages\Controller\ForcontuPagesController.
 */
 namespace Drupal\forcontu_pages\Controller;
+
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\user\UserInterface;
-//use Drupal\Core\Render\RendererInterface;
-//use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\Link;
+use Drupal\http_client_manager\Entity\HttpConfigRequest;
+use Drupal\http_client_manager\HttpClientInterface;
+use Drupal\forcontu_pages\Plugin\HttpServiceApiWrapper\HttpServiceApiWrapperInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
 
 class ForcontuPagesController extends ControllerBase {
 
-	/*protected $renderer;
-	
-	public function __construct(RendererInterface $renderer) {
-		$this->renderer = $renderer;
-	}*/
-	
+	/**
+    * JsonPlaceholder Http Client.
+    *
+    * @var \Drupal\http_client_manager\HttpClientInterface
+    */
+    protected $httpClient;
+
+	/**
+	* The Services Api Wrapper service.
+	*
+	* @var \Drupal\forcontu_pages\Plugin\HttpServiceApiWrapper\HttpServiceApiWrapperServices
+	*/
+	protected $api;
+    
+	/**
+	* The HTTP Service Api Wrapper Factory service.
+	*
+	* @var \Drupal\http_client_manager\HttpServiceApiWrapperFactoryInterface
+	*/
+	protected $apiFactory;
+
+	/**
+	* {@inheritdoc}
+	*/
+	public function __construct(HttpClientInterface $http_client, HttpServiceApiWrapperInterface $api_wrapper, HttpServiceApiWrapperFactoryInterface $api_wrapper_factory) {
+		$this->httpClient = $http_client;
+		$this->api = $api_wrapper;
+		$this->apiFactory = $api_wrapper_factory;
+	}
+
+	/**
+	* {@inheritdoc}
+	*/
+	public static function create(ContainerInterface $container) {
+		return new static(
+			$container->get('forcontu_pages_services_api.http_client'),
+			$container->get('forcontu_pages_services_api.api_wrapper.services'),
+	      	$container->get('http_client_manager.api_wrapper.factory')
+		);
+	}
+
+	/**
+	* Get Client.
+	*
+	* @return \Drupal\http_client_manager\HttpClientInterface
+	*   The Http Client instance.
+	*/
+	public function getClient() {
+		return $this->httpClient;
+	}
+
 	/*Parametro Simple*/
 	public function simple() {
 		
@@ -53,7 +103,32 @@ class ForcontuPagesController extends ControllerBase {
 		];
 	return $build;
 	}
-
 	return $this->renderer->render($build);*/
-	
+
+	/**
+	* Find posts.
+	*
+	* @param int|NULL $postId
+	*   The post Id.
+	*
+	* @return array
+	*   The service response.
+	*/
+	public function services() {
+		/*$client = $this->getClient();
+		$post_link = TRUE;
+		$command = 'getToken';
+		$params = ['userName' => 'portalweb', 'Password' => '@.PwEe76?*'];
+		$response = $client->call($command, $params);
+		$build = [];
+		foreach ($response as $id => $token) {
+			$build[$id] = $this->buildPostResponse($token, $post_link);
+		}*/
+		// Here we are using an HTTP Config Request just for example purposes.
+	    $response = $api->httpConfigRequest('testConnect');
+	    return [
+	      '#type' => 'markup',
+	      '#markup' => '<pre>' . print_r($response, TRUE) . '</pre>',
+	    ];
+	}
 }
