@@ -1,0 +1,5 @@
+name: "[YAML] - BolivarianoServicesApi"
+apiVersion: "1.0"
+description: "Client wrapper for the Bolivariano Services API."
+imports:
+  - "resources/services.yml"

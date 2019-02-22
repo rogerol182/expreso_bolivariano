@@ -1,0 +1,15 @@
+services:
+  bolivariano_api.http_client:
+    parent: http_client_manager.client_base
+    arguments: ['bolivariano_services']
+
+  #http_client_manager_bolivariano.subscriber:
+    #class: Drupal\http_client_manager_bolivariano\EventSubscriber\HttpClientManagerExampleSubscriber
+    #tags:
+      #- { name: event_subscriber }
+
+  http_client_manager_bolivariano.api_wrapper.services:
+    class: Drupal\http_client_manager_bolivariano\Plugin\HttpServiceApiWrapper\HttpServiceApiWrapperServices
+    parent: http_client_manager.api_wrapper.base
+    tags:
+      - { name: 'http_service_api_wrapper', api: 'services'}

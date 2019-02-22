@@ -1,0 +1,4 @@
+services:
+  forcontu_services.http_client.services:
+    parent: http_client_manager.client_base
+    arguments: ['forcontu_services_yaml']
