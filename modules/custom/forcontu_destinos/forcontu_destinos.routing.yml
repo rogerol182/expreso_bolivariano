@@ -1,7 +1,0 @@
-destinos_hello:
-  path: /destinos/hello/{name}
-  defaults:
-    _controller:  Drupal\destinos\Controller\DestinosController::hello
-    _title: 'acme title'
-  requirements:
-    _permission: 'access content'

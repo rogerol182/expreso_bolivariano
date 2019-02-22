@@ -1,8 +1,0 @@
-forcontu_theming.render:
-  path: /forcontu/theming/hello/{name}
-  defaults:
-    _controller:
-      \Drupal\forcontu_theming\Controller\ForcontuThemingController::hello
-    _title: 'Simple Page Render'
-  requirements:
-    _permission: 'access content'

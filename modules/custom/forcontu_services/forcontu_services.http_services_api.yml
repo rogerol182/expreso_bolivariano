@@ -1,5 +1,0 @@
-forcontu_services_yaml:
-  title: "Rest Content Services API"
-  api_path: "src/api/forcontu_services.yml"
-  config:
-    base_uri: "https://qa.sigatt.co"

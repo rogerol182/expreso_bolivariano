@@ -1,0 +1,5 @@
+name: Expreso Bolivariano Services Custom
+type: module
+description: The module provide the definitions of Expreso Bolivariano services from other modules.
+core: 8.x
+package: Expreso Bolivariano

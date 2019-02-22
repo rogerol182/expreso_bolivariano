@@ -1,0 +1,3 @@
+services:
+ expreso_bolivariano_services.sayHello:
+   class: Drupal\expreso_bolivariano_services\ExpresoBolivarianoServices

@@ -1,8 +1,0 @@
-name: Forcontu Services
-type: module
-description: 'Consume the API Rest Services.'
-package: Forcontu
-dependencies:
-  - http_client_manager:http_client_manager
-core: 8.x
-project: 'http_client_manager'
