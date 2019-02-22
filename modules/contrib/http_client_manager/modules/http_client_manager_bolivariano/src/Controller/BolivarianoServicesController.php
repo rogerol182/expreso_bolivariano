@@ -6,8 +6,6 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Link;
 use Drupal\http_client_manager\Entity\HttpConfigRequest;
 use Drupal\http_client_manager\HttpClientInterface;
-use Drupal\http_client_manager\HttpServiceApiWrapperFactoryInterface;
-use Drupal\http_client_manager\Plugin\HttpServiceApiWrapper\HttpServiceApiWrapperInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -25,26 +23,10 @@ class BolivarianoServicesController extends ControllerBase {
   protected $httpClient;
 
   /**
-   * The Posts Api Wrapper service.
-   *
-   * @var \Drupal\http_client_manager_example\Plugin\HttpServiceApiWrapper\HttpServiceApiWrapperPosts
-   */
-  protected $api;
-
-  /**
-   * The HTTP Service Api Wrapper Factory service.
-   *
-   * @var \Drupal\http_client_manager\HttpServiceApiWrapperFactoryInterface
-   */
-  protected $apiFactory;
-
-  /**
    * {@inheritdoc}
    */
-  public function __construct(HttpClientInterface $http_client, HttpServiceApiWrapperInterface $api_wrapper, HttpServiceApiWrapperFactoryInterface $api_wrapper_factory) {
+  public function __construct(HttpClientInterface $http_client) {
     $this->httpClient = $http_client;
-    $this->api = $api_wrapper;
-    $this->apiFactory = $api_wrapper_factory;
   }
 
   /**
@@ -52,9 +34,7 @@ class BolivarianoServicesController extends ControllerBase {
    */
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('bolivariano_api.http_client'),
-      $container->get('http_client_manager_bolivariano.api_wrapper.posts'),
-      $container->get('http_client_manager.api_wrapper.factory')
+      $container->get('bolivariano_api.http_client')
     );
   }
 
