@@ -1,4 +1,4 @@
 services:
   bolivariano_api.http_client:
     parent: http_client_manager.client_base
-    arguments: ['bolivariano_services']
+    arguments: ['bolivariano_services_yaml']

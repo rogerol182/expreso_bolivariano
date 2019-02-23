@@ -57,21 +57,16 @@ class BolivarianoServicesController extends ControllerBase {
   * @return array
   *   The service response.
   */
+  
   public function getTokenConnection() {
     $client = $this->getClient();
     $post_link = TRUE;
     $command = 'getTokenConnection';
-    $params = ['userName' => '', 'Password' => ''];
+    $params = ['userName' => 'portalweb', 'Password' => '@.PwEe76?*'];
     
     $response = $client->call($command, $params);
 
-    $build = [];
-    /*
-    foreach ($response as $id => $post) {
-      $build[$id] = $this->buildPostResponse($post, $post_link);
-    }
-    */
-    return $build;
+    print_r($response);
   }
 
 }
