@@ -1,3 +1,4 @@
 services:
- expreso_bolivariano_services.sayHello:
-   class: Drupal\expreso_bolivariano_services\ExpresoBolivarianoServices
+ expreso_bolivariano_services.http_client.bolivariano_services:
+   class: Drupal\expreso_bolivariano_services\ExpresoBolivarianoServicesController
+   arguments: ['@bolivariano_services.http_client']

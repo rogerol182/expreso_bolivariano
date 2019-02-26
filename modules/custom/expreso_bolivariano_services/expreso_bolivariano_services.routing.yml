@@ -1,0 +1,8 @@
+expreso_bolivariano_services.getToken:
+  path: '/pages/get-token'
+  defaults:
+    _controller:
+      '\Drupal\expreso_bolivariano_services\Controller\ExpresoBolivarianoServicesController::getToken'
+    _title: 'Simple Page'
+  requirements:
+    _permission: 'access content'

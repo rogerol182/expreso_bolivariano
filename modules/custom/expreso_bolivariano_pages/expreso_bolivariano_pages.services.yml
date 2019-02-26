@@ -1,0 +1,4 @@
+services:
+ expreso_bolivariano_pages.create:
+   class: Drupal\expreso_bolivariano_pages\ExpresoBolivarianoPagesController
+   arguments: ['@bolivariano_services.http_client']

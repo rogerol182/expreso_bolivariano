@@ -4,7 +4,7 @@
 #  config:
 #    base_uri: "https://qa.sigatt.co"
 
-bolivariano_services_yaml:
+bolivariano_services:
   title: "[YAML] - Expreso Bolivariano Services API"
   api_path: "src/api/bolivariano_services.yml"
   config:

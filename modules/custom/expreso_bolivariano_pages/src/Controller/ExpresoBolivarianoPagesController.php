@@ -6,16 +6,35 @@
 namespace Drupal\expreso_bolivariano_pages\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+//use Drupal\Core\Link;
 use Drupal\user\UserInterface;
+//use Drupal\http_client_manager\Entity\HttpConfigRequest;
+use Drupal\http_client_manager_bolivariano\HttpClientInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class ExpresoBolivarianoPagesController extends ControllerBase {
 
+	protected $httpClient;
+    
+    public function __construct(HttpClientInterface $http_client) {
+		$this->httpClient = $http_client;
+	}
+
+	public static function create(ContainerInterface $container) {
+		return new static(
+			$container->get('bolivariano_services.http_client')
+		);
+	}
 	/*Parametro Simple*/
 	public function simple() {
 		
+		$configuration_userName_rest = settings::get('rest_userName');
+		$configuration_Password_rest = settings::get('rest_Password');
+        $token = $this->httpClient->getTokenConnection($configuration_userName_rest,$configuration_Password_rest);
+
 		return [
 		      '#theme' => 'my_template',
-		      '#test_var' => $this->t('Test Value'),
+		      '#token' => $token,
 		    ];
 	}
 	

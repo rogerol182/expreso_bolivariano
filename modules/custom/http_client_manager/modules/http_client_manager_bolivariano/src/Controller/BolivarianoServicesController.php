@@ -7,7 +7,6 @@ use Drupal\Core\Link;
 use Drupal\http_client_manager\Entity\HttpConfigRequest;
 use Drupal\http_client_manager\HttpClientInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-
 /**
  * Class ExampleController.
  *
@@ -34,7 +33,7 @@ class BolivarianoServicesController extends ControllerBase {
    */
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('bolivariano_api.http_client')
+      $container->get('bolivariano_services.http_client')
     );
   }
 
@@ -46,27 +45,6 @@ class BolivarianoServicesController extends ControllerBase {
    */
   public function getClient() {
     return $this->httpClient;
-  }
-
-  /**
-  * Find posts.
-  *
-  * @param int|NULL $postId
-  *   The post Id.
-  *
-  * @return array
-  *   The service response.
-  */
-  
-  public function getTokenConnection() {
-    $client = $this->getClient();
-    $post_link = TRUE;
-    $command = 'getTokenConnection';
-    $params = ['userName' => 'portalweb', 'Password' => '@.PwEe76?*'];
-    
-    $response = $client->call($command, $params);
-
-    print_r($response);
   }
 
 }
