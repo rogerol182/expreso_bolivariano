@@ -7,16 +7,38 @@ namespace Drupal\expreso_bolivariano_pages\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\user\UserInterface;
+use Drupal\expreso_bolivariano_services\Services\ExpresoBolivarianoServices;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class ExpresoBolivarianoPagesController extends ControllerBase {
 
+	private $managerServices;
+    
+      /**
+    * {@inheritdoc}
+    */
+    public function __construct(ExpresoBolivarianoServices $managerServices) {
+        $this->managerServices = $managerServices;
+    }
+    /**
+    * {@inheritdoc}
+    */
+    public static function create(ContainerInterface $container) {
+        return new static(
+          $container->get('expreso_bolivariano_services.custom')
+        );
+    }
+
 	/*Parametro Simple*/
 	public function simple() {
-		
-		$service = \Drupal::service('expreso_bolivariano_services.custom');
-		//dsm($service);
-		print_r($service->getToken());
-		//exit();
+    	print_r($this->managerServices->getToken());
+		$list[] = $this->t("Username: @username");
+    	$output['forcontu_pages_user'] = array(
+			'#theme' => 'item_list',
+			'#items' => $list,
+			'#title' => $this->t('User data:'),
+		);
+		return $output;
 	}
 	
 	/*Parametro Usuario*/
