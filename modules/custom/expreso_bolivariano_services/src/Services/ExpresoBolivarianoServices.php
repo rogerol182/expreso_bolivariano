@@ -11,7 +11,7 @@ use Drupal\Core\Site\Settings;
 use Drupal\http_client_manager\Entity\HttpConfigRequest;
 use Drupal\http_client_manager\HttpClientInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Response;
+//use Symfony\Component\HttpFoundation\Response;
 
 class ExpresoBolivarianoServices {
 	
@@ -49,17 +49,24 @@ class ExpresoBolivarianoServices {
 		$configuration_Password_rest = settings::get('rest_Password');
         $params = ['UserName' => $configuration_userName_rest, 'Password' => $configuration_Password_rest];
         $token = $this->httpClient->getTokenConnection($params);
-        $response = new Response($token);
-        return $response;
+        return $token;
     }
 	/*Function to validate a token expires*/
-    public function getTokenExpiration()
+    public function renewToken($tokenId)
     {
         $configuration_userName_rest = settings::get('rest_userName');
-        $configuration_Password_rest = settings::get('rest_Password');
-        $params = ['UserName' => $configuration_userName_rest, 'Password' => $configuration_Password_rest];
-        $token = $this->httpClient->getTokenConnection($params);
-        $response = new Response($token);
-        return $response;
+        $configuration_tokenId_rest = 'Bearer '.$tokenId;
+        $params = ['UserName' => $configuration_userName_rest, 'Authorization' => $configuration_tokenId_rest]; 
+        $tokenRenew = $this->httpClient->renewTokenConnection($params);
+        return $tokenRenew;
+    }
+    /*Function to get Agencies*/
+    public function getAgencies($tokenId,$contractNumber,$contractType)
+    {
+        $configuration_tokenId_rest = 'Bearer '.$tokenId;
+        $params = ['Authorization' => $configuration_tokenId_rest, 'contractNumber' => $contractNumber, 'contractType' => $contractType]; 
+        $listAgencies = $this->httpClient->getAgencies($params);
+        //print_r($listAgencies);
+        return $listAgencies;
     }
 }

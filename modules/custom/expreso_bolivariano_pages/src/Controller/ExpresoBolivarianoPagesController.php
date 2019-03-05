@@ -9,6 +9,7 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\user\UserInterface;
 use Drupal\expreso_bolivariano_services\Services\ExpresoBolivarianoServices;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 class ExpresoBolivarianoPagesController extends ControllerBase {
 
@@ -31,14 +32,39 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 
 	/*Parametro Simple*/
 	public function simple() {
-    	print_r($this->managerServices->getToken());
-		$list[] = $this->t("Username: @username");
-    	$output['forcontu_pages_user'] = array(
+		
+		$response = $this->managerServices->getToken();
+		if($response['statusName']=='OK')
+		{
+			foreach($response as $key => $value) 
+			{
+				$tokenId = $value['token'];
+			    $dateExpires = $value['expires'];
+			}
+		}
+		$contractNumber = 0;
+		$contractType = 'D';
+		/*
+		$responseT = $this->managerServices->renewToken($tokenId);
+		if($responseT['statusName']=='OK')
+		{
+			foreach($responseT as $keyT => $valueT) 
+			{
+				$tokenIdT = $valueT['token'];
+			    $dateExpiresT = $valueT['expires'];
+			}
+		}
+		*/
+		//$list = array($statusNameT,$tokenIdT,$dateExpiresT);
+		$responseT = $this->managerServices->getAgencies($tokenId,$contractNumber,$contractType);
+		print_r($responseT);
+    	$output['expreso_bolivariano_pages'] = array(
 			'#theme' => 'item_list',
-			'#items' => $list,
-			'#title' => $this->t('User data:'),
+			'#items' => $responseT,
+			'#title' => $this->t('Agencies Data:'),
 		);
 		return $output;
+		
 	}
 	
 	/*Parametro Usuario*/

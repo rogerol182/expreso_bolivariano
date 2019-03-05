@@ -1,4 +1,5 @@
 operations:
+  #GetTokenConnection - get the Token for connection to Informix.
   GetTokenConnection:
     httpMethod: "POST"
     uri: "authentication/V1/Authentication/UserLogin"
@@ -18,6 +19,55 @@ operations:
         required: true
         type: "string"
     responseModel: "apiToken"
+#RenewTokenConnection - renew the Token for connection to Informix.    
+  RenewTokenConnection:
+    httpMethod: "POST"
+    uri: "authentication/V1/Authentication/UserTokenRenew"
+    summary: "Renew api token"
+    parameters:
+      content-type:
+        location: "header"
+        default: "application/json"
+      Authorization:
+        location: "header"
+        description: "Bearer Token"
+        required: true
+        type: "string"  
+      UserName:
+        location: "json"
+        description: "userName To Renew"
+        required: true
+        type: "string"
+    responseModel: "apiTokenRenew"
+#GetAgencies - Get all the agencies.    
+  GetAgencies:
+    httpMethod: "POST"
+    uri: "clientsebolweb/V1/Core/GetAgencies"
+    summary: "Get all the agencies"
+    parameters:
+      content-type:
+        location: "header"
+        default: "application/json"
+      client-header-info:
+        location: "header"
+        default: "{'ClientIP':'0.0.0.0', 'ClientInfo':'Cliente WPF'}"  
+      Authorization:
+        location: "header"
+        description: "Bearer Token"
+        required: true
+        type: "string"
+      contractNumber:
+        location: "json"
+        description: "Number of contract."
+        required: true
+        type: "integer"  
+      contractType:
+        location: "json"
+        description: "Type of destination agencie."
+        required: true
+        type: "string"
+    responseClass: "listAgencies"
+
 models:
   apiToken:
     type: "object"
@@ -36,3 +86,37 @@ models:
           expires:
             location: "json"
             type: "string"
+  apiTokenRenew:
+    type: "object"
+    location: "json"
+    properties:
+      statusName:
+        location: "json"
+        type: "string"
+      data:
+        type: "object"
+        location: "json"
+        properties:
+          token:
+            location: "json"
+            type: "string"
+          expires:
+            location: "json"
+            type: "string"
+  listAgencies:
+    type: "object"
+    location: "json"
+    properties:
+      statusCode:
+        location: "json"
+        type: "string"
+      data:
+        type: "array"
+        location: "json"
+        items:
+          agencyId:
+            location: "json"
+            type: "integer"
+          agencyName:
+            location: "json"
+            type: "string" 
