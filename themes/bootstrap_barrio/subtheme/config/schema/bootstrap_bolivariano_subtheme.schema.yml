@@ -1,0 +1,5 @@
+# Schema for the configuration files of the Bootstrap Barrio Subtheme.
+
+bootstrap_bolivariano_subtheme.settings:
+  type: theme_settings
+  label: 'Bootstrap bolivariano Subtheme settings'

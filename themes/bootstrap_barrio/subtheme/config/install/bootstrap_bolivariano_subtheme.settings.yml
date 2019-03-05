@@ -1,0 +1,33 @@
+# Library
+# --------------
+bootstrap_bolivariano_library: 'production'
+# Layout
+# --------------
+bootstrap_bolivariano_sidebar_position: 'both'
+bootstrap_bolivariano_content_offset: 0
+bootstrap_bolivariano_sidebar_first_width: 4
+bootstrap_bolivariano_sidebar_first_offset: 0
+bootstrap_bolivariano_sidebar_second_width: 3
+bootstrap_bolivariano_sidebar_second_offset: 0
+
+# Container
+# --------------
+bootstrap_bolivariano_fluid_container: 0
+
+# Buttons
+# --------------
+bootstrap_bolivariano_button: 1
+bootstrap_bolivariano_button_size: ''
+bootstrap_bolivariano_button_outline: 0
+
+# Navbar
+# --------------
+bootstrap_bolivariano_navbar_toggle: 1
+bootstrap_bolivariano_navbar_container: 'navbar-toggleable-md'
+bootstrap_bolivariano_navbar_top_position: ''
+bootstrap_bolivariano_navbar_top_color: 'navbar-dark'
+bootstrap_bolivariano_navbar_position: ''
+bootstrap_bolivariano_navbar_color: 'navbar-dark'
+# Colors
+# --------------
+bootstrap_bolivariano_table_hover: 1
