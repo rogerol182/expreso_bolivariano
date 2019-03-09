@@ -24,31 +24,37 @@
   We call a macro which calls itself to render the full tree.
   @see http://twig.sensiolabs.org/doc/tags/macro.html
 #}
+<button class="navbar-toggler header__btntoggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown">
+  <span class="navbar-toggler-icon header__toggler"></span>
+  <span class="navbar-toggler-icon header__toggler"></span>
+  <span class="navbar-toggler-icon header__toggler"></span>
+</button>
 {{ menus.menu_links(items, attributes, 0) }}
 
 {% macro menu_links(items, attributes, menu_level) %}
   {% import _self as menus %}
   {% if items %}
     {% if menu_level == 0 %}
-      <ul{{ attributes.addClass('nav navbar-nav') }}>
+      <!--<ul{{ attributes.addClass('nav navbar-nav') }}>-->
+      <div class="collapse navbar-collapse header__items" id="navbarNavDropdown">
+      <ul class="navbar-nav">
     {% else %}
       <ul class="dropdown-menu">
     {% endif %}
     {% for item in items %}
       {%
         set classes = [
-          menu_level ? 'dropdown-item' : 'nav-item',
+          menu_level ? 'dropdown-item' : 'header__item hvr-grow',
           item.is_expanded ? 'menu-item--expanded',
           item.is_collapsed ? 'menu-item--collapsed',
-          item.in_active_trail ? 'active',
-          item.below ? 'dropdown',
         ]
       %}
-      <li{{ item.attributes.addClass(classes) }}>
+
+      <li {{ item.attributes.addClass(classes) }}>
+      
         {%
           set link_classes = [
-            not menu_level ? 'nav-link',
-            item.in_active_trail ? 'active',
+            not menu_level ? 'nav-link header__link',
             item.below ? 'dropdown-toggle',
             item.url.getOption('attributes').class ? item.url.getOption('attributes').class,
           ]
@@ -59,8 +65,12 @@
         {% else %}
           {{ link(item.title, item.url, {'class': link_classes}) }}
         {% endif %}
+        
+         <span class="sr-only">(current)</span>
+        
       </li>
     {% endfor %}
     </ul>
+  
   {% endif %}
 {% endmacro %}

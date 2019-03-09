@@ -24,24 +24,56 @@
   We call a macro which calls itself to render the full tree.
   @see http://twig.sensiolabs.org/doc/tags/macro.html
 #}
-{{ menus.menu_links(items, attributes, 0) }}
 
+{% if logged_in == 1 %}
+{{ menus.menu_links(items, attributes, 0) }}
+<div class="header__login">
 {% macro menu_links(items, attributes, menu_level) %}
   {% import _self as menus %}
   {% if items %}
     {% if menu_level == 0 %}
-      <ul{{ attributes.addClass('nav') }}>
-      {% for item in items %}
-        {%
-          set classes = [
-           'nav-link',
-            item.in_active_trail ? 'active',
-            item.url.getOption('attributes').class ? item.url.getOption('attributes').class,
-          ]
-        %}
-        {{ link(item.title, item.url, {'class': classes}) }}
-      {% endfor %}
-      </ul>
-    {% endif %}
+        <div class="logged">
+         <p class="header__user">Roger Rodriguez</p>
+          <!-- Mobile -->
+          <div class="mobile-only">
+              <a href="">
+                  <div class="header__close-session">
+                      <img src="{{ base_path }}/{{ active_theme_path() }}/images/menu/close.png" alt="Cerrar Sesión">
+                      <hr>
+                      <p>Cerrar sesión</p>
+                  </div>
+              </a>
+          </div>
+         </div>
+          <!-- Desktop -->
+          <div class="header__actions">
+              <a class="header__loginactions" href="#">
+                  <span class="header__linkuser">Puntos</span> 
+                  <span class="header__icon header__icon--points"></span>
+                  <span class="header__linkuser ml-2">1700</span> 
+              </a>
+              <a class="header__loginactions" href="#"><span class="header__linkuser">Reservas</span> <span class="header__icon header__icon--booking">2</span></a>
+              <div class="logged">
+                <div class="desktop-only">
+                    <a href="">
+                        <div class="header__close-session">
+                            <img src="{{ base_path }}/{{ active_theme_path() }}/images/menu/close.png" alt="cerrar">
+                            <hr>
+                            <p>Cerrar sesión</p>
+                        </div>
+                    </a>
+                </div>
+              </div>
+      </div>
+      {% endif %}
   {% endif %}
 {% endmacro %}
+
+{% else %}
+<div class="notlogged">
+    <a href="/user/login"><button>Iniciar sesión</button></a>
+    <a href="/user/register"><button>Registrarse</button></a> 
+</div>
+{% endif %}
+</div>
+</nav>

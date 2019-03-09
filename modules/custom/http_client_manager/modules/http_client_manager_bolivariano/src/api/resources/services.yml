@@ -114,9 +114,11 @@ models:
         type: "array"
         location: "json"
         items:
-          agencyId:
-            location: "json"
-            type: "integer"
-          agencyName:
-            location: "json"
-            type: "string" 
+          type: "array"
+          items:
+            agencyId:
+              location: "json"
+              type: "integer"
+            agencyName:
+              location: "json"
+              type: "string" 

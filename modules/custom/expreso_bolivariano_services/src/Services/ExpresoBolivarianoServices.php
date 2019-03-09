@@ -51,7 +51,7 @@ class ExpresoBolivarianoServices {
         $token = $this->httpClient->getTokenConnection($params);
         return $token;
     }
-	/*Function to validate a token expires*/
+	/*Function to renew a token expires*/
     public function renewToken($tokenId)
     {
         $configuration_userName_rest = settings::get('rest_userName');
@@ -66,7 +66,6 @@ class ExpresoBolivarianoServices {
         $configuration_tokenId_rest = 'Bearer '.$tokenId;
         $params = ['Authorization' => $configuration_tokenId_rest, 'contractNumber' => $contractNumber, 'contractType' => $contractType]; 
         $listAgencies = $this->httpClient->getAgencies($params);
-        //print_r($listAgencies);
         return $listAgencies;
     }
 }

@@ -71,7 +71,7 @@
   <div id="page">
     <header id="header" class="header" role="banner" aria-label="{{ 'Site header'|t}}">
       {% block head %}
-        {% if page.secondary_menu or page.top_header or page.top_header_form %}
+        <!--{% if page.secondary_menu or page.top_header or page.top_header_form %}
           <nav{{ navbar_top_attributes }}>
           {% if container_navbar %}
           <div class="container">
@@ -87,11 +87,11 @@
           </div>
           {% endif %}
           </nav>
-        {% endif %}
-        <nav{{ navbar_attributes }}>
+        {% endif %}-->
+        <!--<nav{{ navbar_attributes }}>
           {% if container_navbar %}
           <div class="container">
-          {% endif %}
+          {% endif %}-->
             {{ page.header }}
             {% if page.primary_menu or page.header_form %}
               <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#CollapsingNavbar" aria-controls="CollapsingNavbar" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
@@ -102,15 +102,16 @@
                     {{ page.header_form }}
                   </div>
                 {% endif %}
-	          </div>
+            </div>
+            
             {% endif %}
-            {% if sidebar_collapse %}
+            <!--{% if sidebar_collapse %}
               <button class="navbar-toggler navbar-toggler-left" type="button" data-toggle="collapse" data-target="#CollapsingLeft" aria-controls="CollapsingLeft" aria-expanded="false" aria-label="Toggle navigation"></button>
             {% endif %}
           {% if container_navbar %}
           </div>
           {% endif %}
-        </nav>
+        </nav>-->
       {% endblock %}
     </header>
     {% if page.highlighted %}
@@ -167,11 +168,33 @@
         </aside>
       </div>
     {% endif %}
-    <footer class="site-footer">
+    <!--<footer class="site-footer">-->
+      <footer class="container-fluid footer">
+        <div class="row footer__row footer__row--hidden footer__icons">
+            <div class="col-4 footer__col footer__col--border">
+                <a href="#">
+                    <img class="footer__icon" src="/{{ active_theme_path() }}/images/misc/map-icon.png" alt="Destinos">
+                    <p>Destinos</p>
+                </a>
+            </div>
+            <div class="col-4 footer__col footer__col--border">
+                <a href="#">
+                    <img class="footer__icon" src="/{{ active_theme_path() }}/images/misc/discount.png" alt="Promociones">
+                    <p>Promociones</p>
+                </a>
+            </div>
+            <div class="col-4 footer__col footer__col--border">
+                <a href="#">
+                    <img class="footer__icon" src="/{{ active_theme_path() }}/images/misc/tickets.png" alt="Vive hoy">
+                    <p>Vive hoy</p>
+                </a>
+            </div>
+        </div>
       {% block footer %}
-        <div class="{{ container }}">
+        <!--<div class="{{ container }}">-->
           {% if page.footer_first or page.footer_second or page.footer_third or page.footer_fourth %}
-            <div class="site-footer__top clearfix">
+            <!--<div class="site-footer__top clearfix">-->
+              <div class="row no-gutters footer__row footer__row--sitemap">
               {{ page.footer_first }}
               {{ page.footer_second }}
               {{ page.footer_third }}
@@ -179,11 +202,12 @@
             </div>
           {% endif %}
           {% if page.footer_fifth %}
-            <div class="site-footer__bottom">
+            <!--<div class="site-footer__bottom">-->
+              <div class="footer__media">
               {{ page.footer_fifth }}
             </div>
           {% endif %}
-        </div>
+        <!--</div>-->
       {% endblock %}
     </footer>
   </div>
