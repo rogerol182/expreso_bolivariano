@@ -300,6 +300,7 @@ function bootstrap_barrio_preprocess_region(&$variables) {
   $nowrap = [
     'breadcrumb',
     'highlighted',
+    'banner_top',
     'content',
     'primary_menu',
     'header',
@@ -433,6 +434,7 @@ function bootstrap_barrio_theme_suggestions_region_alter(array &$suggestions, ar
   $nowrap = [
     'breadcrumb',
     'highlighted',
+    'banner_top',
     'content',
     'primary_menu',
     'header',

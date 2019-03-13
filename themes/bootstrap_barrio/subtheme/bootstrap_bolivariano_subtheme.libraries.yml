@@ -4,12 +4,15 @@ global-styling:
     js/global.js: {}
   css:
     component:
-      css/style.css: {}
+      css/styles.css: {}
       css/fonts.css: {}
+      css/font-awesome.min.css: {}
+      css/hover-min.css: {} 
       #css/colors.css: {}
 bootstrap:
   js:
     #/libraries/popper/popper.min.js: {}
+    /libraries/bootstrap/dist/js/bootstrap.min.js: {}
     /libraries/bootstrap/dist/js/bootstrap.min.js: {}
   css:
     component:
@@ -20,7 +23,7 @@ bootstrap_cdn:
     //stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js: {}
   css:
     component:
-      //stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css: {}
+      //stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css: {}       
 color.preview:
   version: VERSION
   css:

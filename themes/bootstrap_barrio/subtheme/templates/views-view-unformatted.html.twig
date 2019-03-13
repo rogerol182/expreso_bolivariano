@@ -1,0 +1,74 @@
+{#
+/**
+ * @file
+ * Theme override to display a view of unformatted rows.
+ *
+ * Available variables:
+ * - title: The title of this group of rows. May be empty.
+ * - rows: A list of the view's row items.
+ *   - attributes: The row's HTML attributes.
+ *   - content: The row's content.
+ * - view: The view object.
+ * - default_row_class: A flag indicating whether default classes should be
+ *   used on rows.
+ *
+ * @see template_preprocess_views_view_unformatted()
+ */
+#}
+<section class="container-fluid searcher">
+      <div class="row searcher__wrapper">
+{% for row in rows %}
+  {% set photo = file_url(row['content']['#row']._entity.field_image.entity.fileuri) %}          
+		 <img class="searcher__videobackup" src="{{ photo }}" alt="">
+		 <div class="col">
+		    <h1 class="searcher__title">{{ row['content']['#row']._entity.title.value }} </h1>
+		    <svg class="searcher__svg">
+		        <path d="M0 25 L1500 25 Z"></path>
+		    </svg>
+		    <div class="container-fluid searcher__toolbar">
+		        <div class="row">
+		            <div class="col">
+		                <h2 class="searcher__subtitle">¿Cual es tu siguiente viaje?</h2>
+		                <h2 class="searcher__subtitle searcher__subtitle--right">Experiencias</h2>
+		            </div>
+		        </div>
+		        <!--<div class="row searcher__row searcher__row--filler">
+		            <div class="col-6 col-md-2 searcher__col">
+		                <p class="searcher__label">Origen</p>
+		                <select class="searcher__select __select--bluedark" name="origin" id="origin">
+		                    <option value="Bogotá" selected="">Bogotá</option>
+		                    <option value="Bogotá">Cali</option>
+		                </select>
+		            </div>
+		            <div class="col-6 col-md-2 searcher__col searcher__col--line">
+		                <p class="searcher__label">Destino</p>
+		                <select class="searcher__select __select--siena" name="destiny" id="destiny">
+		                    <option value="Medellín" selected="">Medellín</option>
+		                    <option value="Medellín">Melgar</option>
+		                </select>
+		            </div>
+		            <div class="col-6 col-md-2 searcher__col">
+		                <p class="searcher__label searcher__label--nomobile">Ida</p>
+		                <input type="date" class="searcher__input searcher__input--date searcher__input--blue" name="fromof" id="fromof">
+		            </div>
+		            <div class="col-6 col-md-2 searcher__col">
+		                <p class="searcher__label searcher__label--nomobile">Regreso (opcional)</p>
+		                <input type="date" class="searcher__input searcher__input--date searcher__input--yellow" name="cameof" id="cameof">
+		            </div>
+		            <div class="col-12 col-md-2 searcher__col justify-content-center d-flex">
+		                <button class="hvr-pulse-shrink searcher__btn searcher__btn--search">Buscar</button>
+		                <button class="hvr-pulse-shrink searcher__btn searcher__btn--tour d-inline-block d-sm-none">Tours</button>
+		            </div>
+		            <div class="col-12 col-md-2 searcher__col searcher__col--last">
+		                <button class="hvr-pulse-shrink searcher__btn searcher__btn--tour searcher__btn--onlydesktop">Tours</button>
+		            </div>
+		        </div>-->
+		    </div>
+		</div>
+	<!--<div class="weather_box">
+	    <span>22°Guatapé/Piedra el Peñol</span><i></i>
+	</div>-->
+{% endfor %}
+
+	</div>
+</section>

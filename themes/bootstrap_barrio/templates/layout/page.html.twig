@@ -114,6 +114,16 @@
         </nav>-->
       {% endblock %}
     </header>
+    {% if page.breadcrumb %}
+    <div class="wrapper__breadcrump">
+      {{ page.breadcrumb }}
+    </div>
+    {% endif %}
+    {% if page.banner_top %}
+    
+        {{ page.banner_top }}
+        
+    {% endif %}
     {% if page.highlighted %}
       <div class="highlighted">
         <aside class="{{ container }} section clearfix" role="complementary">
@@ -130,10 +140,12 @@
         </div>
       {% endblock %}
     {% endif %}
+
     <div id="main-wrapper" class="layout-main-wrapper clearfix">
+
       {% block content %}
         <div id="main" class="{{ container }}">
-          {{ page.breadcrumb }}
+          
           <div class="row row-offcanvas row-offcanvas-left clearfix">
               <main{{ content_attributes }}>
                 <section class="section">
@@ -195,20 +207,30 @@
           {% if page.footer_first or page.footer_second or page.footer_third or page.footer_fourth %}
             <!--<div class="site-footer__top clearfix">-->
               <div class="row no-gutters footer__row footer__row--sitemap">
-              {{ page.footer_first }}
-              {{ page.footer_second }}
-              {{ page.footer_third }}
-              {{ page.footer_fourth }}
+                <div class="col-12 col-md footer__col footer__col--main">
+                {{ page.footer_first }}
+                </div>
+                <div class="col-12 col-md footer__col footer__col--main">
+                {{ page.footer_second }}
+                </div>
+                <div class="col-12 col-md footer__col footer__col--main footer__col--small">
+                {{ page.footer_third }}
+                </div>
+                <div class="col-12 col-md footer__col footer__col--main footer__col--big">
+                {{ page.footer_fourth }}
+                </div>
             </div>
           {% endif %}
-          {% if page.footer_fifth %}
-            <!--<div class="site-footer__bottom">-->
-              <div class="footer__media">
-              {{ page.footer_fifth }}
-            </div>
-          {% endif %}
+
         <!--</div>-->
       {% endblock %}
+
     </footer>
+    {% if page.footer_fifth %}
+      <!--<div class="site-footer__bottom">-->
+        <div class="footer__media">
+        {{ page.footer_fifth }}
+      </div>
+    {% endif %}
   </div>
 </div>
