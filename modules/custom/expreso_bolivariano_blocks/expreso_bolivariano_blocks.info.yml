@@ -1,0 +1,5 @@
+name: Expreso Bolivariano Blocks
+type: module
+description: 'Displays a custom Blocks.'
+package: Expreso Bolivariano
+core: 8.x

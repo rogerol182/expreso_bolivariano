@@ -11,8 +11,8 @@
 
 function expreso_bolivariano_pages_theme($existing, $type, $theme, $path) {
   return [
-    'my_template' => [
-      'variables' => ['response' => NULL],
+    'banner_home_slideshow_block' => [
+      'variables' => ['data_banner' => NULL],
     ],
   ];
 }

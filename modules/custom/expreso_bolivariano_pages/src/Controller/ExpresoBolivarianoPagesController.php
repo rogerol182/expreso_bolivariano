@@ -1,7 +1,7 @@
 <?php
 /**
 * @file
-* Contains \Drupal\forcontu_pages\Controller\ForcontuPagesController.
+* Contains \Drupal\forcontu_pages\Controller\ExpresoBolivarianoPagesController.
 */
 namespace Drupal\expreso_bolivariano_pages\Controller;
 
@@ -33,7 +33,8 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 	/*Parametro Simple*/
 	public function simple() {
 		
-		/*
+		echo "Holaaaa";
+		die();
 		$response = $this->managerServices->getToken();
 		if($response['statusName']=='OK')
 		{
@@ -43,10 +44,10 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 			    $dateExpires = $value['expires'];
 			}
 		}
-		$contractNumber = 0;
-		$contractType = 'D';
+		//$contractNumber = 0;
+		//$contractType = 'D';
 		
-		$responseT = $this->managerServices->renewToken($tokenId);
+		/*$responseT = $this->managerServices->renewToken($tokenId);
 		if($responseT['statusName']=='OK')
 		{
 			foreach($responseT as $keyT => $valueT) 
@@ -54,31 +55,31 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 				$tokenIdT = $valueT['token'];
 			    $dateExpiresT = $valueT['expires'];
 			}
-		}
-		*/
+		}*/
+		
 		//$list = array($statusNameT,$tokenIdT,$dateExpiresT);
 		//$responseT = $this->managerServices->getAgencies($tokenId,$contractNumber,$contractType);
-		$list[] = $this->t("Username: @username");
-		$output['expreso_bolivariano_pages'] = array(
-			'#theme' => 'item_list',
+		$list[] = array('tokenId' => $tokenId);
+
+		return array(
+			'#theme' => 'grid_home_promotions_block',
 			'#items' => $list,
-			'#title' => $this->t('Agencies Data:'),
+			'#title' => $this->t('Token:'),
 		);
-		return $output;
+		//print_r($responseT);
+		//exit();
+		//return $responseT;
 		
 	}
 	
 	/*Parametro Usuario*/
 	
 	public function user(UserInterface $user) {
-		$list[] = $this->t("Username: @username",
-		array('@username' => $user->getAccountName()));
-		$list[] = $this->t("Email: @email",
-		array('@email' => $user->getEmail()));
-		$list[] = $this->t("Roles: @roles",
-		array('@roles' => implode(', ', $user->getRoles())));
-		$list[] = $this->t("Last accessed time: @lastaccess",
-		array('@lastaccess' => \Drupal::service('date.formatter')->format($user->getLastAccessedTime(), 'short')));
+		$list[] = $this->t("Username: @username",array('@username' => $user->getAccountName()));
+		$list[] = $this->t("Email: @email",array('@email' => $user->getEmail()));
+		$list[] = $this->t("Roles: @roles",array('@roles' => implode(', ', $user->getRoles())));
+		$list[] = $this->t("Last accessed time: @lastaccess",array('@lastaccess' => \Drupal::service('date.formatter')->format($user->getLastAccessedTime(), 'short')));
+
 		$output['forcontu_pages_user'] = array(
 			'#theme' => 'item_list',
 			'#items' => $list,

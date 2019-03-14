@@ -1,0 +1,8 @@
+expreso_bolivariano_blocks.getPromotionsBlock:
+  path: '/blocks/promotions'
+  defaults:
+    _controller:
+      '\Drupal\expreso_bolivariano_blocks\Controller\ExpresoBolivarianoBlocksController::getPromotionsBlockHome'
+    _title: 'Simple Block'
+  requirements:
+    _permission: 'access content'
