@@ -33,8 +33,8 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 	/*Parametro Simple*/
 	public function simple() {
 		
-		echo "Holaaaa";
-		die();
+		//echo "Holaaaa";
+		//die();
 		$response = $this->managerServices->getToken();
 		if($response['statusName']=='OK')
 		{
@@ -44,6 +44,8 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 			    $dateExpires = $value['expires'];
 			}
 		}
+		echo $tokenId;
+		die();
 		//$contractNumber = 0;
 		//$contractType = 'D';
 		

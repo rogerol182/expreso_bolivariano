@@ -7,7 +7,7 @@ namespace Drupal\expreso_bolivariano_services\Services;
 
 //use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Site\Settings;
-//use Drupal\Core\Link;
+use Drupal\Core\Link;
 use Drupal\http_client_manager\Entity\HttpConfigRequest;
 use Drupal\http_client_manager\HttpClientInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -67,5 +67,13 @@ class ExpresoBolivarianoServices {
         $params = ['Authorization' => $configuration_tokenId_rest, 'contractNumber' => $contractNumber, 'contractType' => $contractType]; 
         $listAgencies = $this->httpClient->getAgencies($params);
         return $listAgencies;
+    }
+    /*Function to get Promotions Home*/
+    public function getPromotions($tokenId,$promotionsNumber)
+    {
+        $configuration_tokenId_rest = 'Bearer '.$tokenId;
+        $params = ['Authorization' => $configuration_tokenId_rest, 'promotionsNumber' => $promotionsNumber]; 
+        $listPromotions = $this->httpClient->getPromotions($params);
+        return $listPromotions;
     }
 }

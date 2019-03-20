@@ -1,0 +1,32 @@
+<section class="container-fluid cards">
+	<div class="row no-gutters cards__container">
+    {% for items in promotionsData %}
+    	{% set oddOrEven = cycle(['odd', 'even'], loop.index0) %}
+    	{% if oddOrEven == 'odd' %}
+        	<article class="col-6 col-md-3 cards__item cards__item--yellow">
+    	{% else %}
+        	<article class="col-6 col-md-3 cards__item cards__item--blue">
+    	{% endif %}
+		        <img class="cards__image" src="{{ base_path }}/{{ active_theme_path() }}/images/bg/cocora.jpg" alt="">
+	            <div class="cards__wrapper">
+	                <h3 class="cards__title">{{ (items.agencyDestinationName)|capitalize }}</h3>
+	                <div class="cards__description">
+	                    <img src="{{ base_path }}/{{ active_theme_path() }}/images/label/{{ (items.busServiceName)|trim }}.png" alt="" class="cards__type">
+	                    <img src="{{ base_path }}/{{ active_theme_path() }}/images/bus/{{ (items.busServiceName)|trim }}-vehicle.png" alt="" class="cards__bus">
+	                    <h4 class="cards__cities">{{ (items.agencyOriginName)|capitalize }} - {{ (items.agencyDestinationName)|capitalize }}</h4>
+	                    <p class="cards__prizes">
+	                        <span class="cards__infoprice">Desde:</span>
+	                        <span class="cards__value">${{ (items.tripRate)|number_format(0, '', '.') }}</span>
+	                    </p>
+	                </div>
+	            </div>
+	        </article>		
+	{% endfor %}
+
+    </div>
+    <div class="row no-gutters mt-4">
+        <div class="col-12 text-center">
+            <a href="#" class="cards__anchor">Más rutas <i class="cards__anchor-ico fa fa-angle-down " aria-hidden="true"></i></a>
+        </div>
+    </div>
+</section>

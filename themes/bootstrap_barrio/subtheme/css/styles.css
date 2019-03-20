@@ -1550,10 +1550,7 @@ label:hover:before {
 
 
 
-.searcher{
-    display:block;
-    width:100%;
-}
+
 .searcher .hide{
     display:none;
 }
@@ -1570,7 +1567,7 @@ label:hover:before {
 }
 
 }
-/*.searcher__video{
+.searcher__video{
     position:absolute;
     top:50%;
     left:0;
@@ -1582,8 +1579,8 @@ label:hover:before {
     position:absolute;
     top:0;
     left:50%;
-    transform:translateX(-50%);
-}*/
+    /*transform:translateX(-50%);*/
+}
 .searcher__title{
     text-shadow:0 0 10px black;
     text-align:center;
@@ -1742,13 +1739,65 @@ label:hover:before {
 }
 @media (min-width: 768px){
     .searcher__label--nomobile{
-    display:block;
+        display:block;
+    }
 }
 
+.searcher__slider{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    padding: 0 !important;
+}
+.searcher__slider>div{
+    padding: 0 !important;
 }
 
+.searcher__slider .carousel-indicators{
+    position: absolute !important;
+    bottom: 5px !important;
+    top: auto !important;
+    z-index: 20;
+    display: none !important;
+}
+.searcher__slider .carousel-inner{
+    height: 100%;
+    width: 100% !important;
+    padding: 0 !important;
+}
+.searcher__slider .carousel-item{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+.searcher__slider .carousel-item img{
+    position: absolute;
+    top: -9999px;
+    bottom:-9999px;
+    left: -9999px;
+    right: -9999px;
+    margin: auto;
+    min-width: 100%;
+    min-height: 100%;
+    max-width: 2000px;
+    width: auto;
+}
+/*  
+    Los controles del slider son visibles en la vista desktop, ya que ocupan espacio valioso
+    en la vista mobile, y "ensucia" el formulario de busqueda
+*/
+@media (min-width: 1118px){
+    .searcher__slider .carousel-indicators{
+        display: flex !important;
+    }
+}
 
-
+#searcher__gallery{
+    height: 100%;
+}
 
 .searcher__input{
     color:#2C3C99;
@@ -2491,7 +2540,6 @@ label:hover:before {
     }
     .navbar-expand-lg .navbar-nav .nav-link{
         padding-right: 0.8rem;
-        padding-left: 0.8rem !important;
     }
 }
 .header__link{
@@ -2767,27 +2815,8 @@ label:hover:before {
         align-items:center;
     }
 }
-.searcher__video{
-    /*position:absolute;
-    top:50%;
-    left:0;
-    width:100%;
-    height:200%;
-    transform:translateY(-50%);
-    position: absolute;
-    top: -9999px;
-    bottom:-9999px;
-    left: -9999px;
-    right: -9999px;
-    margin: auto;
-    min-width: 100%;*/
-}
 
 .searcher__videobackup{
-    /*position:absolute;
-    top:0;
-    left:50%;
-    transform:translateX(-50%);*/
     position: absolute;
     top: -9999px;
     bottom:-9999px;
@@ -2804,6 +2833,8 @@ label:hover:before {
     font-size:8vw;
     font-family:'cabin', Helvetica, sans-serif;
     font-weight:600;
+    position: relative;
+    z-index: 1000;
 }
 @media (min-width: 768px){
     .searcher__title{
@@ -6427,13 +6458,14 @@ list-style: none;
 
 .weather_box{
     position: absolute;
-    bottom: 10px;
-    right: 30px;
+    bottom: 25px;
+    right: 20px;
     background: rgba(0, 0, 0, 0.5);
     color: white;
     padding: 10px 25px;
     border-radius: 5px;
     font-size: 0.9em;
+    z-index: 12;
 }
 .weather_box i{
     background: url('../images/svg/icon_weather.svg') no-repeat;

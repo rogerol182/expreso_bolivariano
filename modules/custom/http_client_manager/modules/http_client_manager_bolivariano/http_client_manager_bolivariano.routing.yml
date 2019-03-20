@@ -1,13 +1,13 @@
 
-http_client_manager_bolivariano.get_token:
+#http_client_manager_bolivariano.get_token:
   #path: 'find-posts/{postId}'
-  path: 'get-token'
-  defaults:
-    _controller: '\Drupal\http_client_manager_bolivariano\Controller\BolivarianoServicesController::GetTokenConnection'
-    _title: 'get Token'
+  #path: 'get-token'
+  #defaults:
+    #_controller: '\Drupal\http_client_manager_bolivariano\Controller\BolivarianoServicesController::GetTokenConnection'
+    #_title: 'get Token'
     #postId: null
-  requirements:
-    _permission: 'access content'
+  #requirements:
+    #_permission: 'access content'
 
 #http_client_manager_example.find_posts.advanced:
   #path: 'find-posts-advanced/{postId}'

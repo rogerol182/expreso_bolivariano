@@ -67,6 +67,29 @@ operations:
         required: true
         type: "string"
     responseClass: "listAgencies"
+ #GetAgencies - Get all the agencies.    
+  GetPromotions:
+    httpMethod: "POST"
+    uri: "clientsebolweb/V1/Sales/GetPromotionsHome"
+    summary: "Get all the promotions"
+    parameters:
+      content-type:
+        location: "header"
+        default: "application/json"
+      client-header-info:
+        location: "header"
+        default: "{'ClientIP':'0.0.0.0', 'ClientInfo':'Cliente WPF'}"  
+      Authorization:
+        location: "header"
+        description: "Bearer Token"
+        required: true
+        type: "string"
+      promotionsNumber:
+        location: "json"
+        description: "Number of contract."
+        required: true
+        type: "integer"
+    responseClass: "listPromotions"
 
 models:
   apiToken:
@@ -107,18 +130,55 @@ models:
     type: "object"
     location: "json"
     properties:
-      statusCode:
+      statusName:
         location: "json"
         type: "string"
       data:
         type: "array"
         location: "json"
         items:
-          type: "array"
-          items:
+          type: "object"
+          properties:
             agencyId:
               location: "json"
               type: "integer"
             agencyName:
               location: "json"
               type: "string" 
+  listPromotions:
+    type: "object"
+    location: "json"
+    properties:
+      statusName:
+        location: "json"
+        type: "string"
+      data:
+        type: "array"
+        location: "json"
+        items:
+          type: "object"
+          properties:
+            agencyOriginId:
+              location: "json"
+              type: "integer"
+            agencyOriginName:
+              location: "json"
+              type: "string"
+            agencyDestinationId:
+              location: "json"
+              type: "integer"
+            agencyDestinationName:
+              location: "json"
+              type: "string"
+            tripDate:
+              location: "json"
+              type: "string"
+            tripRate:
+              location: "json"
+              type: "integer"
+            busServiceId:
+              location: "json"
+              type: "integer" 
+            busServiceName:
+              location: "json"
+              type: "string"     
