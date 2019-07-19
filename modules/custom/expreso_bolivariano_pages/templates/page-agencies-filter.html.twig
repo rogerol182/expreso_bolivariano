@@ -1,0 +1,215 @@
+<div class="wrapper__top bg-image">
+    <img src="/sites/default/files/inline-images/agencies.jpg" alt="" class="">
+    <div class="wrapper__topwrap">
+        <h2 class="wrapper__title wrapper__title--cities">Agencias</h2>
+    </div>
+</div>
+<div id="rutas" class="mt-0">
+    <div class="buscador container-fluid">
+        <div class="row">
+            <div class="col col-4 col-md-6 text-center big_text">Mapa de sucursales</div>
+            <div class="col-sm-3 col-md-2">
+                <p>Departamento</p>
+                <select id="department_filter">
+                    <option value="0">-Todos-</option>
+                {% set newDepts = [] %}
+                {% for department in depts|sort %}
+                    {% if department.0.0.value not in newDepts %}
+                        <option value="{{ department.0.0.value }}">{{ department.0.0.value|raw }}</option>
+                    {% set newDepts = newDepts|sort|merge([department.0.0.value]) %}
+                    {% endif %}    
+                {% endfor %}
+                </select>
+            </div>
+            <div class="col-sm-3 col-md-2 destino">
+                <p>Ciudad</p>
+                <select id="city_filter" style="display: none;">
+                    <option value="0">-Todas-</option>
+                {% set newCities = [] %}
+                {% for city in cities|sort %}
+                    {% if city.1.0.0.value not in newCities %}
+                        <option value="{{ city.0.0.0.value }}">{{ city.1.0.0.value|raw }}</option>
+                    {% set newCities = newCities|sort|merge([city.1.0.0.value]) %}
+                    {% endif %}    
+                {% endfor %}
+                </select>
+                <div id="div_city_filter_department" style="display: none;">
+                    <select id="city_filter_department">
+                        <option value="0">-Todas-</option>
+                    </select>
+                </div>    
+            </div>
+            <div class="col col-sm-3 col-md-2 text-center big_text"><button id="filter_agencies" class="btn btn--secondary" style="font-size: 18px;">Filtrar</button></div>
+            
+        </div>
+    </div>
+    <div id="map_agencies" style="height: 800px;"></div>
+</div> 
+<!-- Agencies Filter List -->
+{% set departmentName =  dataMask[0] %}
+{% set cityName =  dataMask[1] %}
+<div class="col col-lg-10 mx-auto mt-4">
+        
+        <h2 class="block-title orange">Agencias en {{ departmentName }} {% if cityName != '0' %} - {{ cityName }} {% endif %} </h2>
+        <!--  Begins For -->
+        {% for agencies in agenciesList %}
+        {% set photo = file_url(agencies[5]) %}
+        <div class="agencias__panel panel panel-shadow mt-2">
+            <div class="row pl-2 pr-2">
+                <div class="col-md-6 mb-4 mt-4">
+                    <div class="row">
+                        <div class="col-md-2 d-flex align-items-center justify-content-center mb-2">
+                            <img src="{{ base_path }}/{{ active_theme_path() }}/images/misc/pin.png" alt="" class="pin">
+                        </div>
+                        <div class="col-md-10">
+                            <h2 class="block-title orange">{{ agencies.0.1.0.value }}</h2>
+                            <div class="details mt-4">
+                                <p><b>Ubicación:</b> {{ agencies.7.1.0.value }} </p>
+                                <p><b>Dirección:</b> {{ agencies.1.1.0.value }} </p>
+                                <p><b>Teléfono:</b> {{ agencies.8.1.0.value }} - {{ agencies.3.1.0.value }} {% if agencies.9.1.0.value != '0' %} {{ agencies.9.1.0.value }} {% endif %} </p>
+                                <p><b>Email:</b> {{ agencies.2.1.0.value }} </p>
+                                <p><b>Horario de atención:</b> {{ agencies.4.1.0.value }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-sm-10 d-flex align-items-start justify-content-center image_ref">
+                            <img src="{{ photo }}" alt="">
+                        </div>
+                        <div class="col-sm-2 d-flex align-items-center justify-content-center">
+                            <a href="{{ agencies.6.1.0.value }}"><button class="btn w-100 p-30 dark">Ver</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        <!-- End For -->
+</div>
+<!-- End -->
+<!-- Agencies Multiservice List -->
+<div class="division mt-4 mb-4"></div>
+<div class="col col-lg-10 mx-auto mt-4">
+        <h2 class="block-title blue">Puntos Multiservicio en {{ departmentName }} {% if cityName != '0' %} - {{ cityName }} {% endif %} </h2>
+        <!--  Begins For -->
+        {% for multiservices in multiservicesList %}
+        {% set photo = file_url(multiservices[5]) %}
+        <div class="agencias__panel panel panel-shadow mt-2">
+            <div class="row pl-2 pr-2">
+                <div class="col-md-6 mb-4 mt-4">
+                    <div class="row">
+                        <div class="col-md-2 d-flex align-items-center justify-content-center mb-2">
+                            <img src="{{ base_path }}/{{ active_theme_path() }}/images/misc/pin_blue.png" alt="" class="pin">
+                        </div>
+                        <div class="col-md-10">
+                            <h2 class="block-title blue">{{ multiservices.0.1.0.value }}</h2>
+                            <div class="details mt-4">
+                                <p><b>Ubicación:</b> {{ multiservices.7.1.0.value }} </p>
+                                <p><b>Dirección:</b> {{ multiservices.1.1.0.value }} </p>
+                                <p><b>Teléfono:</b> {{ multiservices.8.1.0.value }} - {{ multiservices.3.1.0.value }} {% if multiservices.9.1.0.value != '0' %} {{ multiservices.9.1.0.value }} {% endif %} </p>
+                                <p><b>Email:</b> {{ multiservices.2.1.0.value }} </p>
+                                <p><b>Horario de atención:</b> {{ multiservices.4.1.0.value }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-sm-10 d-flex align-items-start justify-content-center image_ref">
+                            <img src="{{ photo }}" alt="">
+                        </div>
+                        <div class="col-sm-2 d-flex align-items-center justify-content-center">
+                            <a href="{{ multiservices.6.1.0.value }}"><button class="btn w-100 p-30 dark">Ver</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        <!-- End For -->
+</div>
+<!-- End-->
+<!-- Begins Script Map -->
+<script>
+  var map;
+  var markers = [];
+  function initMap() {
+    map = new google.maps.Map(
+            document.getElementById('map_agencies'),
+            {center: new google.maps.LatLng(4.010614, -75.975973), zoom: 6, disableDefaultUI: true});
+
+    var iconBase = '{{ base_path }}/{{ active_theme_path() }}/images/misc/';
+
+    var icons = {
+      M: {
+        icon: iconBase + 'pin_blue.png'
+      },
+      A: {
+        icon: iconBase + 'pin_map.png'
+      },
+      T: {
+        icon: iconBase + 'pin_map.png'
+      }
+    };
+      
+    var features = [
+      
+        {% for items in locations %}
+        {% set i = 0 %}
+        {% set coords  = items.0.0.0.value|split(',') %}
+        {% set lat = coords[0] %}
+        {% set lon = coords[1] %}
+        {% set mapType = items.1.0.0.value %}
+        {% set nameCity = items.2.0.0.value %}
+        {% set nameDepartment = items.3.0.0.value %}
+        {% set urlAgency = items.4.0.0.value %}
+        {
+            position: new google.maps.LatLng( {{ lat }}, {{ lon }} ),
+            type: '{{ mapType }}',
+            nameCity: '{{ nameCity }}',
+            nameDepartment: '{{ nameDepartment }}',
+            urlAgency: '{{ urlAgency }}',
+        },
+        {% set i = i+1 %}
+        {% endfor %}
+      
+    ];
+
+    var marker, i;
+            var infowindow = new google.maps.InfoWindow();
+    
+    
+            google.maps.event.addListener(map, 'click', function() {
+                infowindow.close();
+            });
+    
+    // Create markers.
+    for (var i = 0; i < features.length; i++) {
+      
+
+        marker = new google.maps.Marker({
+                    position: features[i].position,
+                    map: map,
+                    icon: icons[features[i].type].icon
+                });
+    
+                google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                    return function() {
+                        var html = '<div class="row" style="margin-left: 0; margin-right: 0;"><div class="col-md-3 text-right" style="padding: 0;"><img src="/themes/bootstrap_barrio/subtheme/images/misc/map-icon-info.svg" style="width: 35%;"></div><div class="col-md-6 text-center" style="padding: 0; padding-top: 8px;"><span style="color: #1B1464;font-size: 15px;">'+features[i].nameDepartment+' - '+features[i].nameCity+'</span></div><div class="col-md-3 text-left" style="padding: 0; padding-top: 8px;"><button class="btn w-30 p-30 dark"><a href="'+features[i].urlAgency+'" style="color: #fff;">Ver</a></button></div></div>';
+                        infowindow.setContent(html);
+                        infowindow.open(map, marker);
+                    }
+                })(marker, i));
+        
+                markers.push(marker);
+      
+    };
+
+  }
+</script>
+
+<!-- Replace the value of the key parameter with your own API key. -->
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyWmzmaeGyLXQpJmbE_oUHxSwOxdS1Xtk&callback=initMap">
+</script>

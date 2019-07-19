@@ -21,7 +21,8 @@
   ]
 %}
 {% if title %}
-  <label{{ title_attributes.addClass(title_classes) }}>{{ title }}</label>
+  <!--<label{{ title_attributes.addClass(title_classes) }}>{{ title }}</label>-->
+  {{ title }}
 {% endif %}
 {{ content }}
 {% if errors %}

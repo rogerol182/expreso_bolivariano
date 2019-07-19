@@ -1,0 +1,91 @@
+{#
+/**
+ * @file
+ * Bootstrap Barrio's override to display Menu Account.
+ *
+ * Available variables:
+ * - menu_name: The machine name of the menu.
+ * - items: A nested list of menu items. Each menu item contains:
+ *   - attributes: HTML attributes for the menu item.
+ *   - below: The menu item child items.
+ *   - title: The menu link title.
+ *   - url: The menu link url, instance of \Drupal\Core\Url
+ *   - localized_options: Menu link localized options.
+ *   - is_expanded: TRUE if the link has visible children within the current
+ *     menu tree.
+ *   - is_collapsed: TRUE if the link has children within the current menu tree
+ *     that are not currently visible.
+ *   - in_active_trail: TRUE if the link is in the active trail.
+ */
+#}
+{% import _self as menus %}
+{#
+  We call a macro which calls itself to render the full tree.
+  @see http://twig.sensiolabs.org/doc/tags/macro.html
+#}
+<div class="header__login">
+{% if logged_in == 1 %}
+
+    {% set namePerson = '' %}
+    {% set idPerson = '' %}
+    {% set mailPerson = '' %}
+    {% set pointsPerson = '' %}
+    {% set reservationsPerson = '' %}
+    {% for key,data in personData %}
+    {% if key == 'userNamePerson' %}
+        {% set namePerson = data %}
+    {% endif %}
+    {% if key == 'idPerson' %}
+        {% set idPerson = data %}
+    {% endif %}
+    {% if key == 'mailPerson' %}
+        {% set mailPerson = data %}
+    {% endif %}
+    {% if key == 'pointsPerson' %}
+        {% set pointsPerson = data %}
+    {% endif %}
+    {% if key == 'reservationsPerson' %}
+        {% set reservationsPerson = data %}
+    {% endif %}
+    {% endfor %}
+    <div class="logged_wrapper">
+        <div class="logged">
+            <p class="header__user"><a href="/pages/user/{{ idPerson }}" class="header__loginactions"><span class="header__linkuser">{{ namePerson }}</span></a></p>
+            <div class="mobile-only">
+                <a href="">
+                    <div class="header__close-session">
+                        <img src="{{ base_path }}/{{ active_theme_path() }}/images/misc/close.png" alt="cerrar">
+                        <hr>
+                        <p>Cerrar sesión</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="header__actions">
+            <a class="header__loginactions" href="/pages/express_traveler">
+                <span class="header__linkuser">Puntos</span> 
+                <span class="header__icon header__icon--points"></span>
+                <span class="header__linkuser ml-2">{{ pointsPerson }}</span> 
+            </a>
+            <a class="header__loginactions" href="/pages/user/{{ idPerson }}"><span class="header__linkuser">Reservas</span> <span class="header__icon header__icon--booking">{{ reservationsPerson }}</span></a>
+        </div>
+    </div>
+    <div class="logged">
+        <div class="desktop-only">
+            <a href="/user/logout">
+                <div class="header__close-session">
+                    <img src="{{ base_path }}/{{ active_theme_path() }}/images/misc/close.png" alt="cerrar">
+                    <hr>
+                    <p>Cerrar sesión</p>
+                </div>
+            </a>
+        </div>    
+    </div> 
+{% else %}
+<div class="notlogged">
+    <a href="/user/login"><button>Iniciar sesión</button></a>
+    <a href="/user/register"><button>Registrarse</button></a> 
+</div>
+{% endif %}
+</div>
+</nav>

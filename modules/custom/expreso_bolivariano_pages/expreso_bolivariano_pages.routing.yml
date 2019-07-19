@@ -1,17 +1,126 @@
-expreso_bolivariano_pages.simple:
-  path: '/pages/simple'
+expreso_bolivariano_pages.page_agencies:
+  path: '/pages/agencies'
   defaults:
     _controller:
-      '\Drupal\expreso_bolivariano_pages\Controller\ExpresoBolivarianoPagesController::simple'
-    _title: 'Simple Page'
+      '\Drupal\expreso_bolivariano_pages\Controller\ExpresoBolivarianoPagesController::page_agencies'
+    _title: 'Agencies Page'
+    _route: 'view.agencies.agencies_list_map'
   requirements:
     _permission: 'access content'
 
-expreso_bolivariano_pages.user:
+expreso_bolivariano_pages.page_reservation:
+  path: '/pages/reservation/{saleAgencyId}/{saleAgencyName}/{destinationAgencyId}/{destinationAgencyName}/{tripDate}/{tripDateBack}'
+  defaults:
+    _controller:
+      '\Drupal\expreso_bolivariano_pages\Controller\ExpresoBolivarianoPagesController::page_reservation'
+    _title: 'Reservation Page'
+  requirements:
+    _permission: 'access content'
+
+expreso_bolivariano_pages.tab_reservation_go:
+  path: '/tab_reservation_go/{saleAgencyId}/{saleAgencyName}/{destinationAgencyId}/{destinationAgencyName}/{tripDate}/{tripDateBack}'
+  defaults:
+    _controller:
+      '\Drupal\expreso_bolivariano_pages\Controller\ExpresoBolivarianoPagesController::tab_reservation_go'
+    _title: 'Reservation Page'
+  requirements:
+    _permission: 'access content'
+    _access: 'TRUE'
+
+expreso_bolivariano_pages.tab_reservation_back:
+  path: '/tab_reservation_back/{saleAgencyId}/{saleAgencyName}/{destinationAgencyId}/{destinationAgencyName}/{tripDate}/{tripDateBack}'
+  defaults:
+    _controller:
+      '\Drupal\expreso_bolivariano_pages\Controller\ExpresoBolivarianoPagesController::tab_reservation_back'
+    _title: 'Reservation Page'
+  requirements:
+    _permission: 'access content'
+    _access: 'TRUE'
+
+expreso_bolivariano_pages.page_selection_go:
+  path: '/pages/selection/{saleAgencyId}/{saleAgencyName}/{destinationAgencyId}/{destinationAgencyName}/{tripDateGo}/{tripKeyGo}/{tripCapacity}/{tripService}'
+  defaults:
+    _controller:
+      '\Drupal\expreso_bolivariano_pages\Controller\ExpresoBolivarianoPagesController::page_selection_go'
+    _title: 'Selection Page'
+  requirements:
+    _permission: 'access content'
+    _role: 'authenticated'  
+
+expreso_bolivariano_pages.page_selection_back:
+  path: '/pages/selection/{saleAgencyId}/{saleAgencyName}/{destinationAgencyId}/{destinationAgencyName}/{tripDateGo}/{tripKeyGo}/{tripCapacityGo}/{tripServiceGo}/{tripDateBack}/{tripKeyBack}/{tripCapacityBack}/{tripServiceBack}'
+  defaults:
+    _controller:
+      '\Drupal\expreso_bolivariano_pages\Controller\ExpresoBolivarianoPagesController::page_selection_back'
+    _title: 'Selection Page'
+  requirements:
+    _permission: 'access content'
+    _role: 'authenticated'    
+
+expreso_bolivariano_pages.page_checkout:
+  path: '/pages/checkout'
+  defaults:
+    _controller:
+      '\Drupal\expreso_bolivariano_pages\Controller\ExpresoBolivarianoPagesController::page_checkout'
+    _title: 'Checkout Page'
+  requirements:
+    _permission: 'access content'
+    _role: 'authenticated'
+
+expreso_bolivariano_pages.page_express_traveler:
+  path: '/pages/express_traveler'
+  defaults:
+    _controller:
+      '\Drupal\expreso_bolivariano_pages\Controller\ExpresoBolivarianoPagesController::page_express_traveler'
+    _title: 'Express Traveler Page'
+  requirements:
+    _permission: 'access content'
+
+expreso_bolivariano_pages.page_agencies_filter:
+  path: '/pages/agencies/filter/{departmentName}/{cityName}'
+  defaults:
+    _controller:
+      '\Drupal\expreso_bolivariano_pages\Controller\ExpresoBolivarianoPagesController::page_agencies_filter'
+    _title: 'Agencies - Filter'
+  requirements:
+    _permission: 'access content'
+
+expreso_bolivariano_pages.page_user:
   path: '/pages/user/{user}'
   defaults:
     _controller:
-      '\Drupal\expreso_bolivariano_pages\Controller\ExpresoBolivarianoPagesController::user'
-    _title: 'User Arguments'  
+      '\Drupal\expreso_bolivariano_pages\Controller\ExpresoBolivarianoPagesController::page_user'
+    _title: 'User Page'  
   requirements:
-    _permission: 'access arguments page'
+    _permission: 'access content'
+    _role: 'authenticated'  
+
+expreso_bolivariano_pages.page_user_register:
+  path: '/pages/user/register/{mail}/{userName}'
+  defaults:
+    _controller:
+      '\Drupal\expreso_bolivariano_pages\Controller\ExpresoBolivarianoPagesController::page_user_register'
+    _title: 'Confirmation Mail - User Registration'
+  requirements:
+    _permission: 'access content'
+
+expreso_bolivariano_pages.page_user_edit:
+  path: '/user/{uid}/edit'
+  defaults:
+    _controller: 
+      '\Drupal\expreso_bolivariano_pages\Controller\ExpresoBolivarianoPagesController::page_user_edit'
+    _title: 'Edit user'
+  requirements:
+    _user_is_logged_in: 'FALSE'
+  options:
+    _maintenance_access: TRUE
+    no_cache: TRUE
+
+expreso_bolivariano_pages.page_notfound:
+  path: '/pages/notfound'
+  defaults:
+    _controller:
+      '\Drupal\expreso_bolivariano_pages\Controller\ExpresoBolivarianoPagesController::page_notfound'
+    _title: 'Page Not Found - 404'
+  requirements:
+    _permission: 'access content'

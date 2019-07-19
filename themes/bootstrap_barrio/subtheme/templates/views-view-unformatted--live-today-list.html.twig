@@ -1,0 +1,160 @@
+{#
+/**
+ * @file
+ * Theme override to display a view of unformatted rows.
+ *
+ * Available variables:
+ * - title: The title of this group of rows. May be empty.
+ * - rows: A list of the view's row items.
+ *   - attributes: The row's HTML attributes.
+ *   - content: The row's content.
+ * - view: The view object.
+ * - default_row_class: A flag indicating whether default classes should be
+ *   used on rows.
+ *
+ * @see template_preprocess_views_view_unformatted()
+ */
+#}
+{% set now = "now"|date("d-m-Y") %}
+<div class="wrapper__body pb-4">
+    <h3 class="wrapper__lead">Ultimas noticias</h3>
+    <div class="wrapper__container container-fluid mb-4">
+        <div class="row">
+            <div class="col-sm-12 col-lg-8">
+                {% for row in rows %}
+                {% set photo = file_url(row['content']['#row']._entity.field_live_today_image.entity.fileuri) %}
+                {% set dateCreated = row['content']['#row']._entity.created.value|date("d-m-Y") %}
+                {% set dayCreated = dateCreated|date('d') %}
+                {% set monthCreated = dateCreated|date('F') %}
+                {% set yearCreated = dateCreated|date('Y') %}
+
+                {% if row['content']['#row']._entity.field_live_today_type.value == 'big_news' %}
+                {% set cityOrigin = '' %}
+                {% for key,value in row['content']['#row']._entity.field_live_today_city_origin_cod.getSetting('allowed_values') %}
+                    {% if(row['content']['#row']._entity.field_live_today_city_origin_cod.value == key) %}
+                    {% set cityOrigin = value %}
+                    {% endif %}
+                {% endfor %}
+                {% set cityDestiny = '' %}
+                {% for key,value in row['content']['#row']._entity.field_live_today_city_destiny_co.getSetting('allowed_values') %}
+                    {% if(row['content']['#row']._entity.field_live_today_city_destiny_co.value == key) %}
+                    {% set cityDestiny = value %}
+                    {% endif %}
+                {% endfor %}
+                <div class="big_news">
+                    <div class="date">publicado {{ dayCreated }} de {{ monthCreated }}, {{ yearCreated }}</div>
+                    <div class="title">{{ row['content']['#row']._entity.field_live_today_title.value }}</div>
+                    <picture><img src="{{ photo }}" alt=""></picture>
+                    <div class="row">
+                        <div class="col-md-12 link">
+                            <div class="salida-regreso d-flex align-items-center justify-content-center mb-2">
+                                <div class="trip__salida" style="font-size: 0.8em;">
+                                    <p>Fecha Inicio</p>
+                                    <p>{{ row['content']['#row']._entity.field_live_today_start_date.value }}</p>
+                                </div>
+                                <div class="trip__regreso" style="font-size: 0.8em;">
+                                    <p>Fecha Fin</p>
+                                    <p>{{ row['content']['#row']._entity.field_live_today_end_date.value }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 paragraph">
+                            <p>{{ row['content']['#row']._entity.field_live_today_resume.value|raw }}</p>
+                        </div>
+                        <div><a href="/pages/reservation/{{ row['content']['#row']._entity.field_live_today_city_origin_cod.value }}/{{ cityOrigin }}/{{ row['content']['#row']._entity.field_live_today_city_destiny_co.value }}/{{ cityDestiny }}/{{ now }}/0"><button class="btn dark">Viaja Ahora!</button></a></div>
+                    </div>
+                </div>
+                {% elseif row['content']['#row']._entity.field_live_today_type.value == 'regular_news' %}
+                {% set cityOrigin = '' %}
+                {% for key,value in row['content']['#row']._entity.field_live_today_city_origin_cod.getSetting('allowed_values') %}
+                    {% if(row['content']['#row']._entity.field_live_today_city_origin_cod.value == key) %}
+                    {% set cityOrigin = value %}
+                    {% endif %}
+                {% endfor %}
+                {% set cityDestiny = '' %}
+                {% for key,value in row['content']['#row']._entity.field_live_today_city_destiny_co.getSetting('allowed_values') %}
+                    {% if(row['content']['#row']._entity.field_live_today_city_destiny_co.value == key) %}
+                    {% set cityDestiny = value %}
+                    {% endif %}
+                {% endfor %}
+                <div class="regular_news">
+                    <div class="date">publicado {{ dayCreated }} de {{ monthCreated }}, {{ yearCreated }}</div>
+                    <div class="title">{{ row['content']['#row']._entity.field_live_today_title.value }}</div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="paragraph">
+                                <p>{{ row['content']['#row']._entity.field_live_today_resume.value|raw }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <picture><img src="{{ photo }}" alt=""></picture>
+                            <div class="link">
+                                <div class="salida-regreso d-flex align-items-center justify-content-center mb-2">
+                                    <div class="trip__salida" style="font-size: 0.8em;">
+                                        <p>Fecha Inicio</p>
+                                        <p>{{ row['content']['#row']._entity.field_live_today_start_date.value }}</p>
+                                    </div>
+                                    <div class="trip__regreso" style="font-size: 0.8em;">
+                                        <p>Fecha Fin</p>
+                                        <p>{{ row['content']['#row']._entity.field_live_today_end_date.value }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="text-align: right;"><a href="/pages/reservation/{{ row['content']['#row']._entity.field_live_today_city_origin_cod.value }}/{{ cityOrigin }}/{{ row['content']['#row']._entity.field_live_today_city_destiny_co.value }}/{{ cityDestiny }}/{{ now }}/0"><button class="btn dark">Viaja Ahora!</button></a></div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+            <div class="col-sm-12 col-lg-4">
+                <div class="wrapper__side_news">
+                {% for row in rows %}
+                    {% set photo = file_url(row['content']['#row']._entity.field_live_today_image.entity.fileuri) %}
+                    {% set dateCreated = row['content']['#row']._entity.created.value|date("d-m-Y") %}
+                    {% set dayCreated = dateCreated|date('d') %}
+                    {% set monthCreated = dateCreated|date('F') %}
+                    {% set yearCreated = dateCreated|date('Y') %}
+                    {% if row['content']['#row']._entity.field_live_today_type.value == 'side_news' %}
+                    {% set cityOrigin = '' %}
+                    {% for key,value in row['content']['#row']._entity.field_live_today_city_origin_cod.getSetting('allowed_values') %}
+                        {% if(row['content']['#row']._entity.field_live_today_city_origin_cod.value == key) %}
+                        {% set cityOrigin = value %}
+                        {% endif %}
+                    {% endfor %}
+                    {% set cityDestiny = '' %}
+                    {% for key,value in row['content']['#row']._entity.field_live_today_city_destiny_co.getSetting('allowed_values') %}
+                        {% if(row['content']['#row']._entity.field_live_today_city_destiny_co.value == key) %}
+                        {% set cityDestiny = value %}
+                        {% endif %}
+                    {% endfor %}
+                    <div class="side_news">
+                        <div class="date">publicado {{ dayCreated }} de {{ monthCreated }}, {{ yearCreated }}</div>
+                        <div class="title" style="text-align: center;">{{ row['content']['#row']._entity.field_live_today_title.value }}</div>
+                        <picture class="">
+                            <img src="{{ photo }}" alt="">
+                        </picture>
+                        <div class="paragraph" style="text-align: justify;">
+                            <p>{{ row['content']['#row']._entity.field_live_today_resume.value|raw }}</p>
+                        </div>
+                        <div class="col-md-12 link">
+                            <div class="salida-regreso d-flex align-items-center justify-content-center mb-2">
+                                <div class="trip__salida" style="font-size: 0.8em;">
+                                    <p>Fecha Inicio</p>
+                                    <p>{{ row['content']['#row']._entity.field_live_today_start_date.value }}</p>
+                                </div>
+                                <div class="trip__regreso" style="font-size: 0.8em;">
+                                    <p>Fecha Fin</p>
+                                    <p>{{ row['content']['#row']._entity.field_live_today_end_date.value }}</p>
+                                </div>
+                            </div>
+                            <div style="text-align: right;"><a href="/pages/reservation/{{ row['content']['#row']._entity.field_live_today_city_origin_cod.value }}/{{ cityOrigin }}/{{ row['content']['#row']._entity.field_live_today_city_destiny_co.value }}/{{ cityDestiny }}/{{ now }}/0"><button class="btn dark">Viaja Ahora!</button></a></div>
+                        </div>
+                    </div>
+                {% endif %}
+                {% endfor %}
+                </div>
+            </div>   
+        </div>
+    </div>
+</div>

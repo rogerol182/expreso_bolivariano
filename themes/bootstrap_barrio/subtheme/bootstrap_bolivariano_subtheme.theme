@@ -1,12 +1,14 @@
 <?php
-
+//error_reporting(0);
 /**
  * @file
  * Functions to support theming in the SASS Starterkit subtheme.
  */
 
 use Drupal\Core\Form\FormStateInterface;
-
+use Drupal\user\Entity\User;
+use Drupal\user\UserInterface;
+/**/
 /**
  * Implements hook_form_system_theme_settings_alter() for settings form.
  *
@@ -16,13 +18,54 @@ use Drupal\Core\Form\FormStateInterface;
  * 
  */
 function bootstrap_bolivariano_subtheme_preprocess_menu(&$variables, $hook) {
-  if ($hook == 'menu__main') { // We're doing that for main menu.
+  if ($hook == 'menu__main') 
+  { 
+    // We're doing that for main menu.
+    $variables['#cache']['max-age'] = 0;
     // Get the current path.
+    $urlPartOne = ''; $urlPartTwo = ''; $urlPartThree = '';
     $current_path = \Drupal::request()->getRequestUri();
+    if($current_path != '/')
+    {
+      $urlComplete = explode("/", $current_path);
+      $urlPartOne = $urlComplete[1];
+      $urlPartTwo = $urlComplete[2];
+      $urlPartThree = $urlComplete[3];
+      $url = '';
+      $pager = '?page=';
+      $pagerPart = strpos($urlPartTwo, $pager);
+      if($pagerPart != 0)
+      {
+        $urlPartPager = explode("?", $urlPartTwo);
+        $urlPartTwo = $urlPartPager[0];
+        $url = '/'.$urlPartOne.'/'.$urlPartTwo; 
+      }
+      else
+      {
+        $url = '/'.$urlPartOne.'/'.$urlPartTwo; 
+      }
+      if($urlPartThree=='filter')
+      {
+        $url = '/pages/agencies';
+      }
+    }
+    if($current_path == '/')
+    {
+      $url = $current_path;
+    }
+    if($url == '/pages/reservation' || $url == '/pages/selection' || $url == '/pages/frequent_questions' || $url == '/pages/legal' || $url == '/pages/contract' || $url == '/pages/privacy' || $url == '/pages/management' || $url=='/pages/redemption' )
+    {
+      $url = '/pages/express_traveler';
+    }
+    if($urlPartOne == 'user')
+    {
+      $url = '/pages/express_traveler';
+    }
     $items = $variables['items'];
+    
     foreach ($items as $key => $item) {
       // If path is current_path, set active to li.
-      if ($item['url']->toString() == $current_path) {
+      if ($item['url']->toString() === $url) {
         // Add active link.
         $variables['items'][$key]['attributes']['class'] = 'header__item--active';
       }
@@ -46,4 +89,193 @@ function bootstrap_bolivariano_subtheme_form_system_theme_settings_alter(&$form,
       'bg-white' => t('White'),
       'bg-transparent' => t('Transparent'),
   );
+}
+function bootstrap_bolivariano_subtheme_theme_suggestions_alter(array &$suggestions, array $variables, $hook) {
+
+  if ($hook == 'form' & !empty($variables['element']['#id'])) {
+    $suggestions[] = 'form__' . str_replace('-', '_', $variables['element']['#id']);
+  }
+}
+
+/**
+ * Implements preprocess breadcrumb().
+ */
+function bootstrap_bolivariano_subtheme_preprocess_breadcrumb(&$variables){
+
+  /*if(($node = \Drupal::routeMatch()->getParameter('node')) && $variables['breadcrumb']){
+// Adding the a divider of between home an the title of the page.
+      $variables['breadcrumb'][] = array(
+          'text' => '>'
+      );
+// Adding the title of the page in the breadcrumb
+      $variables['breadcrumb'][] = array(
+          'text' => $node->getTitle(),
+          'url' => $node->URL()
+      );
+      $variables['#cache']['contexts'][] = 'url';
+   }
+   */
+   $request = \Drupal::request();
+   $route_match = \Drupal::routeMatch();
+   $page_title = \Drupal::service('title_resolver')->getTitle($request, $route_match->getRouteObject());
+   if($page_title!='Agencies - Filter')
+   {
+
+      if(($node = \Drupal::routeMatch()->getParameter('node')) && $variables['breadcrumb']){
+        // Adding the a divider of between home an the title of the page.
+        $variables['breadcrumb'][] = array(
+            'text' => '>'
+        );
+        // Adding the title of the page in the breadcrumb
+        $variables['breadcrumb'][] = array(
+            'text' => $node->getTitle(),
+            'url' => $node->URL()
+        );
+        $variables['#cache']['contexts'][] = 'url';
+     }
+   }
+   else
+   {
+      // Adding the a divider of between home an the title of the page.
+        $variables['breadcrumb'][] = array(
+            'text' => '>'
+        );
+        // Adding the title of the page in the breadcrumb
+        $variables['breadcrumb'][] = array(
+            'text' => '',
+            'url' => ''
+        );
+        $variables['#cache']['contexts'][] = 'url';
+   }
+}
+/**
+ * Implements preprocess home slider to place the block inside the slider().
+ */
+function bootstrap_bolivariano_subtheme_preprocess_views_view_unformatted__banner_home_slider(&$variables){
+
+    $block = \Drupal\block\Entity\Block::load('search_trip_home');
+    $variables['blockSearchTrip'] = \Drupal::entityTypeManager()
+        ->getViewBuilder('block')
+        ->view($block);
+}
+/**
+ * Implements preprocess home slider to place the block inside the slider().
+ */
+function bootstrap_bolivariano_subtheme_preprocess_views_view_unformatted__newsletter(&$variables){
+
+    $block = \Drupal\block\Entity\Block::load('newsletter_home');
+      $variables['blockNewsletter'] = \Drupal::entityTypeManager()
+      ->getViewBuilder('block')
+      ->view($block);
+}
+/**
+ * Implements preprocess map agencies to place the block .
+ */
+function bootstrap_bolivariano_subtheme_preprocess_views_view_unformatted__map_agencies_list_home(&$variables){
+
+      $query = \Drupal::entityQuery('node');
+      $query->condition('status', 1);
+      $query->condition('type', 'agencies');
+      $entity_ids = $query->execute();
+      $responseCities = array();
+      $responseDepts = array();
+      $responseMapPoints = array();
+      foreach ($entity_ids as $nid) {
+        $node = \Drupal::entityTypeManager()->getStorage('node')->load($nid);
+        
+        $responseCity = $node->get('field_agency_city')->getValue();
+        $responseDepartment = $node->get('field_agency_department')->getValue();
+        $responseLocations = $node->get('field_agency_location')->getValue();
+        $responseType = $node->get('field_agency_type')->getValue();
+        $responseCities[] = array($responseDepartment, $responseCity);
+        $responseDepts[] = $node->get('field_agency_department')->getValue();
+        $responseUrl = $node->get('field_agency_url')->getValue();
+        $responseMapPoints[] = array($responseLocations, $responseType, $responseCity, $responseDepartment, $responseUrl);
+      }
+      
+      $variables['cities'] = $responseCities;
+      $variables['idDepts'] = $responseIdDepts;
+      $variables['depts'] = $responseDepts;
+      $variables['locations'] = $responseMapPoints;
+}
+/**
+ * Implements preprocess map routes to place the block .
+ */
+function bootstrap_bolivariano_subtheme_preprocess_views_view_unformatted__map_route_list(&$variables){
+
+      $query = \Drupal::entityQuery('node');
+      $query->condition('status', 1);
+      $query->condition('type', 'route');
+      $entity_ids = $query->execute();
+      $responseCities = array();
+      foreach ($entity_ids as $nid) {
+        $node = \Drupal::entityTypeManager()->getStorage('node')->load($nid);
+        
+        $responseCityGo = $node->get('field_route_city_origin')->getValue();
+        $responseCityBack = $node->get('field_route_city_destiny')->getValue();
+        $responseCities[] = array($responseCityGo, $responseCityBack);
+      }
+      
+      $variables['cities'] = $responseCities;
+}
+/**
+ * Implements preprocess map routes to place the filter in Node .
+ */
+function bootstrap_bolivariano_subtheme_preprocess_node__route(&$variables){
+
+      $query = \Drupal::entityQuery('node');
+      $query->condition('status', 1);
+      $query->condition('type', 'route');
+      $entity_ids = $query->execute();
+      $responseCities = array();
+      foreach ($entity_ids as $nid) {
+        $node = \Drupal::entityTypeManager()->getStorage('node')->load($nid);
+        
+        $responseCityGo = $node->get('field_route_city_origin')->getValue();
+        $responseCityBack = $node->get('field_route_city_destiny')->getValue();
+        $responseCities[] = array($responseCityGo, $responseCityBack);
+      }
+      
+      $variables['cities'] = $responseCities;
+}
+/**
+ * Implements preprocess home slider to place the block inside the slider().
+ */
+function bootstrap_bolivariano_subtheme_preprocess_page_reservation_template(&$variables){
+
+      $block = \Drupal\block\Entity\Block::load('views_block__banner_promotion_block');
+      $variables['blockPromotion'] = \Drupal::entityTypeManager()
+      ->getViewBuilder('block')
+      ->view($block);
+}
+/**
+ * Implements preprocess agencies to place the block map, agencies, and multiservices.
+ */
+function bootstrap_bolivariano_subtheme_preprocess_page_agencies_template(&$variables){
+
+      /* Block Agencies */
+      $blockAgencies = \Drupal\block\Entity\Block::load('views_block__agencies_list_block');
+      $variables['blockAgencies'] = \Drupal::entityTypeManager()
+      ->getViewBuilder('block')
+      ->view($blockAgencies);
+      /* Block Agencies Multiservices */
+      $blockMultiservices = \Drupal\block\Entity\Block::load('views_block__agencies_multiservice_list_block');
+      $variables['blockMultiservices'] = \Drupal::entityTypeManager()
+      ->getViewBuilder('block')
+      ->view($blockMultiservices);
+}
+/**
+ * Implements preprocess page for express traveler.
+ */
+function bootstrap_bolivariano_subtheme_preprocess_views_view_unformatted__express_traveler_info_list(&$variables){
+
+      $block = \Drupal\block\Entity\Block::load('express_traveler_photo');
+      $variables['blockExpressTravelerP'] = \Drupal::entityTypeManager()
+      ->getViewBuilder('block')
+      ->view($block);
+
+      $block = \Drupal\block\Entity\Block::load('info_express_traveler');
+      $variables['blockExpressTraveler'] = \Drupal::entityTypeManager()
+      ->getViewBuilder('block')
+      ->view($block);
 }

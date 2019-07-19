@@ -1,0 +1,25 @@
+<div class="wrapper__body pb-4">
+    <h3 class="wrapper__lead">Viajero Expreso</h3>
+    {{ blockExpressTravelerP }}
+    {{ blockExpressTraveler }}
+    <div class="accordion mb-4" id="accordionpf">
+        {% set j = 0 %}
+        {% for row in rows %}
+        {% set j = j+1 %}
+        <div class="card panel-shadow">
+            <div class="card-header" id="heading{{ j }}">
+            <h5 class="mb-0">
+                <b>{{ row['content']['#row']._entity.field_express_traveler_title.value }}</b>
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse{{ j }}" aria-expanded="false" aria-controls="collapse{{ j }}">
+                </button>
+            </h5>
+            </div>
+            <div id="collapse{{ j }}" class="collapse" aria-labelledby="heading{{ j }}" data-parent="#accordionpf" style="">
+            <div class="card-body text-blue">
+                {{ row['content']['#row']._entity.field_express_traveler_text.value|raw }}
+            </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>

@@ -1,0 +1,126 @@
+body {
+	font-family: 'Lato', sans-serif;
+}
+a {
+	color: #b71a4c;
+}
+.front-indicator {
+	width: 145px;
+	margin: 5px 32px 15px 32px;
+	background-color: #f6f6f6;	
+	color: #adadad;
+	text-align: center;
+	padding: 3px;
+	border-radius: 5px;
+}
+.wrapper {
+	width: 100%;
+	text-align: center;
+}
+.container {
+	margin: 0 auto;
+	width: 500px;
+	text-align: left;
+}
+.booking-details {
+	float: left;
+	text-align: left;
+	margin-left: 35px;
+	font-size: 12px;
+	position: relative;
+	height: 401px;
+}
+.booking-details h2 {
+	margin: 25px 0 20px 0;
+	font-size: 17px;
+}
+.booking-details h3 {
+	margin: 5px 5px 0 0;
+	font-size: 14px;
+}
+div.seatCharts-cell {
+	color: #182C4E;
+	height: 45px;
+	width: 45px;
+	line-height: 40px;
+	
+}
+div.seatCharts-seat {
+	color: #FFFFFF;
+	cursor: pointer;	
+	transform: rotate(90deg);
+}
+div.seatCharts-row {
+	height: 55px;
+}
+div.seatCharts-seat.available {
+	background-color: #DDDDDD;
+
+}
+div.seatCharts-seat.available.first-class {
+	background-color: #BB1F32;
+}
+div.seatCharts-seat.available.comoda {
+	background-color: #DF7200;
+}
+div.seatCharts-seat.available.chevere {
+	background-color: #1B1464;
+}
+div.seatCharts-seat.available.increible {
+	background-color: #4BA54D;
+}
+div.seatCharts-seat.focused {
+	background-color: #E1972F;
+}
+div.seatCharts-seat.selected {
+	background-color: #E1972F;
+}
+div.seatCharts-seat.unavailable {
+	background-color: #808080;
+}
+div.seatCharts-container {
+	width: 300px;
+	padding: 10px;
+	float: left;
+}
+div.seatCharts-legend {
+	padding-left: 0px;
+	position: absolute;
+	bottom: 16px;
+}
+ul.seatCharts-legendList {
+	padding-left: 0px;
+}
+span.seatCharts-legendDescription {
+	margin-left: 5px;
+	line-height: 30px;
+}
+.checkout-button {
+	display: block;
+	margin: 10px 0;
+	font-size: 14px;
+}
+#escalera1, #escalera2, #bano, #conductor{
+	pointer-events: none;
+	color:transparent;
+}
+#escalera1{
+	background: url(../images/sillas_up.svg);
+	height: 35px;
+    width: 35px;
+}
+#escalera2{
+	background: url(../images/sillas_down.svg);
+	height: 35px;
+    width: 35px;
+}
+#bano{
+	background: url(../images/bano.svg);
+	height: 35px;
+    width: 35px;
+}
+#conductor{
+	background: url(../images/conductor.svg);
+	height: 35px;
+    width: 35px;
+}

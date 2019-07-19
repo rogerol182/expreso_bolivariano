@@ -1,0 +1,47 @@
+{% set text = 'Ingrese su documento de identidad (cédula de ciudadanía) o su correo electrónico. cualquiera de los dos datos seran evaluados para enviarle un correo con las instrucciones para su cambio de clave' %}
+<section class="wrapper">
+    <div class="wrapper__top bg-image">
+        <img src="/sites/default/files/inline-images/login.jpg" alt="" class="">
+        <div class="wrapper__topwrap">
+            <h2 class="wrapper__title wrapper__title--cities">Finalizar Registro</h2>
+        </div>
+    </div>
+    <div class="wrapper__body login">
+        <h3 class="wrapper__lead">Finalizar Registro</h3>
+        <div class="wrapper__container col">
+            <div class="container mx-auto">
+                <div class="row no-gutters">
+                    <div class="col-lg-6 col-xl-12 blueBoxFULL">
+                        <div class="bg-crossed"></div>
+                        <div class="titleDescription">
+                            <h1 class="tituloDes"><strong>Finalice su Registro</strong></h1>
+                            <hr>
+                            <!--<p class="textoDes">{{ text|t }}</p>-->
+                        </div>
+                        <form{{ attributes }}>
+                        {% for key, child in element if key|first != '#' %}
+                            {% if key == 'message' %} 
+                            <div class="inputzRecover">
+                                <p class="textoDes">{{ child }}</p>
+                            </div>
+                            {% elseif key == 'actions' %}
+                            <div class="inputzRecover">   
+                                <div class="redSocialGrupo">
+                                {{ child }} 
+                                </div>
+                            </div>
+                            {% elseif key == 'help' %}
+                            <div class="inputzRecover" style="text-align: center;">
+                                <p class="textoDes"><strong>{{ child }}</strong></p>
+                            </div>
+                            {% else %}
+                            <div>{{ child }}</div>
+                            {% endif %}
+                        {% endfor %}
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

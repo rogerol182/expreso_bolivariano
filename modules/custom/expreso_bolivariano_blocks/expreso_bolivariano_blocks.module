@@ -1,21 +1,50 @@
 <?php
 /**
 * @file
-* Module file for Expreso Bolivariano Block
+* Module file for Expreso Bolivariano Blocks
 * 
 */
-
 /**
 * Implements hook_theme().
 */
-
 function expreso_bolivariano_blocks_theme($existing, $type, $theme, $path) {
 
   return [
         'promotions_home_grid_block' => [
           'template' => 'block--promotions-home-grid',	
-          'variables' => ['promotionsData' => NULL, 'title' => ''],
+          'variables' => ['promotionsData' => NULL, 'promotionsMoreData' => NULL, 'title' => ''],
+        ],
+        'search_trip_home' => [
+          'template' => 'block--search-trip-home',  
+          'variables' => ['citiesGoData' => NULL, 'citiesBackData' => NULL],
+        ],
+        'newsletter_home' => [
+          'template' => 'block--newsletter-home',
+          'variables' => ['formData' => NULL, 'cache' => NULL],
+        ],
+        'promotions_interns_grid_block' => [
+          'template' => 'block--promotions-interns-grid',  
+          'variables' => ['promotionsData' => NULL, 'promotionsMoreData' => NULL, 'title' => ''],
+        ],
+        'search_package' => [
+          'template' => 'block--search-package',  
+          //'variables' => ['promotionsData' => NULL, 'promotionsMoreData' => NULL, 'title' => ''],
+        ],
+        'search_ticket' => [
+          'template' => 'block--search-ticket',  
+          //'variables' => ['promotionsData' => NULL, 'promotionsMoreData' => NULL, 'title' => ''],
+        ],
+        'contact_us' => [
+          'template' => 'block--contact-us',  
+          //'variables' => ['promotionsData' => NULL, 'promotionsMoreData' => NULL, 'title' => ''],
+        ],
+        'gps' => [
+          'template' => 'block--gps',  
+          //'variables' => ['promotionsData' => NULL, 'promotionsMoreData' => NULL, 'title' => ''],
+        ],
+        'redemption_points' => [
+          'template' => 'block--redemption-points',  
+          //'variables' => ['promotionsData' => NULL, 'promotionsMoreData' => NULL, 'title' => ''],
         ],
       ];
-
 }

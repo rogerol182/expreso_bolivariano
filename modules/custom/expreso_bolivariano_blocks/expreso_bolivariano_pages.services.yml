@@ -1,4 +1,0 @@
-#services:
- #expreso_bolivariano_pages.simple:
-   #class: Drupal\expreso_bolivariano_pages\ExpresoBolivarianoPagesController
-   #arguments: ['@expreso_bolivariano_services.custom']

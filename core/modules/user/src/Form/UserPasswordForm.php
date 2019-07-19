@@ -6,11 +6,14 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Render\Element\Email;
+use Drupal\user\UserInterface;
 use Drupal\user\UserStorageInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides a user password reset form.
+ *
+ * Send the user an email to reset their password.
  *
  * @internal
  */
@@ -68,7 +71,7 @@ class UserPasswordForm extends FormBase {
       '#type' => 'textfield',
       '#title' => $this->t('Username or email address'),
       '#size' => 60,
-      '#maxlength' => max(USERNAME_MAX_LENGTH, Email::EMAIL_MAX_LENGTH),
+      '#maxlength' => max(UserInterface::USERNAME_MAX_LENGTH, Email::EMAIL_MAX_LENGTH),
       '#required' => TRUE,
       '#attributes' => [
         'autocorrect' => 'off',
@@ -112,20 +115,22 @@ class UserPasswordForm extends FormBase {
     $users = $this->userStorage->loadByProperties(['mail' => $name]);
     if (empty($users)) {
       // No success, try to load by name.
-      $users = $this->userStorage->loadByProperties(['name' => $name]);
+      $users = $this->userStorage->loadByProperties(['uid' => $name]);
     }
     $account = reset($users);
     if ($account && $account->id()) {
       // Blocked accounts cannot request a new password.
       if (!$account->isActive()) {
-        $form_state->setErrorByName('name', $this->t('%name is blocked or has not been activated yet.', ['%name' => $name]));
+        //$form_state->setErrorByName('name', $this->t('%name is blocked or has not been activated yet.', ['%name' => $name]));
+        $form_state->setErrorByName('name', $this->t('%name esta bloqueado o no ha sido activado aun.', ['%name' => $name]));
       }
       else {
         $form_state->setValueForElement(['#parents' => ['account']], $account);
       }
     }
     else {
-      $form_state->setErrorByName('name', $this->t('%name is not recognized as a username or an email address.', ['%name' => $name]));
+      //$form_state->setErrorByName('name', $this->t('%name is not recognized as a username or an email address.', ['%name' => $name]));
+      $form_state->setErrorByName('name', $this->t('%name no se reconoce como una cuenta valida o un correo electrónico.', ['%name' => $name]));
     }
   }
 
@@ -139,8 +144,9 @@ class UserPasswordForm extends FormBase {
     // Mail one time login URL and instructions using current language.
     $mail = _user_mail_notify('password_reset', $account, $langcode);
     if (!empty($mail)) {
-      $this->logger('user')->notice('Password reset instructions mailed to %name at %email.', ['%name' => $account->getUsername(), '%email' => $account->getEmail()]);
-      $this->messenger()->addStatus($this->t('Further instructions have been sent to your email address.'));
+      $this->logger('user')->notice('Password reset instructions mailed to %name at %email.', ['%name' => $account->getAccountName(), '%email' => $account->getEmail()]);
+      //$this->messenger()->addStatus($this->t('Further instructions have been sent to your email address.'));
+      $this->messenger()->addStatus($this->t('Se han enviado más instrucciones a su dirección de correo electrónico.'));
     }
 
     $form_state->setRedirect('user.page');

@@ -1,0 +1,227 @@
+<div class="wrapper__top bg-image"><img alt="" src="/sites/default/files/inline-images/chairSelection.jpg" />
+    <div class="wrapper__topwrap">
+        <h2 class="wrapper__title wrapper__title--cities">Selección de Asientos</h2>
+    </div>
+</div>
+<input type="hidden" readonly="readonly" value="{{ tripsCitiesData['originCity'] }}" id="cityOrigin">
+<input type="hidden" readonly="readonly" value="{{ tripsCitiesData['destinationCity'] }}" id="cityDestiny">
+<input type="hidden" readonly="readonly" value="{{ tripsCitiesData['idOriginCity'] }}" id="idCityOrigin">
+<input type="hidden" readonly="readonly" value="{{ tripsCitiesData['idDestinationCity'] }}" id="idCityDestiny">
+<input type="hidden" readonly="readonly" value="{{ tripsDatesData['tripDateGo'] }}" id="tripDateGo">
+<input type="hidden" readonly="readonly" value="{{ tripsDatesData['tripDateBack'] }}" id="tripDateBack">
+<input type="hidden" readonly="readonly" value="{{ tripsCitiesData['tripService'] }}" id="tripService">
+<input type="hidden" readonly="readonly" value="{{ tripsCitiesData['tripServiceB'] }}" id="tripServiceBack">
+<div class="wrapper__body pb-4">
+    <h3 class="wrapper__lead">Escoja su asiento <small>{{ tripsCitiesData['originCity'] }} - {{ tripsCitiesData['destinationCity'] }}</small></h3>
+    <div class="wrapper__container container-fluid mb-4"><div class="row">
+        <div class="col col-md-12">
+            <div class="seats__toolbar row no-gutters justify-content-between">
+                <div class="col-lg-3">
+                    <!--<p class="seats__labelpassengers">Pasajeros:</p>
+                    <select name="passengers" class="seats__passengers" id="quantity_passengers">
+                        <option value="Pasajeros" selected="">-Cantidad-</option>
+                        {% for i in 1..6 %}
+                        <option value="{{ i }}">{{ i }}</option>
+                        {% endfor %}
+                    </select>-->
+                </div>
+                <div class="col-lg-6" style="margin-left: 30px;">
+                    <div class="seats__title__bus">
+                        <div></div>
+                        <img src="{{ base_path }}/{{ active_theme_path() }}/images/label_reservation/{{ tripsCitiesData['tripService'] }}.png" alt="">
+                        <img src="{{ base_path }}/{{ active_theme_path() }}/images/bus_selection/{{ tripsCitiesData['tripService'] }}-Right.png" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content seats__container" id="nav-tabContent">
+                <div id="floor1">
+                    <div class="tab-pane fade seats__content show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                        <div class="col-md-10 mx-auto seats__bus__sil" style="padding-left: 5px;" id="seat_bus_sil_f1">
+                            <img src="{{ base_path }}/{{ active_theme_path() }}/images/svg/sillas_bus1.svg" alt="">
+                        </div>
+                       <div class="seats__bus" id="seats__bus_f1">
+                            <div>
+                                <span class="seats__legend seats__legend--top">Parte frontal</span>
+                                    <div id="seat-map" class="seatCharts-container"></div>
+                                <span class="seats__legend seats__legend--bottom">Parte trasera</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="division" style="display: none;" class="division"></div>
+                <div id="floor2">
+                    <div class="tab-pane fade seats__content show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                        <div class="col-md-10 mx-auto seats__bus__sil" style="padding-left: 5px;" id="seat_bus_sil_f2">
+                            <img src="{{ base_path }}/{{ active_theme_path() }}/images/svg/sillas_bus2.svg" alt="">
+                        </div>
+                       <div class="seats__bus" id="seats__bus_f2">
+                            <div>
+                                <span class="seats__legend seats__legend--top">Parte frontal</span>
+                                    <div id="seat-map2" class="seatCharts-container"></div>
+                                <span class="seats__legend seats__legend--bottom">Parte trasera</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <section class="legends">
+                <p class="legends__label">Seleccion<span class="legends__color legends__color--selected"></span></p>
+                <p class="legends__label">Ocupado<span class="legends__color legends__color--busy"></span></p>
+                <!--<p class="legends__label">Libre<span class="legends__color legends__color--free"></span></p>-->
+            </section>
+            <section class="legend-prices col-md-6">
+                <div class="row">
+                    <div class="col-6">
+                        <p class="legends__label"><span class="legends__color legends__color--increible"></span> Tarifa Increible</p>
+                    </div>
+                    <div class="col-6">
+                        <p class="legends__label"><span class="legends__color legends__color--comoda"></span> Tarifa Chévere</p>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-6">
+                        <p class="legends__label"><span class="legends__color legends__color--chevere"></span> Tarifa Cómoda</p>
+                    </div>
+                    <div class="col-6">
+                        <p class="legends__label"><span class="legends__color legends__color--primera-clase"></span> Tarifa Primera Clase</p>
+                    </div>
+                </div>
+            </section>
+            <!-- Back -->
+            <div id="backTravel" style="display: none;">
+            <h3 class="wrapper__lead trip__regreso">Escoja su asiento <small> {{ tripsCitiesData['destinationCity'] }} - {{ tripsCitiesData['originCity'] }}</small></h3>
+            <div class="seats__toolbar row no-gutters justify-content-between">
+                <div class="col-lg-3">
+                    <!--<p class="seats__labelpassengers">Pasajeros:</p>
+                    <select name="passengers" class="seats__passengers" id="quantity_passengers">
+                        <option value="Pasajeros" selected="">-Cantidad-</option>
+                        {% for i in 1..6 %}
+                        <option value="{{ i }}">{{ i }}</option>
+                        {% endfor %}
+                    </select>-->
+                </div>
+                <div class="col-lg-6" style="margin-left: 30px;">
+                    <div class="seats__title__bus">
+                        <div></div>
+                        <img src="{{ base_path }}/{{ active_theme_path() }}/images/label_reservation/{{ tripsCitiesData['tripServiceB'] }}.png" alt="">
+                        <img src="{{ base_path }}/{{ active_theme_path() }}/images/bus_selection/{{ tripsCitiesData['tripServiceB'] }}-Right.png" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content seats__container" id="nav-tabContent">
+                <div id="floor1b">
+                    <div class="tab-pane fade seats__content show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                        <div class="col-md-10 mx-auto seats__bus__sil" style="padding-left: 5px;" id="seat_bus_sil_f1b">
+                            <img src="{{ base_path }}/{{ active_theme_path() }}/images/svg/sillas_bus1.svg" alt="">
+                        </div>
+                       <div class="seats__bus" id="seats__bus_f1b">
+                            <div>
+                                <span class="seats__legend seats__legend--top">Parte frontal</span>
+                                    <div id="seat-mapb" class="seatCharts-container"></div>
+                                <span class="seats__legend seats__legend--bottom">Parte trasera</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="divisionb" style="display: none;" class="division"></div>
+                <div id="floor2b">
+                    <div class="tab-pane fade seats__content show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                        <div class="col-md-10 mx-auto seats__bus__sil" style="padding-left: 5px;" id="seat_bus_sil_f2b">
+                            <img src="{{ base_path }}/{{ active_theme_path() }}/images/svg/sillas_bus2.svg" alt="">
+                        </div>
+                       <div class="seats__bus" id="seats__bus_f2b">
+                            <div>
+                                <span class="seats__legend seats__legend--top">Parte frontal</span>
+                                    <div id="seat-map2b" class="seatCharts-container"></div>
+                                <span class="seats__legend seats__legend--bottom">Parte trasera</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <section class="legends">
+                <p class="legends__label">Seleccion<span class="legends__color legends__color--selected"></span></p>
+                <p class="legends__label">Ocupado<span class="legends__color legends__color--busy"></span></p>
+                <!--<p class="legends__label">Libre<span class="legends__color legends__color--free"></span></p>-->
+            </section>
+            <section class="legend-prices col-md-6">
+                <div class="row">
+                    <div class="col-6">
+                        <p class="legends__label"><span class="legends__color legends__color--increible"></span> Tarifa Increible</p>
+                    </div>
+                    <div class="col-6">
+                        <p class="legends__label"><span class="legends__color legends__color--comoda"></span> Tarifa Chévere</p>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-6">
+                        <p class="legends__label"><span class="legends__color legends__color--chevere"></span> Tarifa Cómoda</p>
+                    </div>
+                    <div class="col-6">
+                        <p class="legends__label"><span class="legends__color legends__color--primera-clase"></span> Tarifa Primera Clase</p>
+                    </div>
+                </div>
+            </section>
+            </div>
+            <!-- End Back-->
+            <section class="seatchart">
+                <table class="seatchart__table" id="selected-seats">
+                    <tbody>
+                    <tr class="seatchart__row seatchart__row--header">
+                        <!--<th class="seatchart__col">#</th>-->
+                        <th class="seatchart__col">Silla</th>
+                        <th class="seatchart__col">Tarifa</th>
+                        <th class="seatchart__col">Precio</th>
+                    </tr>
+                </tbody></table>
+            </section>
+            <section class="shopchart">
+                <div class="shopchart__inner">
+                    <div class="shopchart__title">Tu viaje (Resumen de compra)</div>
+                    <div class="shopchart__body">
+                        <div class="shopchart__labels">
+                            <div class="salida-regreso d-flex align-items-center justify-content-center mb-2">
+                                <div class="trip__salida" style="font-size: 0.8em;">
+                                    <p>Salida:</p>
+                                    <p id="dateTripGo"></p>
+                                </div>
+                                <div class="trip__regreso" style="font-size: 0.8em;">
+                                    <p>Regreso:</p>
+                                    <p id="dateTripBack"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="shopchart__tag shopchart__tag--hide"><span id="counter" value="0"></span></div>
+                        <div class="shopchart__tag"><strong>Subtotal:</strong> $ <span id="total">0</span></div>
+                        <div class="shopchart__button">
+                            <button class="shopchart__btn shopchart__btn--back" id="backSelection">Regresar</button>
+                            <button class="shopchart__btn shopchart__btn--confirm" id="confirmSelection">Confirmar</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <div class="division mt-4"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col col-lg-10 mx-auto mt-4 mb-4 text-gray d-flex justify-content-between align-items-end">
+                <img class="mr-3" src="{{ base_path }}/{{ active_theme_path() }}/images/misc/alert.png" height="65px" alt="Alerta" style="margin-bottom: 55px;">
+                <div class="small"><p><ul>
+                    <li>Las agencias que se encuentran disponibles para venta de tiquetes vía web, son las agencias principales.</li>
+                    <li>Debe estar como mínimo una hora antes de su viaje en la terminal de transporte o agencia.</li>
+                    <li>El valor a pagar no siempre corresponde al valor de la reserva. Este valor esta sujeto a la Tarifa Vigente.</li>
+                    <li>Las Tarifas para la compra web se denominan <span style="color: #4BA54D;">Tarifa Increíble</span>,<span style="color: #1B1464;">Tarifa Chévere</span> y <span style="color: #DF7200;">Tarifa Cómoda.</span></li>
+                    <li>Verifique bien su fecha de salida y regreso.</li>
+                    <li>Tenga siempre a la vista su equipaje y no lo descuide.</li>
+                    <li>Si la salida es ruta Internacional los pasajeros deben presentarse en la agencia 02 (Dos) horas antes del viaje.</li>
+                </p></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+<!-- Script to Chairs -->
+{{ attach_library('expreso_bolivariano_pages/seat-charts') }}
+<!-- End Script -->

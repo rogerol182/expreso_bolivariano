@@ -31,6 +31,79 @@ img{
 .bg_bolivariano{
     background: white;
 }
+.geolocation-map-container{
+    width: 100%;
+    height: 100%;
+}
+.map_home{
+    height: 100%;
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 5px;
+}
+.map_route{
+    height: 100%;
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 5px;
+}
+
+.imagedivideone{
+  -webkit-clip-path: polygon(0% 0%, 0% 245%, 48% 0%);
+    clip-path: polygon(0% 0%, 0% 245%, 48% 0%);
+    padding-right: 75px;
+}
+.imagedividetwo{
+  -webkit-clip-path: polygon(100% -250%, 30% 96%, 100% 96%);
+    clip-path: polygon(100% -250%, 30% 96%, 100% 96%);
+    padding-right: 75px;
+}
+
+.linkNew{
+    color: #FFFFF;
+}
+.linkNew:hover{
+    text-decoration: none;
+}
+/*Pagination*/
+.pagination {
+    display: -ms-flexbox;
+    display: flex;
+    padding-left: 0;
+    list-style: none;
+    border-radius: .25rem;
+}
+.page-item.active .page-link{
+    z-index: 1;
+    color: #fff;
+    background-color: #1B1464;
+    border-color: #1B1464;
+}
+.page-link:not(:disabled):not(.disabled) {
+    cursor: pointer;
+}
+.page-link {
+    position: relative;
+    display: block;
+    padding: .5rem .75rem;
+    margin-left: -1px;
+    line-height: 1.25;
+    color: #1B1464;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+}
+.page-link:hover {
+    z-index: 2;
+    color: #1B1464;
+    text-decoration: none;
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+}
+/*Close Pagination*/
+.form-text{
+    display: block;
+    margin-top: .0rem;
+}
 @media (min-width:768px){
     .bg_bolivariano{
         background: url('../images/misc/fondoBol.png');
@@ -83,7 +156,7 @@ i.text-big{
 
 .btn{
     text-decoration: none;
-    padding: 1px 3px;
+    padding: 5px 10px;
     border-radius: 0px;
     font-family: montserrat, sans-serif;
     font-weight: 400;
@@ -180,8 +253,8 @@ i.text-big{
     .wrapper__breadcrump li:after{
         display: inline;
         content: "/";
-        position: absolute;
-        right: -5px;   
+        position: relative;
+        /* right: -5px; */   
     }
     .wrapper__breadcrump li:last-child:after { content: ""; }
 }
@@ -192,8 +265,8 @@ i.text-big{
 {
     display:flex;
     padding:3vw;
-    background:url("http://www.atma.ca/wp-content/uploads/2015/07/9-mountain-landscape-wallpaper.jpg") center no-repeat;
-    background-size:cover;
+    /*background:url("http://www.atma.ca/wp-content/uploads/2015/07/9-mountain-landscape-wallpaper.jpg") center no-repeat;
+    background-size:cover;*/
     height:40vw;
     align-items:flex-end;
     position:relative;
@@ -218,6 +291,8 @@ i.text-big{
     width:100%;
     font-size:2vw;
     text-shadow: 1px 1px 10px black;
+    position: relative;
+    z-index: 20;
 }
 @media (min-width: 768px)
 {
@@ -337,7 +412,7 @@ i.text-big{
     margin: 5px 0px;
 }
 .wrapper__body .link{
-    padding-top: 30px;
+    padding-top: 10px;
 }
 
 
@@ -370,9 +445,10 @@ i.text-big{
 .paragraph{
     color: #1B1464;
     padding-right: 15px;
+    padding-top: 10px;
     font-size: 0.9em;
     min-width: 290px;
-    text-align: left;
+    text-align: justify;
 }
 .big_news>picture img{
     margin-bottom: 15px;
@@ -401,7 +477,10 @@ i.text-big{
 .panel-shadow{
     box-shadow: 0px 0px 15px gray;
 }
-.resultados .panel.panel-shadow{
+.resultados .images div{
+    width: 50%;
+    min-height: 230px;
+} .panel.panel-shadow{
     margin: 5px;
 }
 
@@ -447,7 +526,7 @@ i.text-big{
 /* para tablas muy anchas*/
 .row-table{
     width: 100%;
-    overflow: scroll;
+    overflow: auto;
 }
 
 
@@ -797,6 +876,9 @@ i.text-big{
 .block-title.orange{
     background-color: #E1972F;
 }
+.block-title.blue{
+    background-color: #1b1464;
+}
 
 
 
@@ -1040,7 +1122,7 @@ label:hover:before {
 
 .modal_agencias .info{
     background-color: #E6E6E6;
-    padding: 30px 45px 30px 60px;
+    padding: 10px 35px 10px 35px;
     text-align: justify;
     color: #333333;
 }
@@ -1210,7 +1292,7 @@ label:hover:before {
 }
 @media (min-width: 768px){
     .seats__toolbar{
-        padding:2% 5% 0;
+        padding:0% 5% 0;
     }
 
 }
@@ -1235,9 +1317,10 @@ label:hover:before {
     }
     .seats__bus>div{
         width:300px;
-        padding-top:63px;
-        padding-bottom:63px;
-        margin-top:-220px;
+        padding-top:50px;
+        padding-bottom:50px;
+        padding-left: 10px;
+        margin-top:-200px;
     }
 
 }
@@ -1323,7 +1406,6 @@ label:hover:before {
     .seats__steering{
         height:65px;
     }
-
 }
 .seats__busseat{
     display:block;
@@ -1340,12 +1422,18 @@ label:hover:before {
     font-family:'cabin', Helvetica, sans-serif;
     font-weight:500;font-size:5vw;
 }
+.seats__busseat.ocupado{
+    background-color: gray !important;
+}
+.seats__busseat.seleccion{
+    background-color: #E1972F !important;
+}
 .seats__busseat:nth-child(even){
     margin:12% 0 0;
 }
 @media (min-width: 768px){
     .seats__busseat{
-        height:45px;line-height:45px;font-size:24px;transform:rotate(90deg);
+        height:45px;line-height:45px;font-size:20px;transform:rotate(90deg);
     }
 
 }
@@ -1404,23 +1492,30 @@ label:hover:before {
     font-family:'cabin', Helvetica, sans-serif;background:#1B1464 !important;color:white;
 }
 .seats__toolbar>div{
-    padding-top: 60px;
+    padding-top: 0px;
 }
 .seats__title__bus{
     width: 100%;
     height: 150px;
-    margin-top: 15px;
+    margin-top: 0px;
 }
 .seats__title__bus>div{
     background: #1B1464;
     color: white;
     padding-left: 15px;
+    width: 100%;
+    height: 1em;
 }
 .seats__title__bus img{
-    position: absolute;
+    /*position: absolute;
     top: 0px;
     right: 10px;
-    width:50%;
+    width:50%;*/
+    width: auto;
+    max-width: 49%;
+    display: inline-block;
+    position: relative;
+    top: -20px;
 }
 .seats__bus__sil>img{
     width: 80px;
@@ -1525,7 +1620,16 @@ label:hover:before {
 }
 @media (min-width: 768px){
     .legends{
-        margin:-10% 0 0;
+        margin:-20% 0 0;
+    }
+
+}
+.legends-prices{
+    max-width:1200px;margin:10% auto;position:relative;text-align:right;
+}
+@media (min-width: 768px){
+    .legends-prices{
+        margin:5% 0 0;
     }
 
 }
@@ -1545,6 +1649,32 @@ label:hover:before {
     background:#ddd;
 }
 
+.legends__color--increible{
+    background:#4BA54D;
+}
+.legends__color--comoda{
+    background:#DF7200;
+}
+.legends__color--chevere{
+    background:#1B1464;
+}
+.legends__color--primera-clase{
+    background:#BB1F32;
+}
+
+
+.legends__color--1,.seats__busseat.tipo1{
+    background:green;
+}
+.legends__color--2,.seats__busseat.tipo2{
+    background:yellow;
+}
+.legends__color--3,.seats__busseat.tipo3{
+    background:blueviolet;
+}
+.legends__color--4,.seats__busseat.tipo4{
+    background:aquamarine;
+}
 
 
 
@@ -2394,12 +2524,12 @@ label:hover:before {
 
 .header{
     background:#1B1464;
-    border-bottom:4px solid #001C89;
-    /* outline:4px solid #1B1464; */
+    /*border-bottom:4px solid #001C89;
+     outline:4px solid #1B1464; */
 }
 @media (min-width: 768px){
     .header{
-        border-bottom:5px solid #75739c;
+        /*border-bottom:5px solid #75739c;*/
         outline:4px solid #E1972F;
     }
 }
@@ -2463,7 +2593,7 @@ label:hover:before {
     margin:0 auto;
 }
 .header__items{
-    justify-content:space-around;
+    justify-content:space-between;
     align-items: flex-start;
     border-top:4px solid #001C89;
     position: relative;
@@ -2491,7 +2621,8 @@ label:hover:before {
 .header__item{
     border-bottom: solid 1px lightgray;
     border-radius:0px;
-    
+    min-width: 62px;
+    text-align: center;
 }
 .header__item--active .header__link{
     color:#fabc00;
@@ -2517,7 +2648,7 @@ label:hover:before {
         border-radius:30px;
         box-sizing:border-box;
         padding:0 1px;
-        margin:0 1px;
+        margin:0 5px;
     }
     .header__item--active{
         border-color:#fabc00;
@@ -2539,7 +2670,7 @@ label:hover:before {
         margin-left: 120px;
     }
     .navbar-expand-lg .navbar-nav .nav-link{
-        padding-right: 0.8rem;
+        padding-right: 0.2rem;
     }
 }
 .header__link{
@@ -3200,7 +3331,7 @@ label:hover:before {
     justify-content:space-between;
 }
 .tarifas__tab{
-    width:calc(16.5% - 0px);
+    width:calc(13.5% - 0px);
     text-align:center;
     margin:5px 0 0;
     border-radius:0;
@@ -3210,6 +3341,7 @@ label:hover:before {
     font-weight:700;
     font-size:4vw;
     color:#1B1464 !important;
+    padding: .5rem 0.5rem;
 }
 .nav-tabs .nav-link{
     border-top-left-radius: 0;
@@ -3588,9 +3720,9 @@ label:hover:before {
 }
 .trip__salida,.trip__regreso{
     color: white;
-    width: 50%;
+    width: 100%;
     padding: 10px;
-    font-size: 0.8em;
+    font-size: 1.8em;
 }
 .trip__salida p,.trip__regreso p{
     line-height: 1.2em;
@@ -3832,9 +3964,98 @@ label:hover:before {
 }
 
 
+/*****/
+/*Cards*/
+.cards{
+    display:block;
+    width:100%;
+    position:relative;
+    margin-top:60px;
+    
+}
+.cards__container{
+    max-width:1400px;
+    margin:0 auto;
+    box-shadow:0 -10px 15px lightgray;
+}
+.cards__title{
+    font-weight:600;
+    font-size:28px;
+    position:absolute;
+    top:10px;
+    right:10px;
+    display:none;
+}
+@media (min-width: 768px){
+        .cards__title{
+        display:block;
+    }
+}
+.cards__item{
+    height:200px;
+    overflow:hidden;
+    position: relative;
+}
+.cards__item>img{
+    position: absolute;
+    top: -10050px;
+    bottom:-9999px;
+    left: -9999px;
+    right: -9999px;
+    margin: auto;
+    min-width: 100%;
+}
+@media (min-width: 768px){
+    .cards__item{
+        height:250px;
+    }
+}
+@media (min-width: 1118px){
+    .cards__item{
+        height:358px;
+    }
+}
+.cards__item--yellow .cards__title{
+    color:#E1972F;
+}
+@media (min-width: 768px){
+    .cards__item--yellow .cards__description{
+        background:url("data:image/svg+xml;charset=utf8,<svg viewbox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'><rect width='100%' height='50%' x='0' y='50%' fill='rgba(225,151,41,0.8)' /><polygon fill='#fabc00' points='400,0 180,200 400,200'/></svg>");
+        background: url('../images/svg/franjanaranjatrans.svg');
+        background-position: right center;
+        background-size: cover;
+    }
+}
+.cards__item--yellow .cards__prizes{
+    background:rgba(225,151,41,0.8);
+}
+@media (min-width: 768px){
+    .cards__item--yellow .cards__prizes{
+        background:none;
+    }
+}
 
 
+@media (min-width: 768px){
+    .cards__item--blue .cards__description{
+        background:url("data:image/svg+xml;charset=utf8,<svg viewbox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'><rect width='100%' height='50%' x='0' y='50%' fill='rgba(27,20,100,0.8)' /><polygon fill='#2C3C99' points='400,0 180,200 400,200'/></svg>");
+        background: url('../images/svg/franjazultrans.svg');
+        background-position: right center;
+        background-size: cover;
+    }
+}
+.cards__item--blue .cards__prizes{
+    background:rgba(27,20,100,0.8);
+}
+@media (min-width: 768px){
+    .cards__item--blue .cards__prizes{
+        background:none;
+    }
+}
+/*
+/****/
 
+/*
 .cards{
     display:block;
     width:100%;
@@ -3913,6 +4134,7 @@ label:hover:before {
         background:none;
     }
 }
+*/
 /*
 .cards__image{
      width:100%; 
@@ -3942,8 +4164,8 @@ label:hover:before {
 }
 .cards__type{
     position:absolute;
-    top:45px;
-    left:-10px;
+    top:-50px;
+    right:-30px;
     width:50%;
     display:none;
 }
@@ -3958,7 +4180,7 @@ label:hover:before {
     letter-spacing:-0.05em;
     color:white;
     position:absolute;
-    top:110px;
+    top:5px;
     left:20px;
     text-shadow: 0px 0px 2px black;
 }
@@ -3967,7 +4189,7 @@ label:hover:before {
     font-weight:500;
     color:white;
     position:absolute;
-    bottom:0px;
+    bottom:5px;
     margin:0;
     padding:10px;
     left:0;
@@ -4001,7 +4223,7 @@ label:hover:before {
     bottom:0;
     left:0;
     right:0;
-    height:200px;
+    height:100px;
 }
 @media (min-width: 768px){
     .cards__description{
@@ -4249,7 +4471,7 @@ label:hover:before {
     color: white;
     margin-top: 15px;
 }
-.promocionales img{
+.promocionales>img{
     width: 100%;
 }
 .promocionales:nth-child(even){
@@ -6279,7 +6501,8 @@ list-style: none;
 
 .modal_home{
     font-family: montserrat, Helvetica, sans-serif;
-    margin-top: 60px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 @media (min-width: 576px){
     .modal_home .modal-dialog {
@@ -6336,7 +6559,7 @@ list-style: none;
 .modal_home .user_data{
     background-color: #1b1464;
     padding:45px;
-    padding-top: 60px;
+    padding-top: 20px;
     color: white;   
 }
 .modal_home .user_data h3{
@@ -6386,6 +6609,7 @@ list-style: none;
     padding-top: 11px;
     font-weight: 700;
     font-size: 0.9em;
+    margin-right: 0.5em;
 }
 .modal_home .triada>div:nth-child(2)>div{
     background: url('../images/svg/discount.svg') no-repeat;
@@ -6574,5 +6798,123 @@ list-style: none;
     padding: 10px 6px;
     flex-grow: 1;
     align-self: center;
+    font-size: 1.0em;
+}
+
+
+.promocombo{
+    position: relative;
+    top: 10px;
+    height: 160px;
+    margin-bottom: 20px;
+}
+.promocombo .circle{
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    left: 2px;   
+}
+.promocombo .bg-image>img{
+    max-width: 200%;
+    min-height: 100%;
+}
+.promocombo .circle{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    left: 15px;   
+}
+.promocombo .etiqueta{
+    position: absolute;
+    width: 150px;
+    top: 90px;
+    left: 5px;
+}
+.promocombo .bus{
+    position: absolute;
+    width: 150px;
+    top: 40px;
+    left: 40%;
+}
+.tab-image{
+    text-align: center;
+}
+.tab-image .bus{
+    width: 70%;
+    margin: 0 auto;
+}
+
+.footers_brands{
+    width: 100%;
+    padding:.5vw;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    background: white;
+    border-radius: 10px;
+    margin-top: 15px;
+}
+.footers_brands div{
+    flex: auto;
+    min-width:20px;
+    margin: 0;
+}
+.footers_brands img{
+    width: auto;
+    height: auto;
+}
+@media screen and (max-width: 400px) {
+  .footers_brands { padding: 0; }
+  
+}
+
+.resultados .images{
+    display: flex;
+    min-height: 230px;
+}
+.resultados .images div{
+    width: 49%;
+    min-height: 230px;
+    overflow: hidden;
+    position: relative;
+}
+.resultados .images div>img{
+    position: absolute;
+    top: -9999px;
+    bottom:-9999px;
+    left: -9999px;
+    right: -9999px;
+    margin: auto;
+    min-width: 125%;
+}
+
+.tarifas__col small{
+    color: darkorange;
+    display: block;
     font-size: 0.7em;
+    line-height: 0.7em;
+    font-weight: bold;
+}
+.tarifas__col small.special{
+    color: red;
+    
+}
+
+
+.modal_reserva .modal-dialog{
+    max-width: 550px;
+}
+.modal_reserva label{
+    font-weight: bold;
+    margin-right: 15px;
+}
+
+@media(max-width:768px){
+    .mob-hidden{
+        display: none;
+    }
 }

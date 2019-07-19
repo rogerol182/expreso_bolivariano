@@ -1,0 +1,168 @@
+<section class="wrapper">
+    <div class="wrapper__top bg-image">
+        <img src="/sites/default/files/inline-images/login.jpg" alt="" class="">
+        <div class="wrapper__topwrap">
+            <h2 class="wrapper__title wrapper__title--cities">Registro</h2>
+        </div>
+    </div>
+    <form{{ attributes }}>
+        <div class="wrapper__body login">
+            <h3 class="wrapper__lead">Registro</h3>
+            <div class="wrapper__container col">
+			<div class="container mx-auto login">
+			    <div class="row no-gutters">
+                    
+			        <div class="col-lg-6 dBlueBox">
+			            <div class="titleDescription">
+			                <h1 class="tituloDes">1. Registro</h1>
+			                <hr>
+			                <p class="textoDes">Regístrate en el plan Viajero Expreso de Bolivariano para poder disfruar de descuentos y beneficios.</p>
+			            </div>
+			            <div class="inputz2">
+							{% for key, child in element if key|first != '#' %}
+                            {% if key == 'field_document_type' %}
+                                <div class="inputSingle">
+                                    <h6 class="aboveInput">Tipo de Documento *</h6>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="inputIconBox">
+                                                <i class="fa fa-hand-pointer-o iconito">
+                                                </i>
+                                            </span>
+                                        </div>
+                                        {{ child }}
+                                    </div>
+                                </div>
+                                {% elseif key == 'account' %}
+                                {% for keyz, childz in child if keyz|first != '#' %}
+                                {% if keyz == 'name' %}
+                                <div class="inputSingle">
+                                    <h6 class="aboveInput">Documento o Cédula *</h6>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="inputIconBox">
+                                                <i class="fa fa-drivers-license-o iconito">
+                                                </i>
+                                            </span>
+                                        </div>
+                                        {{ childz }}
+                                    </div>
+                                </div>
+                                {% endif %}
+                                {% endfor %}
+                                {% for keyy, childy in child if keyy|first != '#' %}
+                                {% if keyy == 'mail' %}
+                                <div class="inputSingle">
+                                    <h6 class="aboveInput">Correo Electrónico *</h6>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="inputIconBox">
+                                                <i class="fa fa-drivers-license-o iconito">
+                                                </i>
+                                            </span>
+                                        </div>
+                                        {{ childy }}
+                                    </div>
+                                </div>
+                                {% endif %}
+                                {% endfor %}
+                                {% elseif key == 'field_name_user' %}
+								<div class="inputSingle">
+			                        <h6 class="aboveInput">Nombres *</h6>
+			                        <div class="input-group">
+			                            <div class="input-group-prepend">
+			                                <span class="inputIconBox">
+			                                    <i class="fa fa-user iconito">
+			                                    </i>
+			                                </span>
+			                            </div>
+			                            {{ child }}        
+			                        </div>
+			                    </div>
+			                    {% elseif key == 'field_lastname_user' %}
+			                    <div class="inputSingle">
+			                        <h6 class="aboveInput">Apellidos *</h6>
+			                        <div class="input-group">
+			                            <div class="input-group-prepend">
+			                                <span class="inputIconBox">
+			                                    <i class="fa fa-user iconito">
+			                                    </i>
+			                                </span>
+			                            </div>
+			                            {{ child }}        
+			                        </div>
+			                    </div>
+                        </div>
+					</div>
+					<div class="col-lg-6 blueBox">
+                <div class="titleDescription">
+                    <h1 class="tituloDes">2. Datos adicionales</h1>
+                    <hr>
+                    <p class="textoDes">Para completar su registro en Viajero Expreso de Bolivariano, por favor suministre la siguiente información.</p>
+                </div>
+                <div class="inputz2">
+                	{% elseif key == 'field_phone_user' %}
+                    <div class="inputSingle">
+                        <h6 class="aboveInput">Telefono *</h6>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="inputIconBox">
+                                    <i class="fa fa-phone iconito">
+                                    </i>
+                                </span>
+                            </div>
+                            {{ child }}
+                        </div>
+                    </div>
+                    {% elseif key == 'field_birthday_user' %}
+                    <div class="inputSingle">
+                        <h6 class="aboveInput">Fecha de Nacimiento *</h6>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="inputIconBox">
+                                    <i class="fa fa-calendar iconito">
+                                    </i>
+                                </span>
+                            </div>
+                            {{ child }}
+
+                        </div>
+                    </div>
+                    {% elseif key == 'field_gender_user' %}
+                    <div class="inputSingle">
+                        <h6 class="aboveInput">Genero *</h6>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="inputIconBox">
+                                    <i class="fa fa-hand-pointer-o iconito">
+                                    </i>
+                                </span>
+                            </div>
+                            {{ child }}
+                        </div>
+                    </div>
+                    {% elseif key == 'contact' %}
+                    <div class="inputSingle">
+                        <div class="checkbox">
+                            <label>
+                                {{ child }}
+                            </label>
+                        </div>
+                    </div>
+                    {% elseif key == 'actions' %}
+                    <div class="redSocialGrupo">
+                        {{ child }}
+                    </div>
+                    {% else %}
+                    {{ child }}
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+				</div>
+                
+			</div>
+    	</div>
+    </div>
+    </form>	
+</section>			

@@ -6,8 +6,9 @@ description: 'Basic structure for a Bootstrap Bolivariano SubTheme.'
 base theme: bootstrap_barrio
 
 libraries:
-  - bootstrap_bolivariano_subtheme/bootstrap_cdn
+  #- bootstrap_bolivariano_subtheme/bootstrap_cdn
   - bootstrap_bolivariano_subtheme/global-styling
+  #- bootstrap_bolivariano_subtheme/seat-charts
 
 regions:
   top_header: 'Top Header'

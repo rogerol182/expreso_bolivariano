@@ -1,0 +1,57 @@
+{#
+/**
+ * @file
+ * Theme override to display a view of unformatted rows.
+ *
+ * Available variables:
+ * - title: The title of this group of rows. May be empty.
+ * - rows: A list of the view's row items.
+ *   - attributes: The row's HTML attributes.
+ *   - content: The row's content.
+ * - view: The view object.
+ * - default_row_class: A flag indicating whether default classes should be
+ *   used on rows.
+ *
+ * @see template_preprocess_views_view_unformatted()
+ */
+#}
+<div class="division mt-4 mb-4"></div>
+<div class="col col-lg-10 mx-auto mt-4">
+        <h2 class="block-title blue">Puntos Multiservicio</h2>
+        <!--  Begins For -->
+        {% for row in rows %}
+        {% set photo = file_url(row['content']['#row']._entity.field_agency_image_list.entity.fileuri) %}
+        <div class="agencias__panel panel panel-shadow mt-2">
+            <div class="row pl-2 pr-2">
+                <div class="col-md-6 mb-4">
+                    <div class="row">
+                        <div class="col-md-2 d-flex align-items-center justify-content-center mb-2">
+                            <img src="{{ base_path }}/{{ active_theme_path() }}/images/misc/pinb.png" alt="" class="pin">
+                        </div>
+                        <div class="col-md-10">
+                            <h2 class="block-title blue">{{ row['content']['#row']._entity.field_agency_title.value }}</h2>
+                            <div class="details mt-4">
+                                <p><b>Ubicación:</b> {{ row['content']['#row']._entity.field_agency_city.value }} </p>
+                                <p><b>Dirección:</b> {{ row['content']['#row']._entity.field_agency_address.value }} </p>
+                                <p><b>Teléfono:</b> {{ row['content']['#row']._entity.field_agency_indicative.value }} {{ row['content']['#row']._entity.field_agency_phone.value }} {{ row['content']['#row']._entity.field_agency_extension.value }} </p>
+                                <p><b>Email:</b> {{ row['content']['#row']._entity.field_agency_email.value }} </p>
+                                <p><b>Horario de atención:</b> {{ row['content']['#row']._entity.field_agency_schedule.value }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-sm-10 d-flex align-items-start justify-content-center image_ref">
+                            <img src="{{ photo }}" alt="">
+                        </div>
+                        <div class="col-sm-2 d-flex align-items-center justify-content-center">
+                            <a href="{{ row['content']['#row']._entity.field_agency_url.value }}"><button class="btn w-100 p-30 dark">Ver</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        <!-- End For -->
+</div>

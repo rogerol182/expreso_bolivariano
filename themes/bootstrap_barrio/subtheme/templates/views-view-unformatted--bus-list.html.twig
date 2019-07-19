@@ -1,0 +1,208 @@
+{#
+/**
+ * @file
+ * Theme override to display a view of unformatted rows.
+ *
+ * Available variables:
+ * - title: The title of this group of rows. May be empty.
+ * - rows: A list of the view's row items.
+ *   - attributes: The row's HTML attributes.
+ *   - content: The row's content.
+ * - view: The view object.
+ * - default_row_class: A flag indicating whether default classes should be
+ *   used on rows.
+ *
+ * @see template_preprocess_views_view_unformatted()
+ */
+#}
+<div class="wrapper__body">
+    <h3 class="wrapper__lead">Para pasajeros - conoce nuestra flota</h3>
+    <div class="wrapper__container bus-tabs mb-4 pb-4 pt-0">
+        <div class="row no-gutters">
+            <div class="col col-md-12">
+                <ul class="nav nav-tabs nav-justified" role="tablist">
+                    {% set i = 0 %}
+                    {% for row in rows %}
+                    {% set i = i+1 %}
+                    {% if i == 1 %}
+                    {% set aria = 'true' %}
+                    {% set active = 'show active' %}
+                    {% else %}
+                    {% set aria = 'false' %}
+                    {% set active = '' %}
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link tabBus {{ active }}" href="#tab{{ i }}" role="tab" data-toggle="tab" id="tabSelector{{ i }}" value="tab{{ i }}" aria-selected="{{ aria }}">{{ row['content']['#row']._entity.field_service_bus_title.value }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% set j = 0 %}
+            {% for row in rows %}
+            {% set j = j+1 %}
+            {% if j == 1 %}
+            {% set active = 'show active' %}
+            {% else %}
+            {% set active = '' %}
+            {% endif %}
+            {% set photo = file_url(row['content']['#row']._entity.field_service_bus_front_image.entity.fileuri) %}
+            {% set label = file_url(row['content']['#row']._entity.field_service_bus_label_image.entity.fileuri) %}
+            <div class="tab-content col-12 pr-4 mx-auto no-gutters" id="tabbuses">
+                <div class="tab-pane fade {{ active }}  pl-md-4" "="" id="tab{{ j }}" role="tabpanel" aria-labelledby="tab{{ j }}">
+                    <div class="d-flex mt-4 pl-md-4 flex-wrap">
+                        <div class="col-sm-9 col-md-9 pl-md-4">
+                            <h2 class="title with-underline">{{ row['content']['#row']._entity.field_service_bus_title.value }}</h2>
+                            <p>{{ row['content']['#row']._entity.field_service_bus_description.value }}</p>
+                        </div>
+                        <div class="col-sm-3 col-md-3 tab-image">
+                            <img src="{{ photo }}" alt="bus">
+                            <img src="{{ label }}" alt="bus">
+                        </div>
+                    </div>
+                    <!-- Carrousel -->
+                    <div class="col col-md-12 col-sm-11 mx-auto mt-4 mb-4 gallery">
+                        <div class="row justify-content-center">
+                            <div class="col col-lg-12 p-lg-0">
+                                <div class="panel">
+                                    <h3 class="title">Galería</h3>
+                                    <div id="gallery{{ j }}" class="carousel slide" data-ride="carousel">
+                                        <div class="carousel-inner">
+                                            {% for items in row['content']['#row']._entity.field_service_bus_images %}
+                                            {% set gallery = file_url(items.entity.fileuri) %}
+                                            {% if loop.first %}
+                                                <div class="carousel-item active">
+                                                    <img class="d-block w-100" src="{{ gallery }}" alt="First slide">
+                                                </div>
+                                            {% else %}
+                                                <div class="carousel-item">
+                                                    <img class="d-block w-100" src="{{ gallery }}" alt="First slide">
+                                                </div>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                        <ol class="carousel-indicators">
+                                            {% set k = 0 %}
+                                            {% for items in row['content']['#row']._entity.field_service_bus_images %}
+                                            {% if loop.first %}
+                                            <li data-target="#gallery{{ j }}" data-slide-to="{{ k }}" class="active"></li>
+                                            {% else %}
+                                            <li data-target="#gallery{{ j }}" data-slide-to="{{ k }}" class=""></li>
+                                            {% endif %}
+                                            {% set k = k+1 %}
+                                            {% endfor %}
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Carrousel -->
+                    <!-- Service On Board And Schedule -->
+                    <div class="col col-md-12 col-sm-11 mx-auto mt-4 ">
+                        <div class="row justify-content-between">
+                            <div class="col-lg-6 mt-2 features">
+                                <div class="panel pt-4">
+                                    <h6 class="mb-4"><b>Características adicionales</b></h6>
+                                    <div class="d-flex flex-wrap justify-content-center">
+                                        {% if row['content']['#row']._entity.field_service_bus_air.value == '1' %}
+                                        <div>
+                                            <a href="/pages/experience"><figure><img src="{{ base_path }}/{{ active_theme_path() }}/images/features/if1.png" alt=""></figure></a>
+                                            <hr>
+                                            <p>Aire acondicionado</p>
+                                        </div>
+                                        {% endif %}
+                                        {% if row['content']['#row']._entity.field_service_bus_bath.value == '1' %}
+                                        <div>
+                                            <a href="/pages/experience"><figure> <img src="{{ base_path }}/{{ active_theme_path() }}/images/features/if2.png" alt=""></figure></a>
+                                            <hr>
+                                            <p>Baño</p>
+                                        </div>
+                                        {% endif %}
+                                        {% if row['content']['#row']._entity.field_service_bus_backup.value == '1' %}
+                                        <div>
+                                            <a href="/pages/experience"><figure> <img src="{{ base_path }}/{{ active_theme_path() }}/images/features/if3.png" alt=""></figure></a>
+                                            <hr>
+                                            <p>Dos chóferes</p>
+                                        </div>
+                                        {% endif %}
+                                        {% if row['content']['#row']._entity.field_service_bus_gps.value == '1' %}
+                                        <div>
+                                            <a href="/pages/experience"><figure> <img src="{{ base_path }}/{{ active_theme_path() }}/images/features/if4.png" alt=""></figure></a>
+                                            <hr>
+                                            <p>GPS</p>
+                                        </div>
+                                        {% endif %}
+                                        {% if row['content']['#row']._entity.field_service_bus_screen_a.value == '1' %}
+                                        <div>
+                                            <a href="/pages/experience"><figure> <img src="{{ base_path }}/{{ active_theme_path() }}/images/features/if12.png" alt=""></figure></a>
+                                            <hr>
+                                            <p>Pantallas Ambientales</p>
+                                        </div>
+                                        {% endif %}
+                                        {% if row['content']['#row']._entity.field_service_bus_screen_i.value == '1' %}
+                                        <div>
+                                            <a href="/pages/experience"><figure> <img src="{{ base_path }}/{{ active_theme_path() }}/images/features/if5.png" alt=""></figure></a>
+                                            <hr>
+                                            <p>Pantallas individuales</p>
+                                        </div>
+                                        {% endif %}
+                                        {% if row['content']['#row']._entity.field_service_bus_movie.value == '1' %}
+                                        <div>
+                                            <a href="/pages/experience"><figure> <img src="{{ base_path }}/{{ active_theme_path() }}/images/features/if6.png" alt=""></figure></a>
+                                            <hr>
+                                            <p>Película</p>
+                                        </div>
+                                        {% endif %}
+                                        {% if row['content']['#row']._entity.field_service_bus_direct.value == '1' %}
+                                        <div>
+                                            <a href="/pages/experience"><figure> <img src="{{ base_path }}/{{ active_theme_path() }}/images/features/if7.png" alt=""></figure></a>
+                                            <hr>
+                                            <p>Viaje directo</p>
+                                        </div>
+                                        {% endif %}
+                                        {% if row['content']['#row']._entity.field_service_bus_chair_r.value == '1' %}
+                                        <div>
+                                           <a href="/pages/experience"><figure> <img src="{{ base_path }}/{{ active_theme_path() }}/images/features/if8.png" alt=""></figure></a>
+                                            <hr>
+                                            <p>Asientos reclinables</p>
+                                        </div>
+                                        {% endif %}
+                                        {% if row['content']['#row']._entity.field_service_bus_sound_i.value == '1' %}
+                                        <div>
+                                            <a href="/pages/experience"><figure> <img src="{{ base_path }}/{{ active_theme_path() }}/images/features/if9.png" alt=""></figure></a>
+                                            <hr>
+                                            <p>Sonido individual</p>
+                                        </div>
+                                        {% endif %}
+                                        {% if row['content']['#row']._entity.field_service_bus_wifi.value == '1' %}
+                                        <div>
+                                            <a href="/pages/experience"><figure> <img src="{{ base_path }}/{{ active_theme_path() }}/images/features/if10.png" alt=""></figure></a>
+                                            <hr>
+                                            <p>Wi-Fi</p>
+                                        </div>
+                                        {% endif %}
+                                        {% if row['content']['#row']._entity.field_service_bus_plugin.value == '1' %}
+                                        <div>
+                                            <a href="/pages/experience"><figure> <img src="{{ base_path }}/{{ active_theme_path() }}/images/features/if11.png" alt=""></figure></a>
+                                            <hr>
+                                            <p>Toma Corriente</p>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class=" col-lg-6 routes mt-2">
+                                <div class="panel pt-4">
+                                <h6><b>Rutas y horarios</b></h6>
+                                <div class="listwrapper mt-4">
+                                {{ row['content']['#row']._entity.field_service_bus_schedule.value|raw }}
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>

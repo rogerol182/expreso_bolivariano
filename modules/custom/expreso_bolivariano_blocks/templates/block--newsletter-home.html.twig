@@ -1,0 +1,37 @@
+<form class="formsubs__wrapper mb-4" {{ attributes }} class="newsletter_form btncito" data-drupal-selector="newsletter_form" action="" method="post" id="newsletter_form" accept-charset="UTF-8">
+    <div class="row no-gutters text-orange">
+        {% for key, child in formData if key|first != '#' %}
+        {% if key == 'interestingNewsletter' %}
+        <div class="col-12">
+	        <label class="formsubs__label">Selecciona uno
+	            {{ child }}
+	        </label>
+        </div>
+        {% elseif key == 'nameNewsletter' %}
+        <div class="col-12 col-sm-5">
+            <label class="formsubs__label">Nombre Completo *
+                {{ child }}
+            </label>
+        </div>
+        {% elseif key == 'mailNewsletter' %}
+        <div class="col-12 col-sm-7">
+            <label class="formsubs__label">Correo Electrónico *
+                {{ child }}
+            </label>
+        </div>
+        {% elseif key == 'submit' %}
+		<div class="col-12">
+            {{ child }}
+        </div>
+        {% elseif key == 'form_build_id' %}
+            {{ child }}
+        {% elseif key == 'form_id' %}
+            {{ child }}    
+        {% elseif key == 'form_token' %}
+            {{ child }}
+        {% else %}
+            {{ child }} 
+        {% endif %}
+        {% endfor %} 
+    </div>
+</form>

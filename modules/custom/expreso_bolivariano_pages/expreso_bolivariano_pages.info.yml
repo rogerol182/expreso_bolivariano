@@ -3,3 +3,7 @@ type: module
 description: 'Displays a basic page.'
 package: Expreso Bolivariano
 core: 8.x
+base theme: bootstrap_barrio
+
+libraries:
+  - expreso_bolivariano_pages/seat-charts

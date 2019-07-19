@@ -1,0 +1,51 @@
+{% set text = 'Ingrese su documento de identidad (cédula de ciudadanía) o su correo electrónico. cualquiera de los dos datos seran evaluados para enviarle un correo con las instrucciones para su cambio de clave' %}
+<section class="wrapper">
+    <div class="wrapper__top bg-image">
+        <img src="/sites/default/files/inline-images/login.jpg" alt="" class="">
+        <div class="wrapper__topwrap">
+            <h2 class="wrapper__title wrapper__title--cities">Recuperar Contraseña</h2>
+        </div>
+    </div>
+    <div class="wrapper__body login">
+        <h3 class="wrapper__lead">Recuperar Contraseña</h3>
+        <div class="wrapper__container col">
+            <div class="container mx-auto">
+                <div class="row no-gutters">
+                    <div class="col-lg-6 col-xl-12 blueBoxFULL">
+                        <div class="bg-crossed"></div>
+                        <div class="titleDescription">
+                            <h1 class="tituloDes"><strong>Recupera tu contraseña</strong></h1>
+                            <hr>
+                            <p class="textoDes">{{ text|t }}</p>
+                        </div>
+                        <form{{ attributes }}>
+                        {% for key, child in element if key|first != '#' %}
+                            {% if key == 'name' %} 
+                            <div class="inputzRecover">
+                            <div class="inputSingle">
+                            <h6 class="aboveInput">Cédula o Correo Electrónico *</h6>
+                            <div class="input-group">
+                            <div class="input-group-prepend"><span class="inputIconBox"><i class="fa fa-envelope iconito"></i></span></div>
+                            {{ child }}
+                            </div>
+                            </div>
+                            </div>
+                            {% elseif key == 'actions' %}
+                            <div class="inputzRecover">   
+                                <div class="redSocialGrupo">
+                                {{ child }} 
+                                </div>
+                            </div>
+                            {% elseif key == 'mail' %}
+                            <br>
+                            {% else %}
+                            <div>{{ child }}</div>
+                            {% endif %}
+                        {% endfor %}
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

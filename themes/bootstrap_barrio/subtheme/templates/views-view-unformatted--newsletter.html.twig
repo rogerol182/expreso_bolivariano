@@ -1,0 +1,37 @@
+{#
+/**
+ * @file
+ * Theme override to display a view of unformatted rows.
+ *
+ * Available variables:
+ * - title: The title of this group of rows. May be empty.
+ * - rows: A list of the view's row items.
+ *   - attributes: The row's HTML attributes.
+ *   - content: The row's content.
+ * - view: The view object.
+ * - default_row_class: A flag indicating whether default classes should be
+ *   used on rows.
+ *
+ * @see template_preprocess_views_view_unformatted()
+ */
+#}
+<div class="container">
+    <div class="row">
+    	{% for row in rows %}
+		{% set photo = file_url(row['content']['#row']._entity.field_newsletter_image.entity.fileuri) %}
+        <div class="col-12 col-md-4 col-lg-6 formsubs__flex formsubs__flex--bottom">
+            <img width="100%" src="{{ photo }}" class="formsubs__people" alt="">
+        </div>
+        {% endfor %}
+        <div class="col-12 col-md-8 col-lg-6 pb-4">
+            <h2 class="formsubs__title">Suscribete para <br> promociones especiales 
+                <img src="{{ base_path }}/{{ active_theme_path() }}/images/misc/discount.png" class="formsubs__discount" alt="">
+            </h2>
+            <hr class="formsubs__separator">
+            <!-- Begins Newsletter Block -->
+                {{ blockNewsletter }}
+            <!-- End Newsletter Block -->
+        </div>
+    </div>
+</div>
+<div class="division"></div>

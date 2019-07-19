@@ -1,0 +1,78 @@
+<div class="division"></div>
+<div class="container mt-4 mb-4">
+    <div class="row">
+        <div class="col col-lg-6 mx-auto">
+            <div class="mt-4 mb-4 pr-4 pl-4 underline">
+                <div class="d-flex justify-content-center">
+                    <div class="col col-md-6 text-center"><h4>Planes <br> promocionales</h4></div>
+                    <div class="col col-md-6 text-right"><img height="80px" src="{{ base_path }}/{{ active_theme_path() }}/images/misc/discount.png" alt=""></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container mt-4 mb-4">
+    <div class="row no-gutters">
+        {% for items in promotionsData %}
+        <div class="col col-sm-6 col-md-3 promocionales">
+            <div class="promocombo">
+                <div class="circle bg-image">
+                    <img src="{{ base_path }}/{{ active_theme_path() }}/images/promotions/{{ (items.agencyDestinationName)|trim|lower }}.jpg">
+                </div>
+                <img src="{{ base_path }}/{{ active_theme_path() }}/images/bus/{{ (items.busServiceName)|trim }}-VehicleLateralRight.png" alt="" class="bus">
+                <img src="{{ base_path }}/{{ active_theme_path() }}/images/label/{{ (items.busServiceName)|trim }}-Right.png" alt="" class="etiqueta">
+            </div>
+
+            <div class="texto">
+                <h4>{{ (items.agencyOriginName)|capitalize }} - {{ (items.agencyDestinationName)|capitalize }}</h4>Solo: <h3>${{ (items.tripRate)|number_format(0, '', '.') }}</h3>
+            </div>
+            <div class="text-right">
+                <a href="/pages/reservation/{{ (items.agencyOriginId)|number_format }}/{{ (items.agencyOriginName)|capitalize|trim }}/{{ (items.agencyDestinationId)|number_format }}/{{ (items.agencyDestinationName)|capitalize|trim }}/{{ (items.tripDate|replace({'/': '-'})) }}/0"><button>Ver Fechas</button></a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div id="more" style="display: none;">
+        <div class="row no-gutters">
+        {% for itemsMore in promotionsMoreData %}
+        <div class="col col-sm-6 col-md-3 promocionales">
+            <div class="promocombo">
+                <div class="circle bg-image">
+                    <img src="{{ base_path }}/{{ active_theme_path() }}/images/promotions/{{ (itemsMore.agencyDestinationName)|trim|lower }}.jpg">
+                </div>
+                <img src="{{ base_path }}/{{ active_theme_path() }}/images/bus/{{ (itemsMore.busServiceName)|trim }}-VehicleLateralRight.png" alt="" class="bus">
+                <img src="{{ base_path }}/{{ active_theme_path() }}/images/label/{{ (itemsMore.busServiceName)|trim }}-Right.png" alt="" class="etiqueta">
+            </div>
+
+            <div class="texto">
+                <h4>{{ (itemsMore.agencyOriginName)|capitalize }} - {{ (itemsMore.agencyDestinationName)|capitalize }}</h4>Solo: <h3>${{ (itemsMore.tripRate)|number_format(0, '', '.') }}</h3>
+            </div>
+            <div class="text-right">
+                <a href="/pages/reservation/{{ (itemsMore.agencyOriginId)|number_format }}/{{ (itemsMore.agencyOriginName)|capitalize|trim }}/{{ (itemsMore.agencyDestinationId)|number_format }}/{{ (itemsMore.agencyDestinationName)|capitalize|trim }}/{{ (itemsMore.tripDate|replace({'/': '-'})) }}/0"><button>Ver Fechas</button></a>
+            </div>
+        </div>
+        {% endfor %}
+        </div>
+    </div>
+</div>
+<div class="container mt-2 mb-4">
+    <div class="row">
+        <div class="col col-lg-8 mx-auto">
+            <div class="mt-2 mb-4 pr-4 pl-4">
+                <div class="d-flex justify-content-center">
+                    <div id="button_more" class="col col-md-10 text-center">
+                        <h4>Ver más promociones 
+                            <i style="vertical-align: middle;" class="fa fa-angle-down text-big text-orange ml-2" aria-hidden="true" id="more_promotions"></i>
+                        </h4>
+                    </div>
+                    <div id="button_less" class="col col-md-10 text-center" style="display: none;">
+                        <h4>Ver menos promociones 
+                            <i style="vertical-align: middle;" class="fa fa-angle-up text-big text-orange ml-2" aria-hidden="true" id="less_promotions"></i>
+                        </h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="division"></div>

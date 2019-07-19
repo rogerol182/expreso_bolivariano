@@ -1,0 +1,13 @@
+seat-charts:
+  version: VERSION
+  js:
+    js/global-seats.js: {}
+    js/jquery.seat-charts.min.js: {}
+  dependencies:
+    - core/jquery
+    - core/jquery.once
+    - core/drupalSettings
+  css:
+    component:
+      css/jquery.seat-charts.css: {}
+      css/seat.css: {}

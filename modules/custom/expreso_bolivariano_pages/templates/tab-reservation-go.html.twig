@@ -1,0 +1,99 @@
+<table class="tarifas__table">
+    <tbody><tr class="tarifas__row tarifas__row--header">
+        <th class="tarifas__col" colspan="2">Hora de salida</th>
+        <th class="tarifas__col">Operador</th>
+        <th class="tarifas__col">Servicio</th>
+        <th class="tarifas__col">Tarifa Increible</th>
+        <th class="tarifas__col">Tarifa Comoda</th>
+        <th class="tarifas__col">Tarifa Chevere</th>
+        <th class="tarifas__col">Tarifa Primera Clase</th>
+    </tr>
+    {% for items in tripsGoData %}
+    <div id="tarifas__content_more">
+        <tr class="tarifas__row">
+            <td class="tarifas__col"><input type="hidden" readonly="readonly" value="{{ items.busServiceId }}" id="bus_service_go_{{ items.tripKey }}"><input type="hidden" readonly="readonly" value="{{ items.capacity }}" id="capacity_go_{{ items.tripKey }}"><input type="radio" class="tarifas__radio" name="trip_go" id="go_{{ items.tripAgencyId }}" value="{{ items.tripKey }}"></td>
+            <td class="tarifas__col">{{ (items.tripHour) }}</td>
+            {% if items.companyId == 1 %}
+                <td class="tarifas__col"><img src="{{ base_path }}/{{ active_theme_path() }}/images/label_reservation/bolivariano.svg"></td>
+            {% else %}
+                <td class="tarifas__col"><img src="{{ base_path }}/{{ active_theme_path() }}/images/label_reservation/continental.svg"></td>
+            {% endif %}
+            <td class="tarifas__col"><img src="{{ base_path }}/{{ active_theme_path() }}/images/label_reservation/{{ items.busServiceId }}.png" alt=""></td>
+            <!-- Rate 1 -->
+            {% if items.tripRate1 != 0 %}
+                {% set tripRate1 = (items.tripRate1)|number_format(0, '', '.') %}
+                <td class="tarifas__col" style="font-weight: bold;">
+                   {% if items.availableSeats1 == 0 %}
+                        <del> $ {{ tripRate1 }} </del>
+                        <small class="special">Agotado</small>
+                    {% elseif items.availableSeats1 > 1 and items.availableSeats1 < 6 %}
+                        $ {{ tripRate1 }}
+                        <small>{{ items.availableSeats1 }} puestos</small>
+                    {% else %}
+                        $ {{ tripRate1 }}
+                    {% endif %}
+                </td>
+            {% else %}
+                {% set tripRate1 = 'No Disponible' %}
+                <td class="tarifas__col">{{ tripRate1 }}</td>
+            {% endif %}
+            <!-- Rate 2 -->
+            {% if items.tripRate2 != 0 %}
+                {% set tripRate2 = (items.tripRate2)|number_format(0, '', '.') %}
+                <td class="tarifas__col" style="font-weight: bold;">
+                    {% if items.availableSeats2 == 0 %}
+                        <del> $ {{ tripRate2 }} </del>
+                        <small class="special">Agotado</small>
+                    {% elseif items.availableSeats2 > 1 and items.availableSeats2 < 6 %}
+                        $ {{ tripRate2 }}
+                        <small>{{ items.availableSeats2 }} puestos</small>
+                    {% else %}
+                        $ {{ tripRate2 }}
+                    {% endif %}
+                </td>
+            {% else %}
+                {% set tripRate2 = 'No Disponible' %}
+                <td class="tarifas__col"> {{ tripRate2 }}</td>
+            {% endif %}
+            <!-- Rate 3 -->
+            {% if items.tripRate3 != 0 %}
+                {% set tripRate3 = (items.tripRate3)|number_format(0, '', '.') %}
+                <td class="tarifas__col" style="font-weight: bold;">
+                    {% if items.availableSeats3 == 0 %}
+                        <del> $ {{ tripRate3 }} </del>
+                        <small class="special">Agotado</small>
+                    {% elseif items.availableSeats3 > 1 and items.availableSeats3 < 6 %}
+                        $ {{ tripRate3 }}
+                        <small>{{ items.availableSeats3 }} puestos</small>
+                    {% else %}
+                        $ {{ tripRate3 }}
+                    {% endif %}
+                </td>    
+            {% else %}
+                {% set tripRate3 = 'No Disponible' %}
+                <td class="tarifas__col"> {{ tripRate3 }}</td>
+            {% endif %}
+            <!-- Rate First Class -->
+            {% set tripDuoBusRate = 0 %}
+            {% if items.busServiceId == 9 %}
+                {% set tripDuoBusRate = (items.tripRateClassA)|number_format(0, '', '.') %}
+                <td class="tarifas__col" style="font-weight: bold;">
+                    {% if items.availableFirstClass == 0 %}
+                        <del> $ {{ tripDuoBusRate }} </del>
+                        <small class="special">Agotado</small>
+                    {% elseif items.availableFirstClass > 1 and items.availableFirstClass < 6 %}
+                        $ {{ tripDuoBusRate }}
+                        <small>{{ items.availableFirstClass }} puestos</small>
+                    {% else %}
+                        $ {{ tripDuoBusRate }}
+                    {% endif %}
+                </td>
+            {% else %}
+                {% set tripDuoBusRate = 'No Aplica' %}
+                <td class="tarifas__col"> {{ tripDuoBusRate }}</td>
+            {% endif %}
+            <!-- End Rate -->
+        </tr>
+    </div>    
+    {% endfor %}
+</tbody></table>

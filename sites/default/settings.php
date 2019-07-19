@@ -771,12 +771,29 @@ $settings['entity_update_batch_size'] = 50;
 $databases['default']['default'] = array (
   'database' => 'bolivariano',
   'username' => 'root',
-  'password' => '$?B0l1v4r14n0.$',
+  'password' => 'Base.2019',
   'prefix' => '',
-  'host' => 'localhost',
+  'host' => '172.17.200.170',
   'port' => '3306',
   'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
   'driver' => 'mysql',
 );
 $config_directories['sync'] = 'sites/default/files/config_I242VRLlV-5C6qXs3PrlUvGxkBfm1Tbauw7nGIxcNfjpa4nzj6wTxFokbCAvGeIPCG06ujvhpw/sync';
 $settings['twig_debug'] = TRUE;
+$settings['rest_userName'] = 'portalweb';
+$settings['rest_Password'] = '@.PwEe76?*';
+
+/**
+ * Set session lifetime (in seconds), i.e. the time from the user's last visit
+ * to the active session may be deleted by the session garbage collector. When
+ * a session is deleted, authenticated users are logged out, and the contents
+ * of the user's $_SESSION variable is discarded.
+ */
+ini_set('session.gc_maxlifetime', 200000);
+
+/**
+ * Set session cookie lifetime (in seconds), i.e. the time from the session is
+ * created to the cookie expires, i.e. when the browser is expected to discard
+ * the cookie. The value 0 means "until the browser is closed".
+ */
+ini_set('session.cookie_lifetime', 2000000);

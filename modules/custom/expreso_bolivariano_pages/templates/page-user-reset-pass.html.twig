@@ -1,0 +1,61 @@
+<section class="wrapper">
+    <div class="wrapper__top bg-image">
+        <img src="/sites/default/files/inline-images/login.jpg" alt="" class="">
+        <div class="wrapper__topwrap">
+            <h2 class="wrapper__title wrapper__title--cities">Actualizar Contraseña</h2>
+        </div>
+    </div>
+    <form{{ attributes }}>
+    {{ formData.form_build_id }}
+    {{ formData.form_token }}
+    {{ formData.form_id }}
+        <div class="wrapper__body login">
+            <h3 class="wrapper__lead">Actualizar Contraseña</h3>
+            <div class="wrapper__container col">
+            <div class="container mx-auto login">
+                <div class="row no-gutters">
+                    <div class="col-lg-12 dBlueBox">
+                        <div class="titleDescription">
+                            <h1 class="tituloDes">Cambie su Contraseña</h1>
+                            <hr>
+                            <p class="textoDes">Debe actualizar su contraseña y asi poder empezar a disfrutar de los benficios de ser Viajero Expreso de Bolivariano.</p>
+                        </div>
+                        <div class="inputz2">
+                            <div class="inputSingle">
+                                <h6 class="aboveInput">Documento o Cédula *</h6>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="inputIconBox">
+                                            <i class="fa fa-drivers-license-o iconito"></i>
+                                        </span>
+                                    </div>
+                                    <input data-drupal-selector="edit-username" type="text" id="edit-username" name="userName" size="60" maxlength="128" class="form-text required form-control" readonly="readonly" disabled="disabled" value="{{ uid }}">
+                                </div>
+                            </div>
+                            <div class="inputSingle">
+                                <h6 class="aboveInput">Contraseña *</h6>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="inputIconBox">
+                                            <i class="fa fa-drivers-license-o iconito"></i>
+                                        </span>
+                                    </div>
+                                    {{ formData.passOne }}
+                                    <button class="btn btn-primary inputcitoBtnVer" type="button" id="btnShowPassword1"><i class="fa fa-eye"></i></button>
+                                </div>
+                            </div>        
+                            
+                        {{ formData.actions }}    
+                        <div class="redSocialGrupo">
+                        {{ formData.submit }}    
+                        </div>
+                        <div id="messagePop" style="display: none;"></div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+    </form>
+</section>          

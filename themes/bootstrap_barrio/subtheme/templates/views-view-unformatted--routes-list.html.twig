@@ -1,0 +1,68 @@
+{#
+/**
+ * @file
+ * Theme override to display a view of unformatted rows.
+ *
+ * Available variables:
+ * - title: The title of this group of rows. May be empty.
+ * - rows: A list of the view's row items.
+ *   - attributes: The row's HTML attributes.
+ *   - content: The row's content.
+ * - view: The view object.
+ * - default_row_class: A flag indicating whether default classes should be
+ *   used on rows.
+ *
+ * @see template_preprocess_views_view_unformatted()
+ */
+#}
+{% set now = "now"|date("d-m-Y") %}
+<div class="container">
+    <div class="row">
+        <div class="resultados mt-4 col-12">
+            <div class="text-center">
+                <h3 class="title with-underline">Nuestras Rutas</h3>
+            </div>
+            <div class="row">
+                {% for row in rows %}
+                {% set photo_one = file_url(row['content']['#row']._entity.field_route_image_origin.entity.fileuri) %}
+                {% set photo_two = file_url(row['content']['#row']._entity.field_route_image_destiny.entity.fileuri) %}
+                <div class="col-sm-12 col-md-12 col-lg-4">
+                    <div class="panel panel-shadow">
+                        <div class="cities block-title orange">{{ row['content']['#row']._entity.field_route_title.value }}</div>
+                        <div class="images">
+                            <img class="imagedivideone" style="position:absolute;" src="{{ photo_one }}" alt="">
+                            <img class="imagedividetwo" style="position:absolute;" src="{{ photo_two }}" alt="">
+                        </div>
+                        <div class="bg-dark-blue row no-gutters mt-2">
+                            <div class="col-6 pl-2">Origen</div>
+                            <div class="col-6 pl-2">Destino</div>
+                        </div>
+                        <div class="bg-gray row no-gutters mt-2">
+                            <div class="col-6 pl-2">{{ row['content']['#row']._entity.field_route_city_origin.value }}</div>
+                            <div class="col-6 pl-2">{{ row['content']['#row']._entity.field_route_city_destiny.value }}</div>
+                        </div>
+                        <div class="bg-dark-blue row no-gutters mt-2">
+                            <div class="col-6 pl-2">Distancia</div>
+                            <div class="col-6 pl-2">Tiempo estimado</div>
+                        </div>
+                        <div class="bg-gray row no-gutters mt-2">
+                            <div class="col-6 pl-2">{{ row['content']['#row']._entity.field_route_distance.value }}</div>
+                            <div class="col-6 pl-2">{{ row['content']['#row']._entity.field_route_time_estimated.value }}</div>
+                        </div>
+
+                        <div class="panel mt-4">
+                            <a href="{{ row['content']['#row']._entity.field_route_url.value }}"><button class="btn w-100 light">Ver mapa</button></a>
+                            <!--<a href="/pages/reservation/{{ row['content']['#row']._entity.field_route_city_origin_id.value }}/{{ row['content']['#row']._entity.field_route_city_origin.value }}/{{ row['content']['#row']._entity.field_route_city_destiny_id.value }}/{{ row['content']['#row']._entity.field_route_city_destiny.value }}/{{ now }}/0"><button class="btn mt-2 w-100 dark">Comprar tiquete</button></a>-->
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <!--<div class="col col-lg-10 mx-auto mt-4 mb-4 text-gray d-flex justify-content-between align-items-end">
+        <img class="mr-3" src="{{ base_path }}/{{ active_theme_path() }}/images/misc/alert.png" height="65px" alt="Alerta">
+        <div class="small"> <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi aut nam nisi? Doloribus, dolore incidunt inventore porro hic magni voluptatem soluta?</p></div>
+    </div>-->
+</div>
+

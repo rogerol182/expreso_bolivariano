@@ -1,0 +1,530 @@
+<?php
+/**
+* @file
+* Module file for Expreso Bolivariano Jobs
+* Module
+*/
+//error_reporting(E_ERROR | E_WARNING | E_PARSE);
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\user\Entity\User;
+use Drupal\user\UserInterface;
+use Drupal\user\UserAuthInterface;
+use Drupal\user\UserStorageInterface;
+use Drupal\Core\Url;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Session\Session;
+
+/**
+ * Implements hook_form_alter().
+ * @param $form
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ * @param $form_id
+ */
+function expreso_bolivariano_jobs_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  //var_dump($form_id);
+  //die();
+  if ($form_id == 'user_login_form' ) {
+    //print_r($form);
+    //die();
+    // Add placeholders.
+    $form['name']['#attributes']['class'] = array('form-control', 'inputcito');
+    $form['pass']['#attributes']['class'] = array('form-control', 'inputcito');
+    $form['name']['#attributes']['placeholder'] = t('Documento o Cédula');
+    $form['pass']['#attributes']['placeholder'] = t('Contraseña');
+    $form['name']['#title_display'] = "invisible";
+    $form['pass']['#title_display'] = "invisible";
+    $form['name']['#description'] = '';
+    $form['pass']['#description'] = '';
+    $form['name']['#title'] = '';
+    $form['pass']['#title'] = '';
+    $form['name']['#maxlength'] = 11;
+    $form['pass']['#maxlength'] = 20;
+    $form['actions']['submit'] = array('#type' => 'submit', '#value' => t('Ingresar'));
+    $form['actions']['submit']['#attributes']['class'][] = 'btncito';
+    
+    $form['#attributes']['class'][] = 'btncito';
+  }
+  if ($form_id == 'user_register_form' ) {
+
+    $form['field_name_user']['widget'][0]['value']['#attributes']['class'] = array('form-control', 'inputcito');
+    $form['field_lastname_user']['widget'][0]['value']['#attributes']['class'] = array('form-control', 'inputcito');
+    $form['field_email']['widget'][0]['value']['#attributes']['class'] = array('form-control', 'inputcito');
+    $form['field_document']['widget'][0]['value']['#attributes']['class'] = array('form-control', 'inputcito');
+    $form['field_phone_user']['widget'][0]['value']['#attributes']['class'] = array('form-control', 'inputcito');
+    $form['field_birthday_user']['widget'][0]['value']['#attributes']['class'] = array('form-control', 'inputcito');
+    $form['field_document_type']['widget'][0]['value']['#attributes']['class'] = array('form-control', 'inputcito');
+    $form['account']['mail']['#attributes']['class'] = array('form-control', 'inputcito');
+    $form['account']['name']['#attributes']['class'] = array('form-control', 'inputcito');
+    //
+    $form['field_document_type']['widget']['#options']['_none']  = t('Seleccione');
+    $form['field_gender_user']['widget']['#options']['_none'] = t('Seleccione');
+    $form['field_document_type']['#required'] = TRUE;
+    $form['field_gender_user']['#required'] = TRUE;
+    $form['field_name_user']['widget'][0]['value']['#attributes']['placeholder'] = t('Nombres');
+    $form['field_lastname_user']['widget'][0]['value']['#attributes']['placeholder'] = t('Apellidos');
+    $form['field_document']['widget'][0]['value']['#attributes']['placeholder'] = t('Documento o Cédula');
+    $form['field_phone_user']['widget'][0]['value']['#attributes']['placeholder'] = t('3015557630');
+    $form['field_gender_user']['widget'][0]['value']['#attributes']['placeholder'] = t('Género');
+    $form['field_document_type']['widget']['#attributes']['#required'] = TRUE;
+    $form['field_gender_user']['widget']['#attributes']['#required'] = TRUE;
+    $form['account']['mail']['#attributes']['placeholder'] = t('Correo Electrónico');
+    $form['account']['name']['#attributes']['placeholder'] = t('Documento o Cédula');
+    //$form['account']['name']['type'] = 'number';
+    //
+    $form['field_name_user']['widget'][0]['value']['#title'] = '';
+    $form['field_lastname_user']['widget'][0]['value']['#title'] = '';
+    $form['field_phone_user']['widget'][0]['value']['#title'] = '';
+    $form['field_birthday_user']['widget'][0]['value']['#title'] = '';
+    $form['field_document_type']['widget']['#title'] = t('Tipo de Documento');
+    $form['field_gender_user']['widget']['#title'] = t('Género');
+    $form['contact']['#title'] = t('Acepto <a href="/pages/express_traveler" style="color:#fff;"> términos y condiciones </a> asi como el tratamiento de mis datos personales por parte de Expreso Bolivariano S.A.');
+    //
+    $form['field_name_user']['widget'][0]['value']['#description'] = '';
+    $form['field_lastname_user']['widget'][0]['value']['#description'] = '';
+    $form['field_phone_user']['widget'][0]['value']['#description'] = '';
+    $form['account']['mail']['#description'] = '';
+    $form['account']['name']['#description'] = '';
+    //$form['field_document_type']['widget'][0]['value']['#description'] = t('');
+    $form['contact']['contact']['#description']= '';
+    $form['contact']['contact']['#title']= '';
+    $form['contact']['contact']['#required'] = TRUE;
+    //Maxlength
+    $form['account']['mail']['#maxlength'] = 50;
+    $form['account']['name']['#maxlength'] = 11;
+    $form['field_phone_user']['#maxlength'] = 10;
+    $form['field_name_user']['widget'][0]['value']['#attributes']['maxlength'] = 50;
+    $form['field_lastname_user']['widget'][0]['value']['#attributes']['maxlength'] = 50;
+    //
+    $form['actions']['submit'] = array('#type' => 'submit', '#value' => t('Registrar'));
+    $form['actions']['submit']['#attributes']['class'][] = 'btncito';
+    $form['#attributes']['class'][] = 'btncito';
+    $form['#validate'][] = 'expreso_bolivariano_jobs_register_validate';
+
+  }
+  if ($form_id == 'user_pass' ) {
+
+    $form['name']['#attributes']['class'] = array('form-control', 'inputcito');
+    $form['name']['#attributes']['placeholder'] = t('Cédula o Correo Electrónico');
+    $form['actions']['submit'] = array('#type' => 'submit', '#value' => t('Nueva Contraseña'));
+    $form['actions']['submit']['#attributes']['class'][] = 'btncito';
+    $form['#attributes']['class'][] = 'btncito';
+  }
+  if ($form_id == 'user_pass_reset' ) {
+
+    $form['message']['#markup'] = t('Este es un acceso de un solo uso, ingrese dando click en el boton <strong> Iniciar Sesión </strong> y realice el cambio de su contraseña.');
+    $form['help']['#markup'] = t('Este ingreso solo se puede usar una vez.');
+    $form['actions']['submit'] = array('#type' => 'submit', '#value' => t('Iniciar Sesión'));
+    $form['actions']['submit']['#attributes']['class'][] = 'btncito';
+    $form['#attributes']['class'][] = 'btncito';
+  }
+  if ($form_id == 'user_edit' ) {
+    
+    $form['actions']['submit'] = array('#type' => 'submit', '#value' => t('Actualizar'));
+    $form['actions']['submit']['#attributes']['class'][] = 'btncito';
+    $form['#attributes']['class'][] = 'btncito';
+  }
+  if ($form_id == 'user_form' ) {
+    
+    unset($form['field_document_type']);
+    unset($form['field_gender_user']);
+    unset($form['field_name_user']);
+    unset($form['field_lastname_user']);
+    unset($form['field_phone_user']);
+    unset($form['field_birthday_user']);
+    unset($form['account']['current_pass']);
+    unset($form['account']['name']);
+    
+    $form['account']['pass']['#description']= t('Cree una contraseña para su cuenta y digitela en ambos campos.');
+    $form['actions']['submit'] = array('#type' => 'submit', '#value' => t('Crear Contraseña'));
+    $form['actions']['submit']['#attributes']['class'][] = 'btncito';
+    $form['#after_build'][] = 'expreso_bolivariano_form_user_form_after_build';
+    $form['#validate'][] = 'expreso_bolivariano_jobs_password_validate';
+    $form['account']['pass']['#process'] = array(
+      'form_process_password_confirm',
+      'expreso_bolivariano_jobs_password_construct',
+      'user_process_password_confirm'
+    );
+  }
+  if ($form_id == 'newsletter_form' ) {
+
+    $form['interestingNewsletter']['#attributes']['class'] = array('formsubs__select');
+    $form['nameNewsletter']['#attributes']['class'] = array('formsubs__input', 'inputcito');
+    $form['mailNewsletter']['#attributes']['class'] = array('formsubs__input', 'inputcito');
+    $form['submit'] = array('#type' => 'submit', '#value' => t('Registrar'));
+    $form['submit']['#attributes']['class'][] = 'formsubs__btn';
+    $form['#attributes']['class'][] = 'formsubs__btn';
+    $form['nameNewsletter']['#attributes']['maxlength'] = 100;
+    $form['nameNewsletter']['#attributes']['minlength'] = 7;
+  }
+  if($form_id == 'views_exposed_form'){
+
+    $form['field_agency_city_value']['#attributes']['class'] = array('formsubs__select');
+    $form['field_agency_type_value']['#attributes']['class'] = array('formsubs__select');
+    $form['actions']['submit'] = array('#type' => 'submit', '#value' => t('Filtrar'));
+    $form['actions']['submit']['#attributes']['class'][] = 'btncito';
+    $form['#attributes']['class'][] = 'btncito';
+  }
+}
+/**
+ * Process the password_confirm element.
+ */
+function expreso_bolivariano_form_user_form_after_build($form, &$form_state) {
+  $form['account']['pass']['pass1']['#attributes']['placeholder'] = t('Nueva Contraseña');
+  $form['account']['pass']['pass2']['#attributes']['placeholder'] = t('Confirmar Nueva Contraseña');
+  $form['account']['pass']['#process'] = array(
+      'form_process_password_confirm',
+      'expreso_bolivariano_jobs_password_construct',
+      'user_process_password_confirm'
+    );
+
+  return $form;
+}
+/*Hook Login*/
+function expreso_bolivariano_jobs_form_user_login_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
+      unset($form['links']);
+      $form['#validate'] = array('user_login_name_validate','expreso_bolivariano_jobs_login_validate','user_login_final_validate');
+ }
+/**
+ * Implements alter for login user.
+ */
+function expreso_bolivariano_jobs_login_validate(&$form, FormStateInterface &$form_state) {
+    /*get parameters user and pass*/
+    $name = trim($form_state->getValue('name'));
+    $pass = trim($form_state->getValue('pass'));
+    /*if is the administrator of Drupal*/
+    if($name=='adminebolx')
+    {
+        //$uid = UserAuthInterface::authenticate($form_state->getValue('name'), $pass);
+        $uid = \Drupal::service('user.auth')->authenticate($name,$pass);
+        if($uid==false)
+        {
+          $form_state->setErrorByName('name', t('Datos Incorrectos', ['%name' => $form_state->getValue('name')]));
+        }
+        else
+        {
+          $user = User::load($uid);
+          user_login_finalize($user);
+        }
+    }
+    $countValidate = 0;
+    /*Validate in the web service*/
+    $validate = \Drupal::service('expreso_bolivariano_services.custom');
+    $response = $validate->getToken();
+    if($response['statusName']=='OK')
+    {
+        $tokenId = $response['data']['token'];
+        $dateExpires = $response['data']['expires'];
+    }
+    $responseValidate = $validate->getValidateClientPassword($tokenId,$name,$pass);
+    if($responseValidate['statusName']=='OK')
+    {
+        $countValidate = $responseValidate['data']['countRegisters'];
+    }
+    /*if users does not exits*/
+    if($countValidate==0)
+    {
+       $form_state->setErrorByName('name', t('Datos Incorrectos', ['%name' => $form_state->getValue('name')]));
+    }
+    /*else exists create the user in Drupal*/
+    else
+    {
+        /*check if the user is in the Drupal Database*/
+        $connection = \Drupal::database();
+        $sql = "SELECT count(uid) as countValidate FROM users_field_data WHERE uid = :uid";
+        $result = $connection->query($sql, [':uid' => $name]);
+        if($result)
+        {
+          while ($row = $result->fetchAssoc()) 
+          {
+            $countValidateD = $row['countValidate'];
+          }
+        }
+        if($countValidateD==0)
+        {
+          $responseUserCreate = $validate->getValidateClientData($tokenId,$name);
+          if($responseUserCreate['statusName']=='OK')
+          {
+              foreach($responseUserCreate as $key => $value) 
+              {
+                $userId = $value['clientDocumentId'];
+                $firstName = $value['clientName'];
+                $lastName= $value['clientLastName'];
+                $email = $value['clientMail'];
+              }
+          }
+          $user = User::create();
+
+          $user->setUid(trim($userId));
+          $user->setPassword($pass);
+          $user->setEmail($email);
+          $nameFirstPart = explode(' ', $firstName);
+          $nameSecondPart = explode(' ', $lastName);
+          $nameFirstP = trim(strtolower($nameFirstPart[0]));
+          $nameSecondP = trim(strtolower($nameFirstPart[1]));
+          $lastFirstP = trim(strtolower($nameSecondPart[0]));
+          $lastSecondP = trim(strtolower($nameSecondPart[1]));
+          $fullName = (ucfirst($nameFirstP).' '.ucfirst($nameSecondP).' '.ucfirst($lastFirstP).' '.ucfirst($lastSecondP));
+          $user->setUsername($fullName);
+
+          //Optional settings
+          $language = 'en';
+          $user->set("init", $email);
+          $user->set("langcode", $language);
+          $user->set("preferred_langcode", $language);
+          $user->activate();
+
+          //Save user
+          $user->save();
+          /*Make the query to load the user with the new UID*/
+          $sqlU = "SELECT uid as userId FROM users WHERE uid = :uid";
+          $resultU = $connection->query($sqlU, [':uid' => $userId]);
+          if($resultU) 
+          {
+            while ($row = $resultU->fetchAssoc()) 
+            {
+              $userIdNew = $row['userId'];
+            }
+          }
+          /*Login into the Drupal*/
+          $user = User::load($userIdNew);
+          $form_state->set('uid', $userIdNew);
+          user_login_finalize($user);
+        }
+        else
+        {
+          $responseUserCreate = $validate->getValidateClientData($tokenId,$name);
+          if($responseUserCreate['statusName']=='OK')
+          {
+              foreach($responseUserCreate as $key => $value) 
+              {
+                $userId = $value['clientDocumentId'];
+                $firstName = $value['clientName'];
+                $lastName= $value['clientLastName'];
+                $email = $value['clientMail'];
+              }
+          }
+          $user = User::load($name);
+
+          //$user->setUid(trim($userId));
+          $user->setPassword($pass);
+          $user->setEmail($email);
+          $nameFirstPart = explode(' ', $firstName);
+          $nameSecondPart = explode(' ', $lastName);
+          $nameFirstP = trim(strtolower($nameFirstPart[0]));
+          $nameSecondP = trim(strtolower($nameFirstPart[1]));
+          $lastFirstP = trim(strtolower($nameSecondPart[0]));
+          $lastSecondP = trim(strtolower($nameSecondPart[1]));
+          $fullName = (ucfirst($nameFirstP).' '.ucfirst($nameSecondP).' '.ucfirst($lastFirstP).' '.ucfirst($lastSecondP));
+          $user->setUsername($fullName);
+
+          //Update user
+          $user->save();
+          /*Login into the Drupal*/
+          
+          $user = User::load($name);
+          $form_state->set('uid', $name);
+          $url = \Drupal::url("expreso_bolivariano_pages.page_user", ['user' => $name]);
+          //$form_state->setRedirect($url);
+          user_login_finalize($user);
+          $response = new RedirectResponse($url);
+          $response->send();
+        }
+    }
+}
+/**
+ * Implements alter for login register.
+ */
+function expreso_bolivariano_jobs_register_validate(&$form, FormStateInterface &$form_state) {
+    /*get select items*/
+    $items = $form_state->getValues();
+
+    if(is_null($items['field_document_type'][0]['value']))
+    {
+      $form_state->setErrorByName('field_document_type', t('Tipo Documento no Valido', ['%field_document_type' => $form_state->getValue('field_document_type')]));
+    }
+    else if(is_null($items['field_gender_user'][0]['value']))
+    {
+      $form_state->setErrorByName('field_gender_user', t('Tipo Genero no Valido', ['%field_gender_user' => $form_state->getValue('field_gender_user')]));
+    }
+    else if(!is_numeric($form_state->getValue('name')))
+    {
+      $form_state->setErrorByName('name', t('Documento o Cédula debe ser solo numeros', ['%name' => $form_state->getValue('name')]));
+    }
+    else
+    {
+      $name = (integer) trim($form_state->getValue('name'));
+      $mail = trim($form_state->getValue('mail'));
+      $items = $form_state->getValues();
+      $firstName = trim($items['field_name_user'][0]['value']);
+      $firstName = ucfirst($firstName);
+      $lastName = trim($items['field_lastname_user'][0]['value']);
+      $lastName = ucfirst($lastName);
+      $fullName = $firstName." ".$lastName;
+      $phone = (integer) trim($items['field_phone_user'][0]['value']);
+      $birthday = trim($items['field_birthday_user'][0]['value']);
+      $dateB = explode(' ', $birthday);
+      $birthdayDate = $dateB[0];
+      $gender = (integer) trim($items['field_gender_user'][0]['value']);
+      $docType = (integer) trim($items['field_document_type'][0]['value']);
+      $acceptance[] = trim($items['contact']);
+
+      $validate = \Drupal::service('expreso_bolivariano_services.custom');
+      $response = $validate->getToken();
+      if($response['statusName']=='OK')
+      {
+          $tokenId = $response['data']['token'];
+          $dateExpires = $response['data']['expires'];
+      }
+      $responseValidate = $validate->getValidateClientData($tokenId,$name);
+      if($responseValidate['statusName']=='OK')
+      {
+          $countValidate = count($responseValidate['data']);
+      }
+      if($countValidate!=0)
+      {
+         $form_state->setErrorByName('name', t('Documento o Cédula ya esta Registrado(a) en el Sistema.', ['%name' => $form_state->getValue('name')]));
+      }
+      else
+      {
+          //die();
+          $responseInsert = $validate->setRegisterClient($tokenId,$docType,$name,$password,$firstName,$lastName,$phone,$mail,$gender,$birthdayDate,$acceptance);
+          if($response['statusName']=='OK')
+          {
+              //Create User on Service and Drupal
+              $user = User::create();
+              $user->enforceIsNew();
+              $dateNow = date('Y-m-d H:i:s');
+              $user->setUid($name);
+              $user->setPassword($dateNow);
+              $user->setEmail($mail);
+              $user->setUsername($firstName." ".$lastName);
+              //Optional settings
+              $language = 'en';
+              $user->set("init", $mail);
+              $user->set("langcode", $language);
+              $user->set("preferred_langcode", $language);
+              $user->activate();
+
+              //Save user
+              $user->save();
+              $op = 'register_no_approval_required';
+              if (_user_mail_notify($op, $user)) 
+              {
+                \Drupal::messenger()->addStatus(t('Se ha enviado un Correo Electrónico a su cuenta '.$mail.' con instrucciones para finalizar su registro.'));
+              }
+              $url = \Drupal::url("expreso_bolivariano_pages.page_user_register", ['mail' => $mail, 'userName' => $fullName]);
+              $response = new RedirectResponse($url);
+              $response->send();
+          }
+          else
+          {
+            $form_state->setErrorByName('field_document_type', t('Error Creando el Usuario', ['%field_document_type' => $form_state->getValue('field_document_type')]));
+          }
+          //var_dump($responseInsert);
+          //die();
+      }
+    }
+}
+/*
+ * Implements alter for change password user.
+ */
+function expreso_bolivariano_jobs_password_construct(&$form, FormStateInterface &$form_state) {
+    $form['account']['pass']['pass1']['#attributes']['required'] = TRUE;
+    $form['account']['pass']['pass2']['#attributes']['required'] = TRUE;
+}
+/*
+ * Implements alter for change password user.
+ */
+function expreso_bolivariano_jobs_password_validate(&$form, FormStateInterface &$form_state) {
+    $items = $form_state->getValues();
+    $passOne = $items['pass']['pass1'];
+    $passTwo = $items['pass']['pass2'];
+    if (!preg_match('/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%&()*+.-?¡¿]{8,20}$/', $passOne)) {
+      $form_state->setErrorByName('pass', t('La contraseña debe tener un caracter especial y por lo menos una letra Mayuscula.', ['%pass' => $items['pass']['pass1']]));
+    }
+    else if($passOne!=$passTwo)
+    {
+      $form_state->setErrorByName('pass', t('Las Contraseñas deben coincidir', ['%pass' => $items['pass']['pass1']]));
+    }
+    else
+    {
+      $validate = \Drupal::service('expreso_bolivariano_services.custom');
+      $response = $validate->getToken();
+      if($response['statusName']=='OK')
+      {
+          $tokenId = $response['data']['token'];
+          $dateExpires = $response['data']['expires'];
+      }
+      $uid = \Drupal::currentUser()->id();
+      $userId = (integer) $uid;
+      $password = trim($passOne);
+      $responseSavePassword = $validate->setNewPassword($tokenId,$userId,$password);
+      if($responseSavePassword['statusName']=='OK')
+      {
+          //Create User on Service and Drupal
+          $user = User::load($uid);
+          $user->setPassword($password);
+          $user->save();
+          $url = \Drupal::url("expreso_bolivariano_pages.page_user", ['user' => $uid]);
+          $response = new RedirectResponse($url);
+          $response->send();
+      }
+      else
+      {
+        $form_state->setErrorByName('pass', t('Error Creando el Usuario', ['%pass' => $form_state->getValue('pass')]));
+      }
+    }
+}
+/**
+ * Implements hook_preprocess_user().
+ */
+function bootstrap_bolivariano_subtheme_preprocess_menu__account(&$variables, $hook) {
+      $variables['#cache']['max-age'] = 0;
+      $user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
+      if($user!=NULL)
+      {
+        $uid = $user->get('uid')->value;
+        $name = $user->getDisplayName();
+        $email = $user->getEmail();
+        //$userId = (int)$uid;
+        //Validate in the web service
+        //Period
+        $period = date("Y-m"); 
+        // Get the Points for Express Traveler 
+        $validate = \Drupal::service('expreso_bolivariano_services.custom');
+        $response = $validate->getToken();
+        if($response['statusName']=='OK')
+        {
+          $tokenId = $response['data']['token'];
+          $dateExpires = $response['data']['expires'];
+        }
+        $responsePoints = $validate->getPointsExpressClient($tokenId,$uid,$period);
+        if($responsePoints['statusName']=='OK')
+        {
+            $points = $responsePoints['data']['endBalance'];
+        }
+        else
+        {
+          $points = 0;
+        }
+        //var_dump($validate->getPointsExpressClient($tokenId,$uid,$period));
+        //var_dump($responsePoints);
+        //die();
+        $responseReservations = $validate->getReservationCount($tokenId,$uid,'999');
+        if($responseReservations['statusName']=='OK')
+        {
+            $reservations = $responseReservations['data']['countRegisters'];
+        }
+        if ($hook == 'menu__account')
+        {
+          $variables["personData"] = array (
+            "userNamePerson" => $name,
+            "idPerson" => $uid,
+            "mailPerson" => $email,
+            "pointsPerson" => $points,
+            "reservationsPerson" => $reservations
+          );
+        }
+      }
+}

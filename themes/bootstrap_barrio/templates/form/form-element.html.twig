@@ -129,7 +129,7 @@
     {% endif %}
   </div>
 {% else %}
-  <fieldset{{ attributes.addClass(classes, 'form-group col-auto') }}>
+  <!--<fieldset{{ attributes.addClass(classes, 'form-group col-auto') }}>-->
     {% if label_display in ['before', 'invisible'] %}
       {{ label }}
     {% endif %}
@@ -158,5 +158,5 @@
         {{ description.content }}
       </small>
     {% endif %}
-  </fieldset>
+  <!--</fieldset>-->
 {% endif %}

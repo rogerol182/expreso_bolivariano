@@ -9,7 +9,7 @@ use Drupal\Core\Block\BlockBase;
 use Drupal\expreso_bolivariano_services\Services\ExpresoBolivarianoServices;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-
+use Symfony\Component\HttpFoundation\Response;
 /**
  * Provides a 'Promotions Home' block.
  *
@@ -58,14 +58,17 @@ class PromotionsHomeGridBlock extends BlockBase implements ContainerFactoryPlugi
 			}
 		}
 		$responsePromotions = $this->managerServices->getPromotions($tokenId,4);
+		$responsePromotionsMore = $this->managerServices->getPromotions($tokenId,4);
 		
-		if($responsePromotions['statusName']=='OK')
+		if($responsePromotions['statusName']=='OK' && $responsePromotionsMore['statusName']=='OK')
 		{
 			$promotionsData = $responsePromotions['data'];
+			$promotionsMoreData = $responsePromotionsMore['data'];
 		}
 		return array(
 			'#theme' => 'promotions_home_grid_block',
 			'#promotionsData' => $promotionsData,
+			'#promotionsMoreData' => $promotionsMoreData,
 			'#title' => $this->t('Promociones Home'),
 		);
 	}

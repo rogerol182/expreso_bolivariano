@@ -19,11 +19,11 @@
  */
 #}
 {% import _self as menus %}
-
 {#
   We call a macro which calls itself to render the full tree.
   @see http://twig.sensiolabs.org/doc/tags/macro.html
 #}
+{{ kint(variables) }}
 <div class="header__login">
 {% if logged_in == 1 %}
 {{ menus.menu_links(items, attributes, 0) }}
@@ -32,10 +32,9 @@
   {% import _self as menus %}
   {% if items %}
     {% if menu_level == 0 %}
-
     <div class="logged_wrapper">
         <div class="logged">
-            <p class="header__user">Diego Rodriguez</p>
+            <p class="header__user"><a href="/pages/user" class="header__loginactions"><span class="header__linkuser">{{ current_user_name }}</span></a></p>
             <div class="mobile-only">
                 <a href="">
                     <div class="header__close-session">
@@ -47,12 +46,12 @@
             </div>
         </div>
         <div class="header__actions">
-            <a class="header__loginactions" href="/pages/viajero-expreso">
+            <a class="header__loginactions" href="/pages/express_traveler">
                 <span class="header__linkuser">Puntos</span> 
                 <span class="header__icon header__icon--points"></span>
                 <span class="header__linkuser ml-2">1700</span> 
             </a>
-            <a class="header__loginactions" href="/pages/reservas"><span class="header__linkuser">Reservas</span> <span class="header__icon header__icon--booking">2</span></a>
+            <a class="header__loginactions" href="/user/more"><span class="header__linkuser">Reservas</span> <span class="header__icon header__icon--booking">2</span></a>
         </div>
     </div>
     <div class="logged">

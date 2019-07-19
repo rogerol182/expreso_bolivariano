@@ -1,0 +1,92 @@
+<section class="wrapper">
+    <div class="wrapper__top bg-image">
+        <img src="/sites/default/files/inline-images/login.jpg" alt="" class="">
+        <div class="wrapper__topwrap">
+            <h2 class="wrapper__title wrapper__title--cities">Actualizar Contraseña</h2>
+        </div>
+    </div>
+    <form{{ attributes }}>
+        <div class="wrapper__body login">
+            <h3 class="wrapper__lead">Actualizar Contraseña</h3>
+            <div class="wrapper__container col">
+            <div class="container mx-auto login">
+                <div class="row no-gutters">
+                    <div class="col-lg-12 dBlueBox">
+                        <div class="titleDescription">
+                            <h1 class="tituloDes">Cambie su Contraseña</h1>
+                            <hr>
+                            <p class="textoDes">Sr(a). <strong> {{ user.displayname }}</strong>, Debe actualizar su contraseña y asi poder empezar a disfrutar de los benficios de ser Viajero Expreso de Bolivariano.</p>
+                        </div>
+                        <div class="inputz2">
+                        {% for key, child in element if key|first != '#' %}
+                        {% if key == 'account' %}
+                            {% for keyz, childz in child if keyz|first != '#' %}
+                            {% if keyz == 'mail' %}
+                            <div class="inputSingle">
+                                <h6 class="aboveInput">Documento o Cédula *</h6>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="inputIconBox">
+                                            <i class="fa fa-drivers-license-o iconito"></i>
+                                        </span>
+                                    </div>
+                                    <input class="form-control inputcito form-email required" data-drupal-selector="edit-mail" type="textfield" id="edit-mail" name="mail" value="{{ user.id }}" size="60" readonly="readonly" disabled="disabled">
+                                </div>
+                            </div>
+                            {% elseif keyz == 'pass' %}
+                                {% for keyzz, childzz in childz if keyzz|first != '#' %}
+                                    {% if keyzz == 'pass1' %}
+                                    <div class="inputSingle">
+                                        <h6 class="aboveInput">Contraseña *</h6>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="inputIconBox">
+                                                    <i class="fa fa-drivers-license-o iconito"></i>
+                                                </span>
+                                            </div>
+                                            <input class="password-field js-password-field form-text form-control" data-drupal-selector="edit-pass-pass1" type="password" id="edit-pass-pass1" name="pass[pass1]" size="25" maxlength="128" required="required" placeholder="Contraseña" minlength="8">
+                                            <button class="btn btn-primary inputcitoBtnVer" type="button" id="btnShowPassword1"><i class="fa fa-eye"></i></button>
+                                        </div>
+                                    </div>
+                                    {% elseif keyzz == 'pass2' %}
+                                    <div class="inputSingle">
+                                        <h6 class="aboveInput">Confirmar Contraseña *</h6>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="inputIconBox">
+                                                    <i class="fa fa-drivers-license-o iconito"></i>
+                                                </span>
+                                            </div>
+                                            <input class="password-confirm js-password-confirm form-text form-control" data-drupal-selector="edit-pass-pass2" type="password" id="edit-pass-pass2" name="pass[pass2]" size="25" maxlength="128" required="required" placeholder="Confirmar Contraseña" minlength="8">
+                                            <button class="btn btn-primary inputcitoBtnVer" type="button" id="btnShowPassword2"><i class="fa fa-eye"></i></button>
+                                        </div>
+                                    </div>       
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                {{ childz }}    
+                            {% endif %}
+                            {% endfor %}
+                        {% elseif key == 'footer' %}
+                            {{ child }}
+                        {% elseif key == 'actions' %}
+                        <div class="redSocialGrupo">
+                            {{ child }}
+                        </div>
+                        {% elseif key == 'form_build_id' %}
+                            {{ child }}
+                        {% elseif key == 'form_id' %}
+                            {{ child }}    
+                        {% elseif key == 'form_token' %}
+                            {{ child }}
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+    </form> 
+</section>          

@@ -1,0 +1,64 @@
+<section class="wrapper">
+        <div class="wrapper__top bg-image">
+            <img src="/sites/default/files/inline-images/login.jpg" alt="" class="">
+            <div class="wrapper__topwrap">
+                <h2 class="wrapper__title wrapper__title--cities">Iniciar Sesión</h2>
+            </div>
+        </div>
+        <div class="wrapper__body login">
+            <h3 class="wrapper__lead">Iniciar sesión</h3>
+            <div class="wrapper__container col">
+                <div class="container mx-auto">
+                    <div class="row no-gutters">
+                        <div class="col-md-6 pb-6 grayBox text-center">
+                            <img src="{{ base_path }}/{{ active_theme_path() }}/images/svg/iconLogin.svg" class="iconosSVG">
+                            <h3><b>Iniciar sesión</b></h3>
+                        </div>
+                        <div class="col-md-6 blueBox">
+                            <div class="inputz">
+                                <form{{ attributes }}>
+                                    {% for key, child in element if key|first != '#' %}
+                                       {% if key == 'name' %}
+                                        <div class="inputSingle">
+                                            <h6 class="aboveInput">Documento o Cédula *</h6>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend"><span class="inputIconBox"><i class="fa fa-envelope iconito"></i></span></div>
+                                                {{ child }}
+                                                <!--<input type="text" class="form-control inputcito" placeholder="E-mail">-->
+                                            </div>
+                                        </div> 
+                                      {% elseif key == 'pass' %}
+                                        <div class="inputSingle">
+                                            <h6 class="aboveInput">Contraseña *</h6>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend"><span class="inputIconBox"><i class="fa fa-key iconito"></i></span></div>
+                                                {{ child }}
+                                                <button class="btn btn-primary inputcitoBtnVer" type="button" id="btnShowPassword"><i class="fa fa-eye"></i></button>
+                                            </div>
+                                        </div>
+                                      {% else %}
+                                        <div class="redSocialGrupo">
+                                            <!--<a class="btn btn-block btn-social btn-facebook">
+                                                <span class="fa fa-facebook"></span> Iniciar con Facebook
+                                            </a>
+                                            <a class="btn btn-block btn-social btn-google">
+                                                <span class="fa fa-google"></span> Iniciar con Google
+                                            </a>-->
+                                            {{ child }}
+                                        </div>
+                                      {% endif %}
+                                    {% endfor %}
+                                    
+
+                                </form>
+                            </div>
+                            <div class="col-md-12 text-center" style="padding-bottom: 20px;">
+                                <a href="/user/password" style=" color: #E1972F;">Olvido Contraseña</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>

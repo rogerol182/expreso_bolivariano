@@ -17,76 +17,107 @@
 #}
 <section class="container-fluid searcher">
     <div class="row searcher__wrapper">
-        <!-- 
-        Slider Galería para el buscador:
-        este carousel se identifica con el id: searcher__gallery
-        y se manipula con los identificadores
-        de la clase carousel-indicators
-        El envoltorio del slider es la clase searcher__slider.
-        -->
-        <div class="searcher__slider gallery">
-            <div id="searcher__gallery" class="carousel  slide" data-ride="carousel">
-                <!-- Contenedor Slider Carrusel  -->  
-                <div class="carousel-inner">
-                	<!-- Elemento Slider Carrusel --> 
-                	{% for row in rows %}
-			  		{% set photo = file_url(row['content']['#row']._entity.field_image.entity.fileuri) %}
-                    <div class="carousel-item active">
-                    	<!-- Foto Elemento Slider Carrusel -->
-                    	<h1 class="searcher__title">{{ row['content']['#row']._entity.title.value }}</h1>
-                    	<div class="weather_box">
-			                <span>22° Guatapé/Piedra el Peñol</span><i></i>
-			            </div>
-                        <img src="{{ photo }}" alt="First slide">
-                    </div>
-                    {% endfor %}
-				</div>
-			</div>
-		</div>
-		<div class="col">
-                
-                <svg class="searcher__svg">
-                    <path d="M0 25 L1500 25 Z"/>
-                </svg>
-                <div class="container-fluid searcher__toolbar">
-                    <div class="row">
-                        <div class="col">
-                            <h2 class="searcher__subtitle">¿Cual es tu siguiente viaje?</h2>
-                            <h2 class="searcher__subtitle searcher__subtitle--right">Experiencias</h2>
-                        </div>
-                    </div>
-                    <div class="row searcher__row searcher__row--filler">
-                        <div class="col-6 col-md-2 searcher__col">
-                            <p class="searcher__label">Origen</p>
-                            <select class="searcher__select __select--bluedark" name="origin" id="origin">
-                                <option value="Bogotá" selected>Bogotá</option>
-                                <option value="Bogotá" >Cali</option>
-                            </select>
-                        </div>
-                        <div class="col-6 col-md-2 searcher__col searcher__col--line">
-                            <p class="searcher__label">Destino</p>
-                            <select class="searcher__select __select--siena" name="destiny" id="destiny">
-                                <option value="Medellín" selected>Medellín</option>
-                                <option value="Medellín">Melgar</option>
-                            </select>
-                        </div>
-                        <div class="col-6 col-md-2 searcher__col">
-                            <p class="searcher__label searcher__label--nomobile">Ida</p>
-                            <input type="date" class="searcher__input searcher__input--date searcher__input--blue" name="fromof" id="fromof"/>
-                        </div>
-                        <div class="col-6 col-md-2 searcher__col">
-                            <p class="searcher__label searcher__label--nomobile">Regreso (opcional)</p>
-                            <input type="date" class="searcher__input searcher__input--date searcher__input--yellow" name="cameof" id="cameof"/>
-                        </div>
-                        <div class="col-12 col-md-2 searcher__col justify-content-center d-flex">
-                            <button class="hvr-pulse-shrink searcher__btn searcher__btn--search">Buscar</button>
-                            <button class="hvr-pulse-shrink searcher__btn searcher__btn--tour d-inline-block d-sm-none">Tours</button>
-                        </div>
-                        <div class="col-12 col-md-2 searcher__col searcher__col--last">
-                            <button class="hvr-pulse-shrink searcher__btn searcher__btn--tour searcher__btn--onlydesktop">Tours</button>
-                        </div>
+        <!-- Slider Rotative -->
+        <video class="searcher__video" width="320" height="240" autoplay="" muted="" loop="">
+            <source src="{{ base_path }}/{{ active_theme_path() }}/images/video/video_home.mp4" type="video/mp4">
+        </video>
+        {% for row in rows %}
+        {% set photo = file_url(row['content']['#row']._entity.field_image.entity.fileuri) %}
+        <img class="searcher__videobackup" src="{{ photo }}" alt="First slide">
+        {% endfor %}
+        <div class="col">
+            <h1 class="searcher__title">Viajemos Juntos</h1>
+            <svg class="searcher__svg">
+                <path d="M0 25 L1500 25 Z"></path>
+            </svg>
+            <div class="container-fluid searcher__toolbar">
+                <div class="row">
+                    <div class="col">
+                        <h2 class="searcher__subtitle">¿Cual es tu siguiente viaje?</h2>
+                        <h2 class="searcher__subtitle searcher__subtitle--right">Experiencias</h2>
                     </div>
                 </div>
+                <!-- Begins Search Block -->
+                {{ blockSearchTrip }}
+                <!-- End Search Block -->
             </div>
-	</div>
+        </div>
+    </div>
 </section>
+
+<script type="text/javascript">
+
+    /* 
+    Inicio
+    Script para validar el comportamiento si el home tiene Video.
+    */
+
+    "use strict";
+    function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+    function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+    function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+    var Buscador =
+    function () {
+      function Buscador() {
+        _classCallCheck(this, Buscador);
+
+        this.parent = null;
+        this.video = null;
+        this.image = null;
+      }
+
+      _createClass(Buscador, [{
+        key: "loadComps",
+        value: function loadComps(comp1, comp2) {
+          this.parent = comp1.parentNode;
+          this.video = comp1;
+          this.image = comp2;
+        }
+      }, {
+        key: "detectmob",
+        value: function detectmob() {
+          if (navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/webOS/i) || navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/iPod/i) || navigator.userAgent.match(/BlackBerry/i) || navigator.userAgent.match(/Windows Phone/i)) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      }, {
+        key: "manupulateDOM",
+        value: function manupulateDOM() {
+          var value = this.detectmob();
+
+          if (value) {
+            this.video.classList.add('hide');
+            this.image.classList.remove('hide');
+          } else {
+            this.video.classList.remove('hide');
+            this.image.classList.add('hide');
+          }
+        }
+      }]);
+
+      return Buscador;
+    }();
+
+    
+
+    (function (myClass) {
+      var searcher = new myClass();
+      window.addEventListener('load', function () {
+        searcher.loadComps(document.querySelector('.searcher__video'), document.querySelector('.searcher__videobackup'));
+        searcher.manupulateDOM();
+      });
+      window.addEventListener('resize', function () {
+        return searcher.manupulateDOM();
+      });
+    })(Buscador);
+
+    /*
+    Fin - Script para validar el comportamiento si el home tiene Video.
+    */
+
+</script>

@@ -1,0 +1,44 @@
+{% set now = "now"|date("Y-m-d") %}
+<div class="row searcher__row searcher__row--filler">
+    <div class="col-6 col-md-2 searcher__col">
+        <p class="searcher__label">Origen</p>
+        <select class="searcher__select __select--bluedark" name="origin" id="originCity">
+            {% for itemsGo in citiesGoData %}
+            {% if itemsGo.agencyId == 1 %}
+            {% set selected = 'selected="selected"' %}
+            {% else %}
+            {% set selected = '' %}
+            {% endif %}
+            <option value="{{ (itemsGo.agencyId) }}" {{ selected }} >{{ (itemsGo.agencyName)|trim|title }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-6 col-md-2 searcher__col searcher__col--line">
+        <p class="searcher__label">Destino</p>
+        <select class="searcher__select __select--siena" name="destiny" id="destinyCity">
+            {% for itemsBack in citiesBackData %}
+            {% if itemsBack.agencyId == 2 %}
+            {% set selectedBack = 'selected="selected"' %}
+            {% else %}
+            {% set selectedBack = '' %}
+            {% endif %}
+            <option value="{{ (itemsBack.agencyId) }}" {{ selectedBack }}>{{ (itemsBack.agencyName)|trim|title }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-6 col-md-2 searcher__col">
+        <p class="searcher__label searcher__label--nomobile">Ida</p>
+        <input type="date" class="searcher__input searcher__input--date searcher__input--blue" name="fromof" id="fromof" value="{{ now }}">
+    </div>
+    <div class="col-6 col-md-2 searcher__col">
+        <p class="searcher__label searcher__label--nomobile">Regreso (opcional)</p>
+        <input type="date" class="searcher__input searcher__input--date searcher__input--yellow" name="cameof" id="cameof">
+    </div>
+    <div class="col-12 col-md-2 searcher__col justify-content-center d-flex">
+        <button class="hvr-pulse-shrink searcher__btn searcher__btn--search" id="buttonSearchTrip">Buscar</button>
+        <button class="hvr-pulse-shrink searcher__btn searcher__btn--tour d-inline-block d-sm-none" id="buttonSearchTour">Tours</button>
+    </div>
+    <div class="col-12 col-md-2 searcher__col searcher__col--last">
+        <button class="hvr-pulse-shrink searcher__btn searcher__btn--tour searcher__btn--onlydesktop" id="buttonSearchTourM">Tours</button>
+    </div>
+</div>

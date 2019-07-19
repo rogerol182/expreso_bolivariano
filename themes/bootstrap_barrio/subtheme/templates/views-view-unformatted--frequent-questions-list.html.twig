@@ -1,0 +1,30 @@
+<div class="wrapper__body pb-4">
+    <h3 class="wrapper__lead">Preguntas Frecuentes</h3>
+    <div class="wrapper__container mb-4">
+        <div class="row no-gutters">
+            <div class="col col-md-12 text-gray px-5">
+                Aquí podras encontrar información sobre las preguntas mas frecuentes que tienen nuestros pasajeros, si no logramos resolverla, contactanos de inmediato. <span class="text-blue">!No te los pierdas, compra ya tus tiquetes¡</span>
+            </div>
+        </div>
+    </div>
+    <div class="accordion mb-4" id="accordionpf">
+        {% set j = 0 %}
+        {% for row in rows %}
+        {% set j = j+1 %}
+        <div class="card panel-shadow">
+            <div class="card-header" id="heading{{ j }}">
+            <h5 class="mb-0">
+                <b>P: {{ row['content']['#row']._entity.field_frequent_questions_title.value }}</b>
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse{{ j }}" aria-expanded="false" aria-controls="collapse{{ j }}">
+                </button>
+            </h5>
+            </div>
+            <div id="collapse{{ j }}" class="collapse" aria-labelledby="heading{{ j }}" data-parent="#accordionpf" style="">
+            <div class="card-body text-blue">
+                R: {{ row['content']['#row']._entity.field_frequent_questions_answer.value|raw }}
+            </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>

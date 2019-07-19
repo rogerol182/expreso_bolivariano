@@ -1,0 +1,6 @@
+name: Expreso Bolivariano Jobs
+type: module
+description: 'Module for Jobs in Expreso Bolivariano Page.'
+package: Expreso Bolivariano
+core: 8.x
+base theme: bootstrap_barrio

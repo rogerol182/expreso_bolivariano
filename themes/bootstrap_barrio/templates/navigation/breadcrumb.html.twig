@@ -13,24 +13,34 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col col-md-4 col-lg-4 ">
-
+        {% for item in breadcrumb %}
+        {% if loop.last %}
+          <span>{{ item.text }}</span>
+        {% endif %}
+        {% endfor %}
         </div>  
         <div class="col col-md-8 col-lg-8">
-              <ul>
-              <!--<ol class="breadcrumb">-->
-              {% for item in breadcrumb %}
-                {% if item.url %}
-                  <li>
-                    <a href="{{ item.url }}">{{ item.text }}</a>
-                  </li>
-                {% else %}
-                  <li class="active">
-                    {{ item.text }}
-                  </li>
-                {% endif %}
-              {% endfor %}
-              <!--</ol>-->
-            </ul>
+          <ul>
+          <!--<ol class="breadcrumb">-->
+          {% for item in breadcrumb %}
+            {% if item.text != '>' %}
+              {% if loop.first %}
+                <li>
+                  <a href="{{ item.url }}">{{ item.text }}</a>
+                </li>
+              {% elseif loop.last %}
+                <li class="active">
+                  <a href="{{ item.url }}">{{ item.text }}</a>
+                </li>
+              {% else %}
+                <li>
+                  <a href="{{ item.url }}">{{ item.text }}</a>
+                </li>  
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+          <!--</ol>-->
+        </ul>
       </div>
     </div>
   </div>  

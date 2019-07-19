@@ -1,0 +1,239 @@
+{#
+/**
+ * @file
+ * Theme override to display a view of unformatted rows.
+ *
+ * Available variables:
+ * - title: The title of this group of rows. May be empty.
+ * - rows: A list of the view's row items.
+ *   - attributes: The row's HTML attributes.
+ *   - content: The row's content.
+ * - view: The view object.
+ * - default_row_class: A flag indicating whether default classes should be
+ *   used on rows.
+ *
+ * @see template_preprocess_views_view_unformatted()
+ */
+#}
+<section class="wrapper bg_bolivariano">
+    <div class="wrapper__top reduced  bg-image">
+        <img src="{{ file_url(content.field_agency_image['#items'].entity.uri.value) }}" alt="" class="">
+        <div class="wrapper__topwrap ">
+            <h2 class="wrapper__title wrapper__title--cities">Agencias - {{ node.field_agency_title.0.value|raw }}</h2>
+        </div>
+    </div>
+</section>
+<section class="wrapper__100 mt-5" style="border-bottom: none;">
+    <div id="rutas" class="">
+        <div class="container modal_agencias">
+            <div class="row" style="padding-bottom: 20px;">
+                <div class="col-md-5">
+                    <div class=" info ">
+                      <h2 style="text-align: center;">{{ node.field_agency_title.0.value|raw }}</h2>
+                      <p><b>Información General</b></p>
+                      <p><b>Para Destacar: </b>{{ node.field_agency_block_one.0.value|raw }}</p>
+                      <p><b>Cultura: </b>{{ node.field_agency_block_two.0.value|raw }}</p>
+                    </div>
+                    {% if node.field_agency_type.0.value != "M" %}
+                    <div class="details" style="margin-top: 0px;padding: 0px;display: flex;flex-wrap: wrap; padding-left: 40px;">
+                      <h3 style="text-align: center; padding: 20px;">Servicios en Agencia</h3>
+                      {% for key, item in node.field_agency_service_bus|reverse if key|first != '#' %}
+                        <figure style="width: 30%;"><a href="/pages/bus"><img src="{{ base_path }}/{{ active_theme_path() }}/images/label_reservation/{{ item.value|raw }}.png" alt=""></a></figure> 
+                      {% endfor %}
+                    </div>
+                    {% endif %}
+                    <h3 style="text-align: center; padding: 20px;">Experiencia en Agencia</h3>
+                    <div class="d-flex flex-wrap justify-content-center">
+                        {% if node.field_agency_ticket_sold.0.value == '1' %}
+                        <div style=" padding-right: 20px;">
+                          <figure><img src="/sites/default/files/2019-06/if16.png" alt=""></figure>
+                          <hr style="border-bottom: 1px solid #E1972F;">
+                          <p style="text-align: center; font-size: 12px;">Venta </br> Tiquetes</p>
+                        </div>
+                        {% endif %}
+                        {% if node.field_agency_board.0.value == '1' %}
+                        <div style=" padding-right: 20px;">
+                            <figure><img src="/sites/default/files/2019-06/if17.png" alt=""></figure>
+                            <hr style="border-bottom: 1px solid #E1972F;">
+                            <p style="text-align: center; font-size: 12px;">Abordaje</p>
+                        </div>
+                        {% endif %}
+                        {% if node.field_agency_shipping.0.value == '1' %}
+                        <div style=" padding-right: 20px;">
+                            <figure><img src="/sites/default/files/2019-06/if18.png" alt=""></figure>
+                            <hr style="border-bottom: 1px solid #E1972F;">
+                            <p style="text-align: center; font-size: 12px;">Envios</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                </div>
+                <div class="col-md-7">
+                    <div class="modal_right" style="padding-top: 0px; padding-right: 0px;">
+                        <img class="" src="{{ file_url(content.field_agency_image['#items'].entity.uri.value) }}" alt="">
+                        <div class="details py-4" style="margin-top: 0px;">
+                            <div class="row">
+                                <div class="col-md-2 d-none d-md-block ">
+                                    <img src="{{ base_path }}/{{ active_theme_path() }}/images/misc/pin.png" alt="pin bolivariano">
+                                </div>
+                                <div class="col-md-10">
+                                    <p><b>Ubicación: </b>{{ node.field_agency_city.0.value|raw }}</p>
+                                    <p><b>Dirección: </b>{{ node.field_agency_address.0.value|raw }}</p>
+                                    <p><b>Teléfono: </b> {{ node.field_agency_indicative.0.value|raw }} {{ node.field_agency_phone.0.value|raw }} {{ node.field_agency_extension.0.value|raw }}</p>
+                                    <p><b>Email: </b> {{ node.field_agency_email.0.value|raw }}</p>
+                                    <p><b>Horario de atención: </b> {{ node.field_agency_schedule.0.value|raw }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pac-card" id="pac-card">
+                          <div id="pac-container">
+                            <input id="pac-input" type="text" placeholder="Busca con Bolivariano">
+                          </div>
+                        </div>
+                        <div id="map" class="map_route" style="height: 400px;"></div>
+                        <div id="infowindow-content">
+                          <img src="" width="16" height="16" id="place-icon">
+                          <span id="place-name"  class="title"></span><br>
+                          <span id="place-address"></span>
+                        </div>
+                    </div>
+                </div>
+                {% if node.field_agency_no_service.0.value == '0' %}
+                <div class="col-md-12 info" style="padding: 0px;">
+                  <h3 style="text-align: center; padding: 20px;">Otros Servicios</h3>
+                    <div class="d-flex flex-wrap justify-content-center">
+                    {% if node.field_agency_vip_room.0.value == '1' %}
+                    <div style=" padding-right: 10px;">
+                        <figure><img src="/sites/default/files/2019-06/if15.png" alt=""></figure>
+                        <hr style="border-bottom: 1px solid #E1972F;">
+                        <p style="text-align: center; font-size: 12px;">Sala </br> VIP</p>
+                    </div>
+                    {% endif %}
+                    {% if node.field_agency_chairs.0.value == '1' %}
+                    <div style=" padding-right: 10px;">
+                        <figure><img src="/sites/default/files/2019-06/if20.png" alt=""></figure>
+                        <hr style="border-bottom: 1px solid #E1972F;">
+                        <p style="text-align: center; font-size: 12px;">Sillas</p>
+                    </div>
+                    {% endif %}
+                    {% if node.field_agency_wifi.0.value == '1' %}
+                    <div style=" padding-right: 10px;">
+                        <figure><img src="/sites/default/files/2019-06/if10.png" alt=""></figure>
+                        <hr style="border-bottom: 1px solid #E1972F;">
+                        <p style="text-align: center; font-size: 12px;">WiFi</p>
+                    </div>
+                    {% endif %}
+                    {% if node.field_agency_air.0.value == '1' %}
+                    <div style=" padding-right: 10px;">
+                        <figure><img src="/sites/default/files/2019-06/if1.png" alt=""></figure>
+                        <hr style="border-bottom: 1px solid #E1972F;">
+                        <p style="text-align: center; font-size: 12px;">Aire </br> Acondicionado</p>
+                    </div>
+                    {% endif %}
+                    {% if node.field_agency_ticket_impress.0.value == '1' %}
+                    <div style=" padding-right: 10px;">
+                        <figure><img src="/sites/default/files/2019-06/if19.png" alt=""></figure>
+                        <hr style="border-bottom: 1px solid #E1972F;">
+                        <p style="text-align: center; font-size: 12px;">Impresión </br> Tiquetes</p>
+                    </div>
+                    {% endif %}
+                    {% if node.field_agency_tv.0.value == '1' %}
+                    <div style=" padding-right: 10px;">
+                        <figure><img src="/sites/default/files/2019-06/if13.png" alt=""></figure>
+                        <hr style="border-bottom: 1px solid #E1972F;">
+                        <p style="text-align: center; font-size: 12px;">TV</p>
+                    </div>
+                    {% endif %}
+                    {% if node.field_agency_plugin.0.value == '1' %}
+                    <div style=" padding-right: 10px;">
+                        <figure><img src="/sites/default/files/2019-06/if11.png" alt=""></figure>
+                        <hr style="border-bottom: 1px solid #E1972F;">
+                        <p style="text-align: center; font-size: 12px;">Toma </br> Corriente</p>
+                    </div>
+                    {% endif %}
+                    {% if node.field_agency_water.0.value == '1' %}
+                    <div style=" padding-right: 10px;">
+                        <figure><img src="/sites/default/files/2019-06/if14.png" alt=""></figure>
+                        <hr style="border-bottom: 1px solid #E1972F;">
+                        <p style="text-align: center; font-size: 12px;">Agua</p>
+                    </div>
+                    {% endif %}
+                    {% if node.field_agency_pc.0.value == '1' %}
+                    <div style=" padding-right: 10px;">
+                        <figure><img src="/sites/default/files/2019-06/if21.png" alt=""></figure>
+                        <hr style="border-bottom: 1px solid #E1972F;">
+                        <p style="text-align: center; font-size: 12px;">PC</p>
+                    </div>
+                    {% endif %}
+                  </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+
+      function initMap() {
+      // The location of Uluru
+        var myLatlng = new google.maps.LatLng({{ node.field_agency_location.0.value|raw }});
+      // The map, centered at Uluru
+        var map = new google.maps.Map(document.getElementById('map'), {zoom: 15, center: myLatlng, disableDefaultUI: true});
+      // The marker, positioned at Uluru
+        var marker = new google.maps.Marker({position: myLatlng, map: map, icon: '{{ base_path }}/{{ active_theme_path() }}/images/misc/pin_map.png'});
+
+        var card = document.getElementById('pac-card');
+        var input = document.getElementById('pac-input');
+        //var types = document.getElementById('type-selector');
+        //var strictBounds = document.getElementById('strict-bounds-selector');
+
+        map.controls[google.maps.ControlPosition.TOP_RIGHT].push(card);
+
+        var autocomplete = new google.maps.places.Autocomplete(input);
+
+        // Bind the map's bounds (viewport) property to the autocomplete object,
+        // so that the autocomplete requests use the current map bounds for the
+        // bounds option in the request.
+        autocomplete.bindTo('bounds', map);
+
+        // Set the data fields to return when the user selects a place.
+        //autocomplete.setFields(
+        //    ['address_components', 'geometry', 'icon', 'name']);
+
+        var infowindow = new google.maps.InfoWindow();
+        var infowindowContent = document.getElementById('infowindow-content');
+        infowindow.setContent(infowindowContent);
+        var markerT = new google.maps.Marker({
+          map: map,
+          anchorPoint: new google.maps.Point(0, -29)
+        });
+
+        autocomplete.addListener('place_changed', function() {
+          //infowindow.close();
+          //marker.setVisible(false);
+          var place = autocomplete.getPlace();
+          var address = '';
+          if (place.address_components) {
+            address = [
+              (place.address_components[0] && place.address_components[0].short_name || ''),
+              (place.address_components[1] && place.address_components[1].short_name || ''),
+              (place.address_components[2] && place.address_components[2].short_name || '')
+            ].join(' ');
+          }
+
+          infowindowContent.children['place-icon'].src = place.icon;
+          infowindowContent.children['place-name'].textContent = place.name;
+          infowindowContent.children['place-address'].textContent = address;
+          infowindow.open(map, markerT);
+        });
+
+    }
+
+</script>
+<style>
+
+</style>
+<!-- Replace the value of the key parameter with your own API key. -->
+<!--<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyWmzmaeGyLXQpJmbE_oUHxSwOxdS1Xtk&callback=initMap"></script>-->
+<!-- Replace the value of the key parameter with your own API key. -->
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyWmzmaeGyLXQpJmbE_oUHxSwOxdS1Xtk&callback=initMap&libraries=places"></script>
