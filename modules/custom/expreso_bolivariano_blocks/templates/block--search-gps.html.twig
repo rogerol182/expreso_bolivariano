@@ -1,0 +1,54 @@
+<div class="buscador container-fluid" style="border-top: #E1972F 20px solid; padding-top: 30px; background-color: #1B1464; color: white;">
+    <div class="row" style="text-align: center;">
+        <div class="col-4 col-md-4 mb-4"></div>
+        <div class="col-4 col-md-4 mb-4">
+            <p class="text-white h-2">
+              <i class="fa fa-globe"></i> Ingresa el número de documento del viajero y su tiquete para obtener la ubicación GPS.
+            </p>
+            <form class="gps-form formsubs__wrapper mb-4" data-drupal-selector="gps-form" action="/pages/gps" method="post" id="gps-form" accept-charset="UTF-8"  style="box-shadow: none;">
+                <div class="col-12 col-md-12 mb-4">
+                    {% for key, child in formData if key|first != '#' %}
+                    {% if key == 'documentGps' %}
+                    <div class="inputSingle">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="inputIconBox">
+                                    <i class="fa fa-user iconito">
+                                    </i>
+                                </span>
+                            </div>
+                            {{ child }}
+                        </div>
+                    </div>
+                    {% elseif key == 'ticketGps' %}
+                    <div class="inputSingle mt-2">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="inputIconBox">
+                                    <i class="fa fa-address-card-o iconito">
+                                    </i>
+                                </span>
+                            </div>
+                            {{ child }}
+                        </div>
+                    </div>
+                    {% elseif key == 'actions' %}
+                    <div class="row"><div class="col-8 col-md-6 mx-auto">
+                        {{ child }}
+                    </div></div>
+                    {% elseif key == 'form_build_id' %}
+                        {{ child }}
+                    {% elseif key == 'form_id' %}
+                        {{ child }}    
+                    {% elseif key == 'form_token' %}
+                        {{ child }}
+                    {% else %}
+                        {{ child }} 
+                    {% endif %}
+                    {% endfor %} 
+                </div>
+            </form>
+        </div>
+        <div class="col-4 col-md-4 mb-4"></div>
+    </div>
+</div>

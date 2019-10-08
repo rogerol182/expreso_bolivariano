@@ -797,3 +797,9 @@ ini_set('session.gc_maxlifetime', 200000);
  * the cookie. The value 0 means "until the browser is closed".
  */
 ini_set('session.cookie_lifetime', 2000000);
+
+$settings['trusted_host_patterns'] = [
+  #'^www\.bolivariano\.com\.co$',
+   '^172\.17\.200\.172$',
+   '^bolivariano\-new\.socobec\.com\.co$'
+];

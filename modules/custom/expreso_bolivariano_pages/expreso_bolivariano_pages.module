@@ -26,15 +26,11 @@ function expreso_bolivariano_pages_theme($existing, $type, $theme, $path) {
     ],
     'page_selection_template' => [
       'template' => 'page-selection',
-      'variables' => ['tripsCitiesData' => NULL, 'tripsDatesData' => NULL, 'attached' => NULL, 'title' => t('Selección de Sillas')],
+      'variables' => ['tripsCitiesData' => NULL, 'tripsDatesData' => NULL, 'attached' => NULL, 'title' => t('Selección de Sillas'), 'cache' => NULL],
     ],
     'page_checkout_template' => [
       'template' => 'page-checkout',
-      'variables' => ['tripResumeData' => NULL, 'title' => t('Checkout')],
-    ],
-    'page_express_traveler_template' => [
-      'template' => 'page-express-traveler',
-      'variables' => ['expressTravelerData' => NULL, 'title' => t('Viajero Expreso')],
+      'variables' => ['tripResumeData' => NULL, 'title' => t('Checkout'), 'cache' => NULL],
     ],
     'tab_reservation_go_template' => [
       'template' => 'tab-reservation-go',
@@ -52,13 +48,24 @@ function expreso_bolivariano_pages_theme($existing, $type, $theme, $path) {
       'template' => 'page-user-register',
       'variables' => ['mail' => NULL, 'userName' => NULL, 'title' => t('Confirmación Enviada')],
     ],
-    /*'page_user_reset_pass_template' => [
-      'template' => 'page-user-reset-pass',
-      'variables' => ['uid' => NULL, 'formData' => NULL,'title' => t('Confirmar Contraseña')],
-    ],*/
+    'route_schedule_bus_template' => [
+      'template' => 'route-schedule-bus',
+      'variables' => ['scheduleBus' => NULL, 'title' => t('Horarios Servicio')],
+    ],
     'page_notfound' => [
       'template' => 'page-notfound',
-      //'variables' => ['userData' => NULL, 'title' => t('Mi Cuenta')],
+    ],
+    'page_gps_template' => [
+      'template' => 'page-gps',
+      'variables' => ['title' => t('Ubicación Satelital')],
+    ],
+    'page_services_template' => [
+      'template' => 'page-services',
+      'variables' => ['title' => t('Nuestros Servicios')],
+    ],
+    'route_filter_template' => [
+      'template' => 'route_filter',
+      'variables' => ['filterCities' => NULL, 'title' => t('Filtro Rutas')],
     ],
   ];
 }

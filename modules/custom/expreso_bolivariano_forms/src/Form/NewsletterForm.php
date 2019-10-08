@@ -29,7 +29,7 @@ class NewsletterForm extends FormBase {
             '#title'         => $this->t('Interes'),
             'description' => $this->t('Interes'),
             '#required'      => TRUE,
-            '#options' => array(t('Promociones'), t('Viajero Expreso'), t('Paquetes Turisticos'), t('Concursos'), t('Experiencia a Bordo')),
+            '#options' => array('1' => t('Promociones'), '2' => t('Viajero Expreso'), '3' => t('Paquetes Turisticos'), '4' =>  t('Concursos'), '5' =>  t('Experiencia a Bordo')),
         ];
         $form['nameNewsletter'] = [
             '#type'     => 'textfield',
@@ -96,13 +96,13 @@ class NewsletterForm extends FormBase {
             $query->insert('newsletter')
                   ->fields($field)
                   ->execute();
-            drupal_set_message("Bienvenido a nuestro Newsletter, Espera noticias en tu correo electrónico.");
+            drupal_set_message("Bienvenido a nuestro Newsletter, Espera noticias de tu interes muy pronto.");
         }
         else
         {
             $field  = array(
                 'name'   => $name,
-                'email' =>  $email,
+                'mail' =>  $email,
                 'interest' => $interest,
             );
             $query = \Drupal::database();
@@ -110,7 +110,7 @@ class NewsletterForm extends FormBase {
                   ->fields($field)
                   ->condition('mail',$email)
                   ->execute();
-            drupal_set_message("Ya estas inscrito en nuestro Newsletter, Espera noticias en tu correo electrónico.");
+            drupal_set_message("Ya estas inscrito en nuestro Newsletter, Espera noticias de tu interes muy pronto.");
         }
         
     }

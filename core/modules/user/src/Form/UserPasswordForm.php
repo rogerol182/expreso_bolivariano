@@ -115,22 +115,20 @@ class UserPasswordForm extends FormBase {
     $users = $this->userStorage->loadByProperties(['mail' => $name]);
     if (empty($users)) {
       // No success, try to load by name.
-      $users = $this->userStorage->loadByProperties(['uid' => $name]);
+      $users = $this->userStorage->loadByProperties(['name' => $name]);
     }
     $account = reset($users);
     if ($account && $account->id()) {
       // Blocked accounts cannot request a new password.
       if (!$account->isActive()) {
-        //$form_state->setErrorByName('name', $this->t('%name is blocked or has not been activated yet.', ['%name' => $name]));
-        $form_state->setErrorByName('name', $this->t('%name esta bloqueado o no ha sido activado aun.', ['%name' => $name]));
+        $form_state->setErrorByName('name', $this->t('%name is blocked or has not been activated yet.', ['%name' => $name]));
       }
       else {
         $form_state->setValueForElement(['#parents' => ['account']], $account);
       }
     }
     else {
-      //$form_state->setErrorByName('name', $this->t('%name is not recognized as a username or an email address.', ['%name' => $name]));
-      $form_state->setErrorByName('name', $this->t('%name no se reconoce como una cuenta valida o un correo electrónico.', ['%name' => $name]));
+      $form_state->setErrorByName('name', $this->t('%name is not recognized as a username or an email address.', ['%name' => $name]));
     }
   }
 
@@ -145,8 +143,7 @@ class UserPasswordForm extends FormBase {
     $mail = _user_mail_notify('password_reset', $account, $langcode);
     if (!empty($mail)) {
       $this->logger('user')->notice('Password reset instructions mailed to %name at %email.', ['%name' => $account->getAccountName(), '%email' => $account->getEmail()]);
-      //$this->messenger()->addStatus($this->t('Further instructions have been sent to your email address.'));
-      $this->messenger()->addStatus($this->t('Se han enviado más instrucciones a su dirección de correo electrónico.'));
+      $this->messenger()->addStatus($this->t('Further instructions have been sent to your email address.'));
     }
 
     $form_state->setRedirect('user.page');

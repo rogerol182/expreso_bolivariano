@@ -31,25 +31,15 @@ operations:
     responseClass: "PostList"
 
   FindPost:
-    #httpMethod: "GET"
-    #uri: "posts/{postId}"
-    httpMethod: "POST"
-    uri: "authentication/V1/Authentication/UserLogin"
+    httpMethod: "GET"
+    uri: "posts/{postId}"
     summary: "Find a single post by id."
     parameters:
-      content-type:
-        location: "header"
-        default: "application/json"
-      UserName:
-        location: "json"
+      postId:
+        location: "uri"
         description: "Filter posts by id"
         required: true
-        type: "string"
-      Password:
-        location: "json"
-        description: "Filter posts by id"
-        required: true
-        type: "string"
+        type: "integer"
     responseModel: "Post"
 
   FindComments:
@@ -68,18 +58,18 @@ models:
     type: "object"
     location: "json"
     properties:
-      statusName:
+      userId:
+        location: "json"
+        type: "integer"
+      id:
+        location: "json"
+        type: "integer"
+      title:
         location: "json"
         type: "string"
-      #id:
-      #  location: "json"
-      #  type: "integer"
-      #title:
-      #  location: "json"
-      #  type: "string"
-      #body:
-      #  location: "json"
-      #  type: "string"
+      body:
+        location: "json"
+        type: "string"
 
   PostList:
     type: "array"

@@ -1,0 +1,22 @@
+<table class="tarifas__table">
+    <tbody><tr class="tarifas__row tarifas__row--header">
+        <th class="tarifas__col">Origen</th>
+        <th class="tarifas__col">Destino</th>
+        <th class="tarifas__col">Horario</th>
+    </tr>
+    {% for key, items in scheduleBus %}
+        {% set dateF = items.tripDate|split('T') %}
+        {% set date = dateF.0|split('-') %}
+        {% set year = date.0 %}
+        {% set month = date.1 %}
+        {% set day = date.2 %}
+        <div id="tarifas__content_more">
+            <tr class="tarifas__row">
+                <td class="tarifas__col">{{ (items.agencyOriginName)|capitalize }}</td>
+                <td class="tarifas__col">{{ (items.agencyDestinationName)|capitalize }}</td>
+                <td class="tarifas__col"><a href="/pages/reservation/{{ (items.agencyOriginId) }}/{{ (items.agencyOriginName)|capitalize }}/{{ (items.agencyDestinationId) }}/{{ (items.agencyDestinationName)|capitalize }}/{{ day }}-{{ month }}-{{ year }}/0">{{ (items.hourTrip) }}</a></td>
+            </tr>
+        </div>
+    {% endfor %}
+    </tbody>
+</table>

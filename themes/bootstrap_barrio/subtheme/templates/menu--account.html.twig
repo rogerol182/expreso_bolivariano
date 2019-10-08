@@ -62,12 +62,12 @@
             </div>
         </div>
         <div class="header__actions">
-            <a class="header__loginactions" href="/pages/express_traveler">
+            <a class="header__loginactions" href="/pages/redemption">
                 <span class="header__linkuser">Puntos</span> 
                 <span class="header__icon header__icon--points"></span>
-                <span class="header__linkuser ml-2">{{ pointsPerson }}</span> 
+                <span class="header__linkuser ml-2">{{ pointsPerson|number_format(0, '', '.')  }}</span> 
             </a>
-            <a class="header__loginactions" href="/pages/user/{{ idPerson }}"><span class="header__linkuser">Reservas</span> <span class="header__icon header__icon--booking">{{ reservationsPerson }}</span></a>
+            <a class="header__loginactions" href="/pages/reservations/{{ idPerson }}"><span class="header__linkuser">Reservas</span> <span class="header__icon header__icon--booking">{{ reservationsPerson }}</span></a>
         </div>
     </div>
     <div class="logged">

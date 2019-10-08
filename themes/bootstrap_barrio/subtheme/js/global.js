@@ -21,7 +21,30 @@
 			$("#button_more").show();
 			$("#button_less").hide();
 		});
+		/*To load for the first bus service*/
+		var idSchedule = "#schedule_bus_9";
+		var date = new Date();
+			var day = date.getDate();
+			var month = date.getMonth();
+			month = (month + 1);
+			if(month<10)
+			{
+				month = '0'+month;
+			}
+			var year = date.getFullYear();
+			var dateNow = year+'-'+month+'-'+day;
+		var urlTo = '/route_schedule_bus/9/'+dateNow;
 		
+		$.ajax({
+          url: urlTo,
+          success: function (response) {
+          	$( idSchedule ).html(response);
+          },
+          error: function (error) {
+            console.log(error);
+          }
+        });
+		/*End*/
 		//Show Tab Bus 
 		$(".tabBus", context).once('a').click(function(e) {
 			var tab = $(this).attr("href");
@@ -31,6 +54,31 @@
 			$(".tab-pane").attr("class","tab-pane fade pl-md-4");
 			$("#tabSelector"+value).attr("aria-selection","false");
 			$(tab).attr("class","tab-pane show active fade pl-md-4");
+			/* Schedule Bus */
+			var id = $(this).attr("name");
+			var idSchedule = "#schedule_bus_"+id;
+			var date = new Date();
+  			var day = date.getDate();
+  			var month = date.getMonth();
+  			month = (month + 1);
+  			if(month<10)
+  			{
+  				month = '0'+month;
+  			}
+  			var year = date.getFullYear();
+  			var dateNow = year+'-'+month+'-'+day;
+			var urlTo = '/route_schedule_bus/'+id+'/'+dateNow;
+			
+			$.ajax({
+	          url: urlTo,
+	          success: function (response) {
+	          	$( idSchedule ).html(response);
+	          },
+	          error: function (error) {
+	            console.log(error);
+	          }
+	        });
+			
 		});
 		
 		/* Button Search Click */
@@ -40,16 +88,72 @@
 			var destiny = $( "select#destinyCity" ).val();
 			var destinyName = $('#destinyCity option:selected').text();
 			var dateSplit = $( "#fromof" ).val();
-			var dateSplit = dateSplit.split('-');
-			var dateGo = dateSplit[2]+'-'+dateSplit[1]+'-'+dateSplit[0];
 			var dateSplitBack = $( "#cameof" ).val();
-			if(dateSplitBack=='')
+			//
+			if(dateSplit=='' && dateSplitBack=='')
 			{
-				dateBack = 0
+				var dateSplit = new Date();
+  				var day = dateSplit.getDate();
+  				if(day<=9)
+  				{
+  					var dayF = '0'+day;
+  				}
+  				else
+  				{
+  					var dayF = dayF;
+  				}
+  				var month = dateSplit.getMonth();
+  				if(month<=9)
+  				{
+  					var monthF = month+1;
+  					monthF = '0'+monthF;
+  				}
+  				else
+  				{
+  					var monthF = month+1;
+  				}
+				var year = dateSplit.getFullYear();
+				var dateGo = dayF+'-'+monthF+'-'+year;
+				var dateBack = 0;
 			}
-			else
+			else if(dateSplit!='' && dateSplitBack=='')
 			{
-				dateSplitBack = dateSplitBack.split('-');
+				var dateSplit = dateSplit.split('-');
+				var dateGo = dateSplit[2]+'-'+dateSplit[1]+'-'+dateSplit[0];
+				var dateBack = 0;
+			}
+			else if(dateSplit=='' && dateSplitBack!='')
+			{
+				var dateSplit = new Date();
+  				var day = dateSplit.getDate();
+  				if(day<=9)
+  				{
+  					var dayF = '0'+day;
+  				}
+  				else
+  				{
+  					var dayF = dayF;
+  				}
+  				var month = dateSplit.getMonth();
+  				if(month<=9)
+  				{
+  					var monthF = month+1;
+  					monthF = '0'+monthF;
+  				}
+  				else
+  				{
+  					var monthF = month+1;
+  				}
+				var year = dateSplit.getFullYear();
+				var dateGo = dayF+'-'+monthF+'-'+year;
+				var dateSplitBack = dateSplitBack.split('-');
+				var dateBack = dateSplitBack[2]+'-'+dateSplitBack[1]+'-'+dateSplitBack[0];
+			}
+			else if(dateSplit!='' && dateSplitBack!='')
+			{
+				var dateSplit = dateSplit.split('-');
+				var dateGo = dateSplit[2]+'-'+dateSplit[1]+'-'+dateSplit[0];
+				var dateSplitBack = dateSplitBack.split('-');
 				var dateBack = dateSplitBack[2]+'-'+dateSplitBack[1]+'-'+dateSplitBack[0];
 			}
 			window.location.href = '/pages/reservation/'+origin+'/'+originName+'/'+destiny+'/'+destinyName+'/'+dateGo+'/'+dateBack;
@@ -83,39 +187,45 @@
 			var city = $( "#city_filter_department" ).val();
 			if(department!=0)
 			{
-				//var urlTo = '/pages/agencies/filter/'+department+'/'+city;
 				window.location.href = '/pages/agencies/filter/'+department+'/'+city;
-				/*$.ajax({
-		          url: urlTo,
-		          success: function (response) {
-		            //$(tab).html(response);
-		            //$( "#nav-tabContent" ).show();
-		          },
-		          error: function (error) {
-		            console.log(error);
-		          }
-		        });*/
 			}
 			
 		});
+		/*Change Select Routes*/
+		$("#origin_filter", context).once('select').change(function() {
+			$('#destiny').empty();
+			var origin = $( "#origin_filter" ).val();
+			var urlTo = '/route_filter/'+origin;
+			$.ajax({
+	          url: urlTo,
+	          success: function (response) {
+	          	$( "#destiny" ).hide();
+	            $( "#destiny_filter_select" ).html(response);
+	            $( "#destiny_filter_select" ).show();
+	          },
+	          error: function (error) {
+	            console.log(error);
+	          }
+	        });
+		});
+		/**/
 		/* Filter Routes Click */
 		$("#filter_routes", context).once('button').click(function(e) {
 			var origin = $( "#origin_filter" ).val();
 			var destiny = $( "#destiny_filter" ).val();
-			if(origin!=0)
+			if(origin==0)
 			{
-				//var urlTo = '/pages/agencies/filter/'+department+'/'+city;
+				$( "#messagePop" ).html('<div class="alert alert-danger" role="alert">Debe seleccionar una opción de Origen.</div>');
+    			$( "#messagePop" ).show();
+			}
+			else if(destiny==0)
+			{
+				$( "#messagePop" ).html('<div class="alert alert-danger" role="alert">Debe seleccionar una opción de Destino.</div>');
+    			$( "#messagePop" ).show();
+			}
+			else if(origin!=0 && destiny!=0)
+			{
 				window.location.href = '/pages/routes/'+origin+'_'+destiny;
-				/*$.ajax({
-		          url: urlTo,
-		          success: function (response) {
-		            //$(tab).html(response);
-		            //$( "#nav-tabContent" ).show();
-		          },
-		          error: function (error) {
-		            console.log(error);
-		          }
-		        });*/
 			}
 			
 		});
@@ -131,13 +241,14 @@
 		$(".rateTripGo", context).once('a').click(function(e) {
 			var tab = $(this).attr("href");
 			var dateSplit = $(this).attr("value");
-			$( "#tripDateGo" ).val(dateSplit);
+			
 			var origin = $( "#idCityOrigin" ).val();
 			var originName = $( "#cityOrigin" ).val();
 			var destiny = $( "#idCityDestiny" ).val();
 			var destinyName = $( "#cityDestiny" ).val();
 			var dateSplit = dateSplit.split('/');
 			var dateGo = dateSplit[0]+'-'+dateSplit[1]+'-'+dateSplit[2];
+			$( "#tripDateGo" ).val(dateSplit[2]+'-'+dateSplit[1]+'-'+dateSplit[0]);
 			var dateBack = 0;
 			var urlTo = '/tab_reservation_go/'+origin+'/'+originName+'/'+destiny+'/'+destinyName+'/'+dateGo+'/'+dateBack;
 			$( "#nav-tabContent" ).hide();
@@ -156,14 +267,15 @@
 		$(".rateTripBack", context).once('a').click(function(e) {
 			var tab = $(this).attr("href");
 			var dateSplit = $(this).attr("value");
-			$( "#tripDateBack" ).val(dateSplit);
+			
 			var origin = $( "#idCityDestiny" ).val();
 			var originName = $( "#cityDestiny" ).val();
 			var destiny = $( "#idCityOrigin" ).val();
 			var destinyName = $( "#cityOrigin" ).val();
 			var dateSplit = dateSplit.split('/');
-			var dateGo = dateSplit[0]+'-'+dateSplit[1]+'-'+dateSplit[2];
-			var dateBack = 0;
+			var dateGo = 0;
+			$( "#tripDateBack" ).val(dateSplit[2]+'-'+dateSplit[1]+'-'+dateSplit[0]);
+			var dateBack = dateSplit[0]+'-'+dateSplit[1]+'-'+dateSplit[2];
 			var urlTo = '/tab_reservation_back/'+origin+'/'+originName+'/'+destiny+'/'+destinyName+'/'+dateGo+'/'+dateBack;
 			$( "#nav-tabContentB" ).hide();
 			$.ajax({
@@ -183,12 +295,12 @@
 			var originName = $( "#cityOrigin" ).val();
 			var destiny = $( "#idCityDestiny" ).val();
 			var destinyName = $( "#cityDestiny" ).val();
-			var dateSplit = $( "#tripDateGo" ).val();
-			var dateSplitB = $( "#tripDateBack" ).val();
-			var dateSplit = dateSplit.split('/');
-			var tripDateGo = dateSplit[0]+'-'+dateSplit[1]+'-'+dateSplit[2];
-			var dateSplitB = dateSplitB.split('/');
-			var tripDateBack = dateSplitB[0]+'-'+dateSplitB[1]+'-'+dateSplitB[2];
+			var tripDateGo = $( "#tripDateGo" ).val();
+			var tripDateBack = $( "#tripDateBack" ).val();
+			//var dateSplit = dateSplit.split('/');
+			//var tripDateGo = dateSplit[0]+'-'+dateSplit[1]+'-'+dateSplit[2];
+			//var dateSplitB = dateSplitB.split('/');
+			//var tripDateBack = dateSplitB[0]+'-'+dateSplitB[1]+'-'+dateSplitB[2];
 			
     		if($("[name=trip_go]:checked").is(':checked')==false)
     		{
@@ -283,6 +395,9 @@
 			    x.type = "password";
 			  }
 		});
+		$("#checkout").once('button').click(function() {
+			console.log('Entra a Checkout Final');
+		});
 		/*End*/
 		/*******
 		// Note: This example requires that you consent to location sharing when
@@ -326,11 +441,6 @@
 	        infoWindow.open(map);
 	      }
 		*/
-
-		/**/
-		
-		/**/
-		
     }
   };
 

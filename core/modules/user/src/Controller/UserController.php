@@ -223,15 +223,13 @@ class UserController extends ControllerBase {
     $timeout = $this->config('user.settings')->get('password_reset_timeout');
     // No time out for first time login.
     if ($user->getLastLoginTime() && $current - $timestamp > $timeout) {
-      //$this->messenger()->addError($this->t('You have tried to use a one-time login link that has expired. Please request a new one using the form below.'));
-      $this->messenger()->addError($this->t('Esta tratando de usar un link de unico acceso que ya expiro. Por favor solicite uno nuevo usando el siguiente formulario.'));
+      $this->messenger()->addError($this->t('You have tried to use a one-time login link that has expired. Please request a new one using the form below.'));
       return $this->redirect('user.pass');
     }
     elseif ($user->isAuthenticated() && ($timestamp >= $user->getLastLoginTime()) && ($timestamp <= $current) && Crypt::hashEquals($hash, user_pass_rehash($user, $timestamp))) {
       user_login_finalize($user);
       $this->logger->notice('User %name used one-time login link at time %timestamp.', ['%name' => $user->getDisplayName(), '%timestamp' => $timestamp]);
-      //$this->messenger()->addStatus($this->t('You have just used your one-time login link. It is no longer necessary to use this link to log in. Please change your password.'));
-      $this->messenger()->addStatus($this->t('Acaba de usar su link de unico acceso. No es necesario que use este link para Iniciar Sesión. Por favor cambie su contraseña.'));
+      $this->messenger()->addStatus($this->t('You have just used your one-time login link. It is no longer necessary to use this link to log in. Please change your password.'));
       // Let the user's password be changed without the current password
       // check.
       $token = Crypt::randomBytesBase64(55);
@@ -246,8 +244,7 @@ class UserController extends ControllerBase {
       );
     }
 
-    //$this->messenger()->addError($this->t('You have tried to use a one-time login link that has either been used or is no longer valid. Please request a new one using the form below.'));
-    $this->messenger()->addError($this->t('Esta tratando de usar un link de unico acceso que ya fue usado o no es mas valido. Por favor solicite uno nuevo usando el siguiente formulario.'));
+    $this->messenger()->addError($this->t('You have tried to use a one-time login link that has either been used or is no longer valid. Please request a new one using the form below.'));
     return $this->redirect('user.pass');
   }
 

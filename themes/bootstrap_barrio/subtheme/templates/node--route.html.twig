@@ -82,7 +82,7 @@
               </div>
               <div class="col-sm-3 col-md-2 destino">
                   <p>Destino</p>
-                  <select id="destiny_filter">
+                  <select id="destiny">
                       <option value="0">-Todas-</option>
                   {% set newCities = [] %}
                   {% for city in cities|sort %}
@@ -92,10 +92,10 @@
                       {% set newCities = newCities|merge([city.1.1.0.value]) %}
                       {% endif %}    
                   {% endfor %}
-                  </select>    
+                  </select>
+                  <div id="destiny_filter_select" style="display: none;"></div>
               </div>
               <div class="col col-sm-3 col-md-2 text-center big_text"><button id="filter_routes" class="btn btn--secondary" style="font-size: 18px;">Filtrar</button></div>
-              
           </div>
         </div>
         <div class="">

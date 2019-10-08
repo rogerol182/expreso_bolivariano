@@ -1,0 +1,60 @@
+<div class="form_calculadora_costos panel">
+    <form class="shipping-quote-form formsubs__wrapper mb-4" data-drupal-selector="shipping-quote-form" action="/pages/services" method="post" id="shipping_quote_form" accept-charset="UTF-8"  style="box-shadow: none;">
+    <!--<div class="col-12 col-md-12 mb-4">-->
+        {% for key, child in formData if key|first != '#' %}
+        {% if key == 'areaShipping' %}
+        <div class="form-selects">
+            <div class="form-group">
+                <label for="">Cobertura</label>
+                {{ child }}
+            </div>
+        </div>
+        {% elseif key == 'weigthShipping' %}
+        <div class="form-input_text">
+            <div class="form-group linear">
+                <label for="">Peso</label>
+                {{ child }}
+                <span>Kg</span>
+            </div>
+        {% elseif key == 'highShipping' %}
+            <div class="form-group linear">
+                <label for="">Alto</label>
+                {{ child }}
+                <span>Cms</span>
+            </div>
+        {% elseif key == 'widthShipping' %}
+            <div class="form-group linear">
+                <label for="">Ancho</label>
+                {{ child }}
+                <span>Cms</span>
+            </div>
+        {% elseif key == 'longShipping' %}
+            <div class="form-group linear">
+                <label for="">Largo</label>
+                {{ child }}
+                <span>Cms</span>
+            </div>
+        </div>
+        {% elseif key == 'valueShipping' %}
+        <div class="form-group linear">
+            <label for="">Valor Declarado</label>
+            {{ child }}
+            <span>Pesos</span>
+        </div>
+        <!--</div>-->       
+        {% elseif key == 'actions' %}
+        <div class="col text-center mt-4">
+        {{ child }}
+        </div>
+        {% elseif key == 'form_build_id' %}
+            {{ child }}
+        {% elseif key == 'form_id' %}
+            {{ child }}    
+        {% elseif key == 'form_token' %}
+            {{ child }}
+        {% else %}
+            {{ child }} 
+        {% endif %}
+        {% endfor %} 
+    </form>
+</div>

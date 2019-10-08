@@ -1,0 +1,7 @@
+{
+    "AppWebApiAuthUri":"https://qa.sigatt.co/authentication",
+    "AppWebApiResourcesUri":"https://qa.sigatt.co/resources",
+    "AppWebApiCustomerLoyaltyUri":"https://qa.sigatt.co/customerloyalty",
+    "WebApiUserName":"webviaje",
+    "WebApiPasword":"ive?0987@."
+  }

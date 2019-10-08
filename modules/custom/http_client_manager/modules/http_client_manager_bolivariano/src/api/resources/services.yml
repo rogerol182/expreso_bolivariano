@@ -67,6 +67,34 @@ operations:
         required: true
         type: "string"
     responseClass: "listAgencies"
+#GetScheduleService - Get all the schedule by the id service.    
+  GetScheduleService:
+    httpMethod: "POST"
+    uri: "clientsebolweb/V1/Sales/GetSchedulesByService"
+    summary: "Get all the schedule by te id service"
+    parameters:
+      content-type:
+        location: "header"
+        default: "application/json"
+      client-header-info:
+        location: "header"
+        default: "{'ClientIP':'0.0.0.0', 'ClientInfo':'Cliente WPF'}"  
+      Authorization:
+        location: "header"
+        description: "Bearer Token"
+        required: true
+        type: "string"
+      tripDate:
+        location: "json"
+        description: "Date of travel"
+        required: true
+        type: "string"  
+      busServiceId:
+        location: "json"
+        description: "Id of the service"
+        required: true
+        type: "integer"
+    responseClass: "listSchedule"
  #GetPromotions - Get all the promotionsHome.    
   GetPromotions:
     httpMethod: "POST"
@@ -425,7 +453,7 @@ operations:
         location: "json"
         description: "Gender Client"
         required: true
-        type: "integer"
+        type: "string"
       clientBirthDate:
         location: "json"
         description: "Birth Date Client"
@@ -465,6 +493,426 @@ operations:
         required: true
         type: "string"
     responseClass: "newPassword"
+ # getTicketPlate - Get the data for the ticket plate to Wizens.    
+  getTicketPlate:
+    httpMethod: "POST"
+    uri: "clientsebolweb/V1/Gps/GetTicketPlate"
+    summary: "Get the Ticket Plate"
+    parameters:
+      content-type:
+        location: "header"
+        default: "application/json"
+      client-header-info:
+        location: "header"
+        default: "{'ClientIP':'0.0.0.0', 'ClientInfo':'Cliente WPF'}"  
+      Authorization:
+        location: "header"
+        description: "Bearer Token"
+        required: true
+        type: "string"
+      ticketNumber:
+        location: "json"
+        description: "Number of Ticket"
+        required: true
+        type: "integer"
+      documentId:
+        location: "json"
+        description: "Client Document"
+        required: true
+        type: "integer"
+    responseClass: "ticketPlate"
+# getQueryTicket - Get the data for the ticket client. 
+  getQueryTicket:
+    httpMethod: "POST"
+    uri: "clientsebolweb/V1/Sales/QueryTicket"
+    summary: "Get the Ticket Data"
+    parameters:
+      content-type:
+        location: "header"
+        default: "application/json"
+      client-header-info:
+        location: "header"
+        default: "{'ClientIP':'0.0.0.0', 'ClientInfo':'Cliente WPF'}"  
+      Authorization:
+        location: "header"
+        description: "Bearer Token"
+        required: true
+        type: "string"
+      companyId:
+        location: "json"
+        description: "Number of Company"
+        required: true
+        type: "integer"
+      clientDocumentId:
+        location: "json"
+        description: "Client Document"
+        required: true
+        type: "integer"
+      ticketNumber:
+        location: "json"
+        description: "Number of Ticket"
+        required: true
+        type: "integer"
+    responseClass: "ticketData"
+# getDeliveryRate - Get the data for the shipping cost. 
+  getDeliveryRate:
+    httpMethod: "POST"
+    uri: "clientsebolweb/V1/Delivery/GetDeliveryRate"
+    summary: "Get the Shipping Rate"
+    parameters:
+      content-type:
+        location: "header"
+        default: "application/json"
+      client-header-info:
+        location: "header"
+        default: "{'ClientIP':'0.0.0.0', 'ClientInfo':'Cliente WPF'}"  
+      Authorization:
+        location: "header"
+        description: "Bearer Token"
+        required: true
+        type: "string"
+      deliveryDeclaratedValue:
+        location: "json"
+        description: "Declarate Value"
+        required: true
+        type: "integer"
+      deliveryWeightKg:
+        location: "json"
+        description: "Weight"
+        required: true
+        type: "integer"
+      deliveryWidth:
+        location: "json"
+        description: "Width"
+        required: true
+        type: "integer"
+      deliveryHigh:
+        location: "json"
+        description: "High"
+        required: true
+        type: "integer"
+      deliveryLong:
+        location: "json"
+        description: "Long"
+        required: true
+        type: "integer"
+      modalityId:
+        location: "json"
+        description: "Modality"
+        required: true
+        type: "integer"
+    responseClass: "deliveryRateData"
+# getDeliveryDocument - Get the data for the shipping. 
+  getDeliveryDocument:
+    httpMethod: "POST"
+    uri: "clientsebolweb/V1/Delivery/GetDeliveryDocument"
+    summary: "Get the Shipping Info"
+    parameters:
+      content-type:
+        location: "header"
+        default: "application/json"
+      client-header-info:
+        location: "header"
+        default: "{'ClientIP':'0.0.0.0', 'ClientInfo':'Cliente WPF'}"  
+      Authorization:
+        location: "header"
+        description: "Bearer Token"
+        required: true
+        type: "string"
+      documentId:
+        location: "json"
+        description: "Document Id"
+        required: true
+        type: "integer"
+    responseClass: "deliveryDocumentData"
+# getListReservations - Get the data of reservations by Client. 
+  getListReservations:
+    httpMethod: "POST"
+    uri: "clientsebolweb/V1/Sales/QueryReservation"
+    summary: "Get the Reservations Info"
+    parameters:
+      content-type:
+        location: "header"
+        default: "application/json"
+      client-header-info:
+        location: "header"
+        default: "{'ClientIP':'0.0.0.0', 'ClientInfo':'Cliente WPF'}"  
+      Authorization:
+        location: "header"
+        description: "Bearer Token"
+        required: true
+        type: "string"
+      clientDocumentId:
+        location: "json"
+        description: "Document Id"
+        required: true
+        type: "integer"
+      webAgencyId:
+        location: "json"
+        description: "Agency Id"
+        required: true
+        type: "integer"
+    responseClass: "listReservations"
+# getListTickets - Get the data of Tickets by Client. 
+  getListTickets:
+    httpMethod: "POST"
+    uri: "clientsebolweb/V1/Sales/QueryTicketsByClient"
+    summary: "Get the Tickets Info"
+    parameters:
+      content-type:
+        location: "header"
+        default: "application/json"
+      client-header-info:
+        location: "header"
+        default: "{'ClientIP':'0.0.0.0', 'ClientInfo':'Cliente WPF'}"  
+      Authorization:
+        location: "header"
+        description: "Bearer Token"
+        required: true
+        type: "string"
+      clientDocumentId:
+        location: "json"
+        description: "Document Id"
+        required: true
+        type: "integer"
+      webAgencyId:
+        location: "json"
+        description: "Agency Id"
+        required: true
+        type: "integer"
+    responseClass: "listTickets"
+# getListHistory - Get the data of History by Client. 
+  getListHistory:
+    httpMethod: "POST"
+    uri: "clientsebolweb/V1/Sales/QueryTripsByClient"
+    summary: "Get the History Info"
+    parameters:
+      content-type:
+        location: "header"
+        default: "application/json"
+      client-header-info:
+        location: "header"
+        default: "{'ClientIP':'0.0.0.0', 'ClientInfo':'Cliente WPF'}"  
+      Authorization:
+        location: "header"
+        description: "Bearer Token"
+        required: true
+        type: "string"
+      clientDocumentId:
+        location: "json"
+        description: "Document Id"
+        required: true
+        type: "integer"
+      webAgencyId:
+        location: "json"
+        description: "Agency Id"
+        required: true
+        type: "integer"
+    responseClass: "listHistory"
+# setGenerateReservationOneWay - Get the data of History by Client. 
+  setGenerateReservationOneWay:
+    httpMethod: "POST"
+    uri: "clientsebolweb/V1/Sales/GenerateReservationOneWay"
+    summary: "Set the Reservation One Way"
+    parameters:
+      content-type:
+        location: "header"
+        default: "application/json"
+      client-header-info:
+        location: "header"
+        default: "{'ClientIP':'0.0.0.0', 'ClientInfo':'Cliente WPF'}"  
+      Authorization:
+        location: "header"
+        description: "Bearer Token"
+        required: true
+        type: "string"
+      agencyReservation:
+        location: "json"
+        description: "Agency Id Web"
+        required: true
+        type: "integer"
+      clientDocumentId:
+        location: "json"
+        description: "Document Id"
+        required: true
+        type: "integer"
+      agencyOriginId:
+        location: "json"
+        description: "Agency Origin Id"
+        required: true
+        type: "integer"
+      agencyDestinationId:
+        location: "json"
+        description: "Agency Destination Id"
+        required: true
+        type: "integer"
+      tripKey:
+        location: "json"
+        description: "Trip Key"
+        required: true
+        type: "integer"
+      tripDepartureDate:
+        location: "json"
+        description: "Trip Date"
+        required: true
+        type: "string"
+      passengers:
+        location: "json"
+        description: "Trip Key"
+        required: true
+        type: "integer"
+      clientDocuments:
+        location: "json"
+        description: "Documents Clients"
+        required: true
+        type: "string"
+      seats:
+        location: "json"
+        description: "Seats"
+        required: true
+        type: "string"
+      promotionalCodes:
+        location: "json"
+        description: "Codes for Promotions"
+        required: true
+        type: "string"
+    responseClass: "reservationOneWayData"
+# setGenerateReservationTwoWay - Set the reservation one way and reverse. 
+  setGenerateReservationTwoWay:
+    httpMethod: "POST"
+    uri: "clientsebolweb/V1/Sales/GenerateReservationOneWayOrReverse"
+    summary: "Set the Reservation One Way and Reserve"
+    parameters:
+      content-type:
+        location: "header"
+        default: "application/json"
+      client-header-info:
+        location: "header"
+        default: "{'ClientIP':'0.0.0.0', 'ClientInfo':'Cliente WPF'}"  
+      Authorization:
+        location: "header"
+        description: "Bearer Token"
+        required: true
+        type: "string"
+      agencyReservation:
+        location: "json"
+        description: "Agency Id Web"
+        required: true
+        type: "integer"
+      clientDocumentId:
+        location: "json"
+        description: "Document Id"
+        required: true
+        type: "integer"
+      oneWayAgencyOriginId:
+        location: "json"
+        description: "Agency Origin Id"
+        required: true
+        type: "integer"
+      returnAgencyOriginId:
+        location: "json"
+        description: "Agency Destination Id"
+        required: true
+        type: "integer"
+      oneWayAgencyDestinationId:
+        location: "json"
+        description: "Agency Destination Id"
+        required: true
+        type: "integer"
+      returnAgencyDestinationId:
+        location: "json"
+        description: "Agency Origin Id"
+        required: true
+        type: "integer"
+      oneWayTripKey:
+        location: "json"
+        description: "Trip Key"
+        required: true
+        type: "integer"
+      returnTripKey:
+        location: "json"
+        description: "Trip Key Return"
+        required: true
+        type: "integer"
+      oneWayDeapartureDate:
+        location: "json"
+        description: "Trip Date"
+        required: true
+        type: "string"
+      returnDeapartureDate:
+        location: "json"
+        description: "Trip Date Return"
+        required: true
+        type: "string"  
+      oneWayPasengers:
+        location: "json"
+        description: "Passengers"
+        required: true
+        type: "integer"
+      returnPasengers:
+        location: "json"
+        description: "Passengers Back"
+        required: true
+        type: "integer"  
+      oneWayClientDocuments:
+        location: "json"
+        description: "Documents Clients"
+        required: true
+        type: "string"
+      returnClientDocuments:
+        location: "json"
+        description: "Documents Clients Return"
+        required: true
+        type: "string"
+      oneWaySeats:
+        location: "json"
+        description: "Seats"
+        required: true
+        type: "string"
+      returnSeats:
+        location: "json"
+        description: "Seats Return"
+        required: true
+        type: "string"
+      oneWayPromotionCodes:
+        location: "json"
+        description: "Codes for Promotions"
+        required: true
+        type: "string"
+      returnPromotionCodes:
+        location: "json"
+        description: "Return Codes for Promotions"
+        required: true
+        type: "string"
+    responseClass: "reservationTwoWayData"
+# getTicketDetail - Get the data of One Ticket by Client. 
+  getTicketDetail:
+    httpMethod: "POST"
+    uri: "clientsebolweb/V1/Sales/QueryPurshaseTicketDetail"
+    summary: "Get the Ticket Information"
+    parameters:
+      content-type:
+        location: "header"
+        default: "application/json"
+      client-header-info:
+        location: "header"
+        default: "{'ClientIP':'0.0.0.0', 'ClientInfo':'Cliente WPF'}"  
+      Authorization:
+        location: "header"
+        description: "Bearer Token"
+        required: true
+        type: "string"
+      purshaseId:
+        location: "json"
+        description: "Id Purchase"
+        required: true
+        type: "integer"
+      webAgencyId:
+        location: "json"
+        description: "Id Agency Web"
+        required: true
+        type: "integer"
+    responseClass: "ticketInformationData"
 models:
   apiToken:
     type: "object"
@@ -519,6 +967,40 @@ models:
             agencyName:
               location: "json"
               type: "string" 
+  listSchedule:
+    type: "object"
+    location: "json"
+    properties:
+      statusName:
+        location: "json"
+        type: "string"
+      data:
+        type: "array"
+        location: "json"
+        items:
+          type: "object"
+          properties:
+            tripId:
+              location: "json"
+              type: "string"
+            tripDate:
+              location: "json"
+              type: "string"
+            hourTrip:
+              location: "json"
+              type: "string"  
+            agencyOriginId:
+              location: "json"
+              type: "string"  
+            agencyOriginName:
+              location: "json"
+              type: "string"
+            agencyDestinationId:
+              location: "json"
+              type: "string"  
+            agencyDestinationName:
+              location: "json"
+              type: "string"
   listPromotions:
     type: "object"
     location: "json"
@@ -612,13 +1094,13 @@ models:
             companyId:
               location: "json"
               type: "integer"
-            tripRate1:
+            tripRateSeat1:
               location: "json"
               type: "integer"
-            tripRate2:
+            tripRateSeat2:
               location: "json"
               type: "integer"
-            tripRate3:
+            tripRateSeat3:
               location: "json"
               type: "integer"
             tripRateClassA:
@@ -698,6 +1180,9 @@ models:
             seatStateDescription:
               location: "json"
               type: "string"
+            consecutiveId:
+              location: "json"
+              type: "integer"
   validateClientPassword:
     type: "object"
     location: "json"
@@ -821,3 +1306,373 @@ models:
           countRegisters:
             location: "json"
             type: "integer"
+  ticketPlate:
+    type: "object"
+    location: "json"
+    properties:
+      statusName:
+        location: "json"
+        type: "string"
+      data:
+        type: "object"
+        location: "json"
+        properties:
+          plate:
+            location: "json"
+            type: "string"
+          vehicle:
+            location: "json"
+            type: "integer"
+          passengerName:
+            location: "json"
+            type: "string"
+          status:
+            location: "json"
+            type: "integer"
+          message:
+            location: "json"
+            type: "string"
+  ticketData:
+    type: "object"
+    location: "json"
+    properties:
+      statusName:
+        location: "json"
+        type: "string"
+      data:
+        type: "object"
+        location: "json"
+        properties:
+          companyName:
+            location: "json"
+            type: "string"
+          companyIdentification:
+            location: "json"
+            type: "integer"
+          ticketNumber:
+            location: "json"
+            type: "integer"
+          busServiceName:
+            location: "json"
+            type: "string"
+          agencyOriginName:
+            location: "json"
+            type: "string"
+          agencyDestinationName:
+            location: "json"
+            type: "string"
+          clientDocumentId:
+            location: "json"
+            type: "integer"
+          clientName:
+            location: "json"
+            type: "string"
+          clientLastName:
+            location: "json"
+            type: "string"
+          passengerRate:
+            location: "json"
+            type: "integer"
+          passengerCount:
+            location: "json"
+            type: "integer"
+          ticketSaleDate:
+            location: "json"
+            type: "date"
+          tripDate:
+            location: "json"
+            type: "date"
+          tripHour:
+            location: "json"
+            type: "string"
+          seats:
+            location: "json"
+            type: "string"
+  deliveryRateData:
+    type: "object"
+    location: "json"
+    properties:
+      statusName:
+        location: "json"
+        type: "string"
+      data:
+        type: "object"
+        location: "json"
+        properties:
+          deliveryRate:
+            location: "json"
+            type: "integer"
+  deliveryDocumentData:
+    type: "object"
+    location: "json"
+    properties:
+      statusName:
+        location: "json"
+        type: "string"
+      data:
+        type: "object"
+        location: "json"
+        properties:
+          agencyOriginName:
+            location: "json"
+            type: "string"
+          agencyDestinationName:
+            location: "json"
+            type: "string"
+          senderClientName:
+            location: "json"
+            type: "string"
+          addresseeClientName:
+            location: "json"
+            type: "string" 
+          senderClientLocationAddress:
+            location: "json"
+            type: "string" 
+          addresseeClientLocationAddress:
+            location: "json"
+            type: "string"
+          merchandiseType:
+            location: "json"
+            type: "string"
+          deliveryDate:
+            location: "json"
+            type: "date"
+          deliveryState:
+            location: "json"
+            type: "string"
+          deliveryStateId:
+            location: "json"
+            type: "integer"
+          realWeight:
+            location: "json"
+            type: "integer"
+          merchandiseCount:
+            location: "json"
+            type: "integer"
+  listReservations:
+    type: "object"
+    location: "json"
+    properties:
+      statusName:
+        location: "json"
+        type: "string"
+      data:
+        type: "array"
+        location: "json"
+        items:
+          type: "object"
+          properties:
+            companyId:
+              location: "json"
+              type: "integer"
+            reservationId:
+              location: "json"
+              type: "integer"
+            agencyOriginName:
+              location: "json"
+              type: "string"
+            agencydestinationName:
+              location: "json"
+              type: "string" 
+            tripDate:
+              location: "json"
+              type: "date" 
+            tripHour:
+              location: "json"
+              type: "string"
+            totalPurshase:
+              location: "json"
+              type: "integer"
+            oneWayOrReturn:
+              location: "json"
+              type: "string"
+            clientName:
+              location: "json"
+              type: "string"
+            clientLastName:
+              location: "json"
+              type: "string"
+  listTickets:
+    type: "object"
+    location: "json"
+    properties:
+      statusName:
+        location: "json"
+        type: "string"
+      data:
+        type: "array"
+        location: "json"
+        items:
+          type: "object"
+          properties:
+            companyId:
+              location: "json"
+              type: "integer"
+            purshaseId:
+              location: "json"
+              type: "integer"
+            agencyOriginName:
+              location: "json"
+              type: "string"
+            agencydestinationName:
+              location: "json"
+              type: "string" 
+            tripDate:
+              location: "json"
+              type: "date" 
+            tripHour:
+              location: "json"
+              type: "string"
+            totalPurshase:
+              location: "json"
+              type: "integer"
+            oneWayOrReturn:
+              location: "json"
+              type: "string"
+            clientName:
+              location: "json"
+              type: "string"
+            clientLastName:
+              location: "json"
+              type: "string"
+  listHistory:
+    type: "object"
+    location: "json"
+    properties:
+      statusName:
+        location: "json"
+        type: "string"
+      data:
+        type: "array"
+        location: "json"
+        items:
+          type: "object"
+          properties:
+            companyId:
+              location: "json"
+              type: "integer"
+            purshaseId:
+              location: "json"
+              type: "integer"
+            agencyOriginName:
+              location: "json"
+              type: "string"
+            agencydestinationName:
+              location: "json"
+              type: "string" 
+            tripDate:
+              location: "json"
+              type: "date" 
+            tripHour:
+              location: "json"
+              type: "string"
+            totalPurshase:
+              location: "json"
+              type: "integer"
+            oneWayOrReturn:
+              location: "json"
+              type: "string"
+            clientName:
+              location: "json"
+              type: "string"
+            clientLastName:
+              location: "json"
+              type: "string"
+  reservationOneWayData:
+    type: "object"
+    location: "json"
+    properties:
+      statusName:
+        location: "json"
+        type: "string"
+      data:
+        type: "object"
+        location: "json"
+        properties:
+          oneWayPurshasedId:
+            location: "json"
+            type: "integer"
+          message:
+            location: "json"
+            type: "string"
+          returnPurshasedId:
+            location: "json"
+            type: "integer"
+          ticketGenerate:
+            location: "json"
+            type: "string" 
+          discountPurshased:
+            location: "json"
+            type: "integer"
+  reservationTwoWayData:
+    type: "object"
+    location: "json"
+    properties:
+      statusName:
+        location: "json"
+        type: "string"
+      data:
+        type: "object"
+        location: "json"
+        properties:
+          oneWayPurshasedId:
+            location: "json"
+            type: "integer"
+          message:
+            location: "json"
+            type: "string"
+          returnPurshasedId:
+            location: "json"
+            type: "integer"
+          ticketGenerate:
+            location: "json"
+            type: "string" 
+          discountPurshased:
+            location: "json"
+            type: "integer"
+  ticketInformationData:
+    type: "object"
+    location: "json"
+    properties:
+      statusName:
+        location: "json"
+        type: "string"
+      data:
+        type: "array"
+        location: "json"
+        items:
+          type: "object"
+          properties:
+            clientName:
+              location: "json"
+              type: "string"
+            clientLastName:
+              location: "json"
+              type: "string" 
+            agencyOriginName:
+              location: "json"
+              type: "string" 
+            agencyDestinationName:
+              location: "json"
+              type: "string" 
+            rate:
+              location: "json"
+              type: "integer" 
+            seatNumber:
+              location: "json"
+              type: "integer" 
+            tripDate:
+              location: "json"
+              type: "date" 
+            tripHour:
+              location: "json"
+              type: "string" 
+            busServiceId:
+              location: "json"
+              type: "integer"
+            homologationSeat:
+              location: "json"
+              type: "string"
+            oneWayOrReturn:
+              location: "json"
+              type: "string"

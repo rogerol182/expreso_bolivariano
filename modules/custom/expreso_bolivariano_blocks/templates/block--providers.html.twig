@@ -1,0 +1,86 @@
+<!-- Template for Page Providers -->
+<div class="wrapper__body login">
+    <h3 class="wrapper__lead">{{ title }}</h3>
+    <div class="wrapper__container col">
+        <div class="container mx-auto">
+            <div class="row no-gutters">
+                <div class="col-12 col-md-6 blueBox">
+                    <div class="px-5 py-5">
+                        <form class="providers-form formsubs__wrapper mb-4" data-drupal-selector="providers-form" action="/pages/provider" method="post" id="providers_form" accept-charset="UTF-8"  style="box-shadow: none;">
+                        {% for key, child in formData if key|first != '#' %}
+                            {% if key == 'providerEnterprise' %}
+                            <div class="inputSingle">
+                            <h6 class="aboveInput">Empresa: *</h6>
+                            <div class="input-group">
+                                <div class="input-group-prepend">&nbsp;</div>
+                                {{ child }}
+                                </div>
+                            </div>
+                            {% elseif key == 'providerDocument' %}
+                            <div class="inputSingle">
+                            <h6 class="aboveInput">Número de Identificación: *</h6>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">&nbsp;</div>
+                                    {{ child }}
+                                </div>
+                            </div>
+                            {% elseif key == 'providerYear' %}
+                            <div class="inputSingle">
+                            <h6 class="aboveInput">Año: *</h6>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">&nbsp;</div>
+                                    {{ child }}
+                                </div>
+                            </div>
+                            {% elseif key == 'providerMonth' %}
+                            <div class="inputSingle">
+                            <h6 class="aboveInput">Mes Inicial: *</h6>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">&nbsp;</div>
+                                    {{ child }}
+                                </div>
+                            </div>
+                            {% elseif key == 'providerMonthEnd' %}
+                            <div class="inputSingle">
+                            <h6 class="aboveInput">Mes Final: *</h6>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">&nbsp;</div>
+                                    {{ child }}
+                                </div>
+                            </div>
+                            {% elseif key == 'providerType' %}
+                            <div class="inputSingle">
+                            <h6 class="aboveInput">Tipo de certificado: *</h6>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">&nbsp;</div>
+                                    {{ child }}
+                                </div>
+                            </div>
+                            {% elseif key == 'actions' %}
+                            <div class="col text-center">
+                            {{ child }}
+                            </div>
+                            {% elseif key == 'form_build_id' %}
+                                {{ child }}
+                            {% elseif key == 'form_id' %}
+                                {{ child }}    
+                            {% elseif key == 'form_token' %}
+                                {{ child }}
+                            {% else %}
+                                {{ child }} 
+                            {% endif %}
+                        {% endfor %} 
+                        </form>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 grayBox px-5 py-5 text-left">
+                    <h3 style="text-align: center;">¡Descargue sus certificados de proveedores de una forma agil!</h3>
+                    <ul class="orange-dots" style="padding-top: 50px;">
+                        <li>Seleccione la empresa a la cual desea solicitar el certificado.</li>
+                        <li>El sistema le solicitará los datos minimos y necesarios para la solicitud de los certificados.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

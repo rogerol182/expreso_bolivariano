@@ -36,7 +36,30 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
           $container->get('expreso_bolivariano_services.custom')
         );
     }
+    /*Route Schedule Bus*/
+	public function route_schedule_bus($idBus,$tripDate) {
+		
+		$response = $this->managerServices->getToken();
+		if($response['statusName']=='OK')
+		{
+			$tokenId = $response['data']['token'];
+			$dateExpires = $response['data']['expires'];
+		}
 
+		$idBusService = (int)$idBus;
+		
+		$responseScheduleBus = $this->managerServices->getScheduleService($tokenId,$idBusService,$tripDate);
+		if($responseScheduleBus['statusName']=='OK')
+		{
+			$responseSchedule = $responseScheduleBus['data'];
+		}
+		$build = array(
+			'#theme' => 'route_schedule_bus_template',
+			'#scheduleBus' => $responseSchedule,
+		);
+		
+		return new Response(render($build));
+	}
 	/*Page Reservation*/
 	public function page_reservation($saleAgencyId,$saleAgencyName,$destinationAgencyId,$destinationAgencyName,$tripDate,$tripDateBack) {
 		
@@ -161,7 +184,7 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 
 		$saleAgencyId = (int)$saleAgencyId;
 		$destinationAgencyId = (int)$destinationAgencyId;
-		$tripDate = explode('-', $tripDate);
+		$tripDate = explode('-', $tripDateBack);
 		$tripDate = $tripDate[2]."-".$tripDate[1]."-".$tripDate[0];
 			
 		$contractNumber = 0;
@@ -191,7 +214,6 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 	}
 	/*Page Reservation*/
 	public function page_selection_go($saleAgencyId,$saleAgencyName,$destinationAgencyId,$destinationAgencyName,$tripDateGo,$tripKeyGo,$tripCapacity,$tripService) {
-		
 		$response = $this->managerServices->getToken();
 		if($response['statusName']=='OK')
 		{
@@ -218,28 +240,28 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 		foreach ($responseTripChairs as $key => $item)
 		{
 			//Count Many Rows to draw
-			//$countRows[] = $item['row'];
+			$idChair[] = $item['consecutiveId'];
 			//Rates for Chair Selection
-			if($item['rateType']=='INCREIBLE' && $item['rate']!=0)
+			if(trim(trim($item['rateType']))=='ESPECTACULAR' && $item['rate']!=0)
 			{
-				$countRates['in'] = array('i',$item['rate'],'increible','Tarifa Increible');
+				$countRates['es'] = array('e',$item['rate'],'espectacular','Tarifa Espectacular');
 			}
-			if($item['rateType']=='COMODO' && $item['rate']!=0)
+			if(trim(trim($item['rateType']))=='COMODA' && $item['rate']!=0)
 			{
 				$countRates['co'] = array('c',$item['rate'],'comoda','Tarifa Comoda');
 			}
-			if($item['rateType']=='CHEVERE' && $item['rate']!=0)
+			if(trim(trim($item['rateType']))=='CHEVERE' && $item['rate']!=0)
 			{
-				$countRates['ce'] = array('e',$item['rate'],'chevere','Tarifa Chevere');
+				$countRates['ce'] = array('v',$item['rate'],'chevere','Tarifa Chevere');
 			}
-			if($item['rateType']=='PRIMERA_CLASE' && $item['rate']!=0)
+			if(trim(trim($item['rateType']))=='PRIMERA_CLASE' && $item['rate']!=0)
 			{
 				$countRates['pc'] = array('p',$item['rate'],'first-class','Tarifa Primera Clase');
 			}
 			//Blocked Chairs
-			if($item['homologatedSeatState']=='V')
+			if($item['homologatedSeatState']=='V' || $item['homologatedSeatState']=='I')
 			{
-				$block = $item['row'].'_'.$item['column'];
+				$block = $item['homologatedSeatCode'];
 				$countBlocked[] = $block;
 			}
 			//First Floor
@@ -266,13 +288,21 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 					}
 					if(trim($item['elementCode'])=='S')
 					{
-						if($item['rateType']=='PRIMERA_CLASE')
+						if(trim(trim($item['rateType']))=='PRIMERA_CLASE')
 						{
 							$varMapFirstFloor .= 'p';
 						}
-						if($item['rateType']=='COMODO')
+						if(trim(trim($item['rateType']))=='ESPECTACULAR')
+						{
+							$varMapFirstFloor .= 'e';
+						}
+						if(trim(trim($item['rateType']))=='COMODA')
 						{
 							$varMapFirstFloor .= 'c';
+						}
+						if(trim(trim($item['rateType']))=='CHEVERE')
+						{
+							$varMapFirstFloor .= 'v';
 						}
 					}
 				}
@@ -292,13 +322,21 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 					}
 					if(trim($item['elementCode'])=='S')
 					{
-						if($item['rateType']=='PRIMERA_CLASE')
+						if(trim(trim($item['rateType']))=='PRIMERA_CLASE')
 						{
 							$varMapFirstFloor .= 'p';
 						}
-						if($item['rateType']=='COMODO')
+						if(trim(trim($item['rateType']))=='ESPECTACULAR')
+						{
+							$varMapFirstFloor .= 'e';
+						}
+						if(trim(trim($item['rateType']))=='COMODA')
 						{
 							$varMapFirstFloor .= 'c';
+						}
+						if(trim(trim($item['rateType']))=='CHEVERE')
+						{
+							$varMapFirstFloor .= 'v';
 						}
 					}
 				}
@@ -310,13 +348,21 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 					}
 					if(trim($item['elementCode'])=='S')
 					{
-						if($item['rateType']=='PRIMERA_CLASE')
+						if(trim(trim($item['rateType']))=='PRIMERA_CLASE')
 						{
 							$varMapFirstFloor .= 'p';
 						}
-						if($item['rateType']=='COMODO')
+						if(trim(trim($item['rateType']))=='ESPECTACULAR')
+						{
+							$varMapFirstFloor .= 'e';
+						}
+						if(trim(trim($item['rateType']))=='COMODA')
 						{
 							$varMapFirstFloor .= 'c';
+						}
+						if(trim(trim($item['rateType']))=='CHEVERE')
+						{
+							$varMapFirstFloor .= 'v';
 						}
 					}
 				}
@@ -332,13 +378,21 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 					}
 					if(trim($item['elementCode'])=='S')
 					{
-						if($item['rateType']=='PRIMERA_CLASE')
+						if(trim(trim($item['rateType']))=='PRIMERA_CLASE')
 						{
 							$varMapFirstFloor .= 'p';
 						}
-						if($item['rateType']=='COMODO')
+						if(trim(trim($item['rateType']))=='ESPECTACULAR')
+						{
+							$varMapFirstFloor .= 'e';
+						}
+						if(trim(trim($item['rateType']))=='COMODA')
 						{
 							$varMapFirstFloor .= 'c';
+						}
+						if(trim(trim($item['rateType']))=='CHEVERE')
+						{
+							$varMapFirstFloor .= 'v';
 						}
 					}
 				}
@@ -366,13 +420,21 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 					}
 					if(trim($item['elementCode'])=='S')
 					{
-						if($item['rateType']=='PRIMERA_CLASE')
+						if(trim(trim($item['rateType']))=='PRIMERA_CLASE')
 						{
 							$varMapFirstFloor .= 'p';
 						}
-						if($item['rateType']=='COMODO')
+						if(trim(trim($item['rateType']))=='ESPECTACULAR')
+						{
+							$varMapFirstFloor .= 'e';
+						}
+						if(trim(trim($item['rateType']))=='COMODA')
 						{
 							$varMapFirstFloor .= 'c';
+						}
+						if(trim(trim($item['rateType']))=='CHEVERE')
+						{
+							$varMapFirstFloor .= 'v';
 						}
 					}
 				}
@@ -400,13 +462,21 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 					}
 					if(trim($item['elementCode'])=='S')
 					{
-						if($item['rateType']=='PRIMERA_CLASE')
+						if(trim(trim($item['rateType']))=='PRIMERA_CLASE')
 						{
 							$varMapFirstFloor .= 'p';
 						}
-						if($item['rateType']=='COMODO')
+						if(trim(trim($item['rateType']))=='ESPECTACULAR')
+						{
+							$varMapFirstFloor .= 'e';
+						}
+						if(trim(trim($item['rateType']))=='COMODA')
 						{
 							$varMapFirstFloor .= 'c';
+						}
+						if(trim(trim($item['rateType']))=='CHEVERE')
+						{
+							$varMapFirstFloor .= 'v';
 						}
 					}
 					$varMapFirstFloor .= '_end';
@@ -428,9 +498,21 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 					}
 					if(trim($item['elementCode'])=='S')
 					{
-						if($item['rateType']=='COMODO')
+						if(trim(trim($item['rateType']))=='PRIMERA_CLASE')
+						{
+							$varMapSecondFloor .= 'p';
+						}
+						if(trim(trim($item['rateType']))=='ESPECTACULAR')
+						{
+							$varMapSecondFloor .= 'e';
+						}
+						if(trim(trim($item['rateType']))=='COMODA')
 						{
 							$varMapSecondFloor .= 'c';
+						}
+						if(trim(trim($item['rateType']))=='CHEVERE')
+						{
+							$varMapSecondFloor .= 'v';
 						}
 					}
 				}
@@ -446,9 +528,21 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 					}
 					if(trim($item['elementCode'])=='S')
 					{
-						if($item['rateType']=='COMODO')
+						if(trim(trim($item['rateType']))=='PRIMERA_CLASE')
+						{
+							$varMapSecondFloor .= 'p';
+						}
+						if(trim(trim($item['rateType']))=='ESPECTACULAR')
+						{
+							$varMapSecondFloor .= 'e';
+						}
+						if(trim(trim($item['rateType']))=='COMODA')
 						{
 							$varMapSecondFloor .= 'c';
+						}
+						if(trim(trim($item['rateType']))=='CHEVERE')
+						{
+							$varMapSecondFloor .= 'v';
 						}
 					}
 				}
@@ -490,9 +584,21 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 					}
 					if(trim($item['elementCode'])=='S')
 					{
-						if($item['rateType']=='COMODO')
+						if(trim(trim($item['rateType']))=='PRIMERA_CLASE')
+						{
+							$varMapSecondFloor .= 'p';
+						}
+						if(trim(trim($item['rateType']))=='ESPECTACULAR')
+						{
+							$varMapSecondFloor .= 'e';
+						}
+						if(trim(trim($item['rateType']))=='COMODA')
 						{
 							$varMapSecondFloor .= 'c';
+						}
+						if(trim(trim($item['rateType']))=='CHEVERE')
+						{
+							$varMapSecondFloor .= 'v';
 						}
 					}
 				}
@@ -520,9 +626,21 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 					}
 					if(trim($item['elementCode'])=='S')
 					{
-						if($item['rateType']=='COMODO')
+						if(trim(trim($item['rateType']))=='PRIMERA_CLASE')
+						{
+							$varMapSecondFloor .= 'p';
+						}
+						if(trim(trim($item['rateType']))=='ESPECTACULAR')
+						{
+							$varMapSecondFloor .= 'e';
+						}
+						if(trim(trim($item['rateType']))=='COMODA')
 						{
 							$varMapSecondFloor .= 'c';
+						}
+						if(trim(trim($item['rateType']))=='CHEVERE')
+						{
+							$varMapSecondFloor .= 'v';
 						}
 					}
 					$varMapSecondFloor .= '_end';
@@ -533,7 +651,6 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 				$varMapSecondFloor = '0';
 			}
 		}
-		
 		//I make the variables to send
 		//Make the First Floor & Second
 		$varEnd = explode("_end",$varMapFirstFloor);
@@ -655,13 +772,14 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 			}
 		}
 		$varRates .= '}';
+		$tripBackT ='n';
 		//End of create rates
-		
 		return array(
 			'#theme' => 'page_selection_template',
-			'#tripsCitiesData' => ['idOriginCity'=> $saleAgencyId, 'idDestinationCity'=>$destinationAgencyId, 'originCity'=>$saleAgencyName, 'destinationCity'=>$destinationAgencyName, 'tripService'=>$tripService],
+			'#tripsCitiesData' => ['idOriginCity'=> $saleAgencyId, 'idDestinationCity'=>$destinationAgencyId, 'originCity'=>$saleAgencyName, 'destinationCity'=>$destinationAgencyName, 'tripService'=>$tripService, 'tripKeyGo' => $tripKeyGo],
 			'#tripsDatesData' => ['tripDateGo'=>$tripDateGo],
-			'#attached' => ['library' => ['bootstrap_bolivariano_subtheme/seat-charts'], 'drupalSettings'=> ['bootstrap_bolivariano_subtheme' => ['seatCharts' => ['countColumnsFF' => $varColumns, 'countColumnsSF' => $varColumnsS, 'countRowsFF' => $varRows, 'countRowsSF' => $varRowsS, 'countRates' => $varRates, 'countBlocked' => $countBlocked, 'chairsMapFirstFloor' => $varChairsFirstFloor, 'chairsMapSecondFloor' => $varChairsSecondFloor]]]],
+			'#attached' => ['library' => ['bootstrap_bolivariano_subtheme/seat-charts'], 'drupalSettings'=> ['bootstrap_bolivariano_subtheme' => ['seatCharts' => ['countColumnsFF' => $varColumns, 'countColumnsSF' => $varColumnsS, 'countRowsFF' => $varRows, 'countRowsSF' => $varRowsS, 'countRates' => $varRates, 'countBlocked' => $countBlocked, 'chairsMapFirstFloor' => $varChairsFirstFloor, 'chairsMapSecondFloor' => $varChairsSecondFloor, /*back*/ 'tripBackT' => $tripBackT]]]],
+			'#cache' => ['max-age' => 0],
 		);
 	}
 
@@ -696,7 +814,7 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 		/*End*/
 		/*Services for search Back Travel*/
 		$responsePrintBusBack = $this->managerServices->getPrintBusMap($tokenId,$tripKeyBack,$tripCapacityBack,$saleAgencyId,$destinationAgencyId);
-		$responseTripChairsBack = $this->managerServices->getAvailableTripChairs($tokenId,$mapType,$companyId,$tripKeyBack,$saleAgencyId,$destinationAgencyId);
+		$responseTripChairsBack = $this->managerServices->getAvailableTripChairs($tokenId,$mapType,$companyId,$tripKeyBack,$destinationAgencyId,$saleAgencyId);
 		if($responsePrintBusBack['statusName']=='OK' && $responseTripChairsBack['statusName']=='OK')
 		{
 			$responseTripChairsBack = $responseTripChairsBack['data'];
@@ -709,26 +827,26 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 		{
 			//Count Many Rows to draw
 			//Rates for Chair Selection
-			if($item['rateType']=='INCREIBLE' && $item['rate']!=0)
+			if(trim(trim($item['rateType']))=='ESPECTACULAR' && $item['rate']!=0)
 			{
-				$countRatesGo['in'] = array('i',$item['rate'],'increible','Tarifa Increible');
+				$countRatesGo['es'] = array('e',$item['rate'],'espectacular','Tarifa Espectacular');
 			}
-			if($item['rateType']=='COMODO' && $item['rate']!=0)
+			if(trim(trim($item['rateType']))=='COMODA' && $item['rate']!=0)
 			{
 				$countRatesGo['co'] = array('c',$item['rate'],'comoda','Tarifa Comoda');
 			}
-			if($item['rateType']=='CHEVERE' && $item['rate']!=0)
+			if(trim(trim($item['rateType']))=='CHEVERE' && $item['rate']!=0)
 			{
-				$countRatesGo['ce'] = array('e',$item['rate'],'chevere','Tarifa Chevere');
+				$countRatesGo['ce'] = array('v',$item['rate'],'chevere','Tarifa Chevere');
 			}
-			if($item['rateType']=='PRIMERA_CLASE' && $item['rate']!=0)
+			if(trim(trim($item['rateType']))=='PRIMERA_CLASE' && $item['rate']!=0)
 			{
 				$countRatesGo['pc'] = array('p',$item['rate'],'first-class','Tarifa Primera Clase');
 			}
 			//Blocked Chairs
-			if($item['homologatedSeatState']=='V')
+			if($item['homologatedSeatState']=='V' || $item['homologatedSeatState']=='I')
 			{
-				$block = $item['row'].'_'.$item['column'];
+				$block = $item['homologatedSeatCode'];
 				$countBlockedGo[] = $block;
 			}
 			//First Floor
@@ -755,13 +873,21 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 					}
 					if(trim($item['elementCode'])=='S')
 					{
-						if($item['rateType']=='PRIMERA_CLASE')
+						if(trim(trim($item['rateType']))=='PRIMERA_CLASE')
 						{
 							$varMapFirstFloorGo .= 'p';
 						}
-						if($item['rateType']=='COMODO')
+						if(trim(trim($item['rateType']))=='ESPECTACULAR')
+						{
+							$varMapFirstFloorGo .= 'e';
+						}
+						if(trim(trim($item['rateType']))=='COMODA')
 						{
 							$varMapFirstFloorGo .= 'c';
+						}
+						if(trim(trim($item['rateType']))=='CHEVERE')
+						{
+							$varMapFirstFloorGo .= 'v';
 						}
 					}
 				}
@@ -781,13 +907,21 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 					}
 					if(trim($item['elementCode'])=='S')
 					{
-						if($item['rateType']=='PRIMERA_CLASE')
+						if(trim(trim($item['rateType']))=='PRIMERA_CLASE')
 						{
 							$varMapFirstFloorGo .= 'p';
 						}
-						if($item['rateType']=='COMODO')
+						if(trim(trim($item['rateType']))=='ESPECTACULAR')
+						{
+							$varMapFirstFloorGo .= 'e';
+						}
+						if(trim(trim($item['rateType']))=='COMODA')
 						{
 							$varMapFirstFloorGo .= 'c';
+						}
+						if(trim(trim($item['rateType']))=='CHEVERE')
+						{
+							$varMapFirstFloorGo .= 'v';
 						}
 					}
 				}
@@ -799,13 +933,21 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 					}
 					if(trim($item['elementCode'])=='S')
 					{
-						if($item['rateType']=='PRIMERA_CLASE')
+						if(trim(trim($item['rateType']))=='PRIMERA_CLASE')
 						{
 							$varMapFirstFloorGo .= 'p';
 						}
-						if($item['rateType']=='COMODO')
+						if(trim(trim($item['rateType']))=='ESPECTACULAR')
+						{
+							$varMapFirstFloorGo .= 'e';
+						}
+						if(trim(trim($item['rateType']))=='COMODA')
 						{
 							$varMapFirstFloorGo .= 'c';
+						}
+						if(trim(trim($item['rateType']))=='CHEVERE')
+						{
+							$varMapFirstFloorGo .= 'v';
 						}
 					}
 				}
@@ -821,13 +963,21 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 					}
 					if(trim($item['elementCode'])=='S')
 					{
-						if($item['rateType']=='PRIMERA_CLASE')
+						if(trim(trim($item['rateType']))=='PRIMERA_CLASE')
 						{
 							$varMapFirstFloorGo .= 'p';
 						}
-						if($item['rateType']=='COMODO')
+						if(trim(trim($item['rateType']))=='ESPECTACULAR')
+						{
+							$varMapFirstFloorGo .= 'e';
+						}
+						if(trim(trim($item['rateType']))=='COMODA')
 						{
 							$varMapFirstFloorGo .= 'c';
+						}
+						if(trim(trim($item['rateType']))=='CHEVERE')
+						{
+							$varMapFirstFloorGo .= 'v';
 						}
 					}
 				}
@@ -855,13 +1005,21 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 					}
 					if(trim($item['elementCode'])=='S')
 					{
-						if($item['rateType']=='PRIMERA_CLASE')
+						if(trim(trim($item['rateType']))=='PRIMERA_CLASE')
 						{
 							$varMapFirstFloorGo .= 'p';
 						}
-						if($item['rateType']=='COMODO')
+						if(trim(trim($item['rateType']))=='ESPECTACULAR')
+						{
+							$varMapFirstFloorGo .= 'e';
+						}
+						if(trim(trim($item['rateType']))=='COMODA')
 						{
 							$varMapFirstFloorGo .= 'c';
+						}
+						if(trim(trim($item['rateType']))=='CHEVERE')
+						{
+							$varMapFirstFloorGo .= 'v';
 						}
 					}
 				}
@@ -889,13 +1047,21 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 					}
 					if(trim($item['elementCode'])=='S')
 					{
-						if($item['rateType']=='PRIMERA_CLASE')
+						if(trim(trim($item['rateType']))=='PRIMERA_CLASE')
 						{
 							$varMapFirstFloorGo .= 'p';
 						}
-						if($item['rateType']=='COMODO')
+						if(trim(trim($item['rateType']))=='ESPECTACULAR')
+						{
+							$varMapFirstFloorGo .= 'e';
+						}
+						if(trim(trim($item['rateType']))=='COMODA')
 						{
 							$varMapFirstFloorGo .= 'c';
+						}
+						if(trim(trim($item['rateType']))=='CHEVERE')
+						{
+							$varMapFirstFloorGo .= 'v';
 						}
 					}
 					$varMapFirstFloorGo .= '_end';
@@ -917,9 +1083,21 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 					}
 					if(trim($item['elementCode'])=='S')
 					{
-						if($item['rateType']=='COMODO')
+						if(trim(trim($item['rateType']))=='PRIMERA_CLASE')
+						{
+							$varMapSecondFloorGo .= 'p';
+						}
+						if(trim(trim($item['rateType']))=='ESPECTACULAR')
+						{
+							$varMapSecondFloorGo .= 'e';
+						}
+						if(trim(trim($item['rateType']))=='COMODA')
 						{
 							$varMapSecondFloorGo .= 'c';
+						}
+						if(trim(trim($item['rateType']))=='CHEVERE')
+						{
+							$varMapSecondFloorGo .= 'v';
 						}
 					}
 				}
@@ -935,9 +1113,21 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 					}
 					if(trim($item['elementCode'])=='S')
 					{
-						if($item['rateType']=='COMODO')
+						if(trim(trim($item['rateType']))=='PRIMERA_CLASE')
+						{
+							$varMapSecondFloorGo .= 'p';
+						}
+						if(trim(trim($item['rateType']))=='ESPECTACULAR')
+						{
+							$varMapSecondFloorGo .= 'e';
+						}
+						if(trim(trim($item['rateType']))=='COMODA')
 						{
 							$varMapSecondFloorGo .= 'c';
+						}
+						if(trim(trim($item['rateType']))=='CHEVERE')
+						{
+							$varMapSecondFloorGo .= 'v';
 						}
 					}
 				}
@@ -979,9 +1169,21 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 					}
 					if(trim($item['elementCode'])=='S')
 					{
-						if($item['rateType']=='COMODO')
+						if(trim(trim($item['rateType']))=='PRIMERA_CLASE')
+						{
+							$varMapSecondFloorGo .= 'p';
+						}
+						if(trim(trim($item['rateType']))=='ESPECTACULAR')
+						{
+							$varMapSecondFloorGo .= 'e';
+						}
+						if(trim(trim($item['rateType']))=='COMODA')
 						{
 							$varMapSecondFloorGo .= 'c';
+						}
+						if(trim(trim($item['rateType']))=='CHEVERE')
+						{
+							$varMapSecondFloorGo .= 'v';
 						}
 					}
 				}
@@ -1009,9 +1211,21 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 					}
 					if(trim($item['elementCode'])=='S')
 					{
-						if($item['rateType']=='COMODO')
+						if(trim(trim($item['rateType']))=='PRIMERA_CLASE')
+						{
+							$varMapSecondFloorGo .= 'p';
+						}
+						if(trim(trim($item['rateType']))=='ESPECTACULAR')
+						{
+							$varMapSecondFloorGo .= 'e';
+						}
+						if(trim(trim($item['rateType']))=='COMODA')
 						{
 							$varMapSecondFloorGo .= 'c';
+						}
+						if(trim(trim($item['rateType']))=='CHEVERE')
+						{
+							$varMapSecondFloorGo .= 'v';
 						}
 					}
 					$varMapSecondFloorGo .= '_end';
@@ -1152,26 +1366,26 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 		{
 			//Count Many Rows to draw
 			//Rates for Chair Selection
-			if($item['rateType']=='INCREIBLE' && $item['rate']!=0)
+			if(trim(trim($item['rateType']))=='ESPECTACULAR' && $item['rate']!=0)
 			{
-				$countRatesBack['in'] = array('i',$item['rate'],'increible','Tarifa Increible');
+				$countRatesBack['es'] = array('e',$item['rate'],'espectacular','Tarifa Espectacular');
 			}
-			if($item['rateType']=='COMODO' && $item['rate']!=0)
+			if(trim(trim($item['rateType']))=='COMODA' && $item['rate']!=0)
 			{
 				$countRatesBack['co'] = array('c',$item['rate'],'comoda','Tarifa Comoda');
 			}
-			if($item['rateType']=='CHEVERE' && $item['rate']!=0)
+			if(trim(trim($item['rateType']))=='CHEVERE' && $item['rate']!=0)
 			{
-				$countRatesBack['ce'] = array('e',$item['rate'],'chevere','Tarifa Chevere');
+				$countRatesBack['ce'] = array('v',$item['rate'],'chevere','Tarifa Chevere');
 			}
-			if($item['rateType']=='PRIMERA_CLASE' && $item['rate']!=0)
+			if(trim(trim($item['rateType']))=='PRIMERA_CLASE' && $item['rate']!=0)
 			{
 				$countRatesBack['pc'] = array('p',$item['rate'],'first-class','Tarifa Primera Clase');
 			}
 			//Blocked Chairs
-			if($item['homologatedSeatState']=='V')
+			if($item['homologatedSeatState']=='V' || $item['homologatedSeatState']=='I')
 			{
-				$block = $item['row'].'_'.$item['column'];
+				$block = $item['homologatedSeatCode'];
 				$countBlockedBack[] = $block;
 			}
 			//First Floor
@@ -1198,13 +1412,21 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 					}
 					if(trim($item['elementCode'])=='S')
 					{
-						if($item['rateType']=='PRIMERA_CLASE')
+						if(trim(trim($item['rateType']))=='PRIMERA_CLASE')
 						{
 							$varMapFirstFloorBack .= 'p';
 						}
-						if($item['rateType']=='COMODO')
+						if(trim(trim($item['rateType']))=='ESPECTACULAR')
+						{
+							$varMapFirstFloorBack .= 'e';
+						}
+						if(trim(trim($item['rateType']))=='COMODA')
 						{
 							$varMapFirstFloorBack .= 'c';
+						}
+						if(trim(trim($item['rateType']))=='CHEVERE')
+						{
+							$varMapFirstFloorBack .= 'v';
 						}
 					}
 				}
@@ -1224,13 +1446,21 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 					}
 					if(trim($item['elementCode'])=='S')
 					{
-						if($item['rateType']=='PRIMERA_CLASE')
+						if(trim(trim($item['rateType']))=='PRIMERA_CLASE')
 						{
 							$varMapFirstFloorBack .= 'p';
 						}
-						if($item['rateType']=='COMODO')
+						if(trim(trim($item['rateType']))=='ESPECTACULAR')
+						{
+							$varMapFirstFloorBack .= 'e';
+						}
+						if(trim(trim($item['rateType']))=='COMODA')
 						{
 							$varMapFirstFloorBack .= 'c';
+						}
+						if(trim(trim($item['rateType']))=='CHEVERE')
+						{
+							$varMapFirstFloorBack .= 'v';
 						}
 					}
 				}
@@ -1242,13 +1472,21 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 					}
 					if(trim($item['elementCode'])=='S')
 					{
-						if($item['rateType']=='PRIMERA_CLASE')
+						if(trim(trim($item['rateType']))=='PRIMERA_CLASE')
 						{
 							$varMapFirstFloorBack .= 'p';
 						}
-						if($item['rateType']=='COMODO')
+						if(trim(trim($item['rateType']))=='ESPECTACULAR')
+						{
+							$varMapFirstFloorBack .= 'e';
+						}
+						if(trim(trim($item['rateType']))=='COMODA')
 						{
 							$varMapFirstFloorBack .= 'c';
+						}
+						if(trim(trim($item['rateType']))=='CHEVERE')
+						{
+							$varMapFirstFloorBack .= 'v';
 						}
 					}
 				}
@@ -1264,13 +1502,21 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 					}
 					if(trim($item['elementCode'])=='S')
 					{
-						if($item['rateType']=='PRIMERA_CLASE')
+						if(trim(trim($item['rateType']))=='PRIMERA_CLASE')
 						{
 							$varMapFirstFloorBack .= 'p';
 						}
-						if($item['rateType']=='COMODO')
+						if(trim(trim($item['rateType']))=='ESPECTACULAR')
+						{
+							$varMapFirstFloorBack .= 'e';
+						}
+						if(trim(trim($item['rateType']))=='COMODA')
 						{
 							$varMapFirstFloorBack .= 'c';
+						}
+						if(trim(trim($item['rateType']))=='CHEVERE')
+						{
+							$varMapFirstFloorBack .= 'v';
 						}
 					}
 				}
@@ -1298,13 +1544,21 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 					}
 					if(trim($item['elementCode'])=='S')
 					{
-						if($item['rateType']=='PRIMERA_CLASE')
+						if(trim(trim($item['rateType']))=='PRIMERA_CLASE')
 						{
 							$varMapFirstFloorBack .= 'p';
 						}
-						if($item['rateType']=='COMODO')
+						if(trim(trim($item['rateType']))=='ESPECTACULAR')
+						{
+							$varMapFirstFloorBack .= 'e';
+						}
+						if(trim(trim($item['rateType']))=='COMODA')
 						{
 							$varMapFirstFloorBack .= 'c';
+						}
+						if(trim(trim($item['rateType']))=='CHEVERE')
+						{
+							$varMapFirstFloorBack .= 'v';
 						}
 					}
 				}
@@ -1332,13 +1586,21 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 					}
 					if(trim($item['elementCode'])=='S')
 					{
-						if($item['rateType']=='PRIMERA_CLASE')
+						if(trim(trim($item['rateType']))=='PRIMERA_CLASE')
 						{
 							$varMapFirstFloorBack .= 'p';
 						}
-						if($item['rateType']=='COMODO')
+						if(trim(trim($item['rateType']))=='ESPECTACULAR')
+						{
+							$varMapFirstFloorBack .= 'e';
+						}
+						if(trim(trim($item['rateType']))=='COMODA')
 						{
 							$varMapFirstFloorBack .= 'c';
+						}
+						if(trim(trim($item['rateType']))=='CHEVERE')
+						{
+							$varMapFirstFloorBack .= 'v';
 						}
 					}
 					$varMapFirstFloorBack .= '_end';
@@ -1360,9 +1622,21 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 					}
 					if(trim($item['elementCode'])=='S')
 					{
-						if($item['rateType']=='COMODO')
+						if(trim(trim($item['rateType']))=='PRIMERA_CLASE')
+						{
+							$varMapSecondFloorBack .= 'p';
+						}
+						if(trim(trim($item['rateType']))=='ESPECTACULAR')
+						{
+							$varMapSecondFloorBack .= 'e';
+						}
+						if(trim(trim($item['rateType']))=='COMODA')
 						{
 							$varMapSecondFloorBack .= 'c';
+						}
+						if(trim(trim($item['rateType']))=='CHEVERE')
+						{
+							$varMapSecondFloorBack .= 'v';
 						}
 					}
 				}
@@ -1378,9 +1652,21 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 					}
 					if(trim($item['elementCode'])=='S')
 					{
-						if($item['rateType']=='COMODO')
+						if(trim(trim($item['rateType']))=='PRIMERA_CLASE')
+						{
+							$varMapSecondFloorBack .= 'p';
+						}
+						if(trim(trim($item['rateType']))=='ESPECTACULAR')
+						{
+							$varMapSecondFloorBack .= 'e';
+						}
+						if(trim(trim($item['rateType']))=='COMODA')
 						{
 							$varMapSecondFloorBack .= 'c';
+						}
+						if(trim(trim($item['rateType']))=='CHEVERE')
+						{
+							$varMapSecondFloorBack .= 'v';
 						}
 					}
 				}
@@ -1422,9 +1708,21 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 					}
 					if(trim($item['elementCode'])=='S')
 					{
-						if($item['rateType']=='COMODO')
+						if(trim(trim($item['rateType']))=='PRIMERA_CLASE')
+						{
+							$varMapSecondFloorBack .= 'p';
+						}
+						if(trim(trim($item['rateType']))=='ESPECTACULAR')
+						{
+							$varMapSecondFloorBack .= 'e';
+						}
+						if(trim(trim($item['rateType']))=='COMODA')
 						{
 							$varMapSecondFloorBack .= 'c';
+						}
+						if(trim(trim($item['rateType']))=='CHEVERE')
+						{
+							$varMapSecondFloorBack .= 'v';
 						}
 					}
 				}
@@ -1452,9 +1750,21 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 					}
 					if(trim($item['elementCode'])=='S')
 					{
-						if($item['rateType']=='COMODO')
+						if(trim(trim($item['rateType']))=='PRIMERA_CLASE')
+						{
+							$varMapSecondFloorBack .= 'p';
+						}
+						if(trim(trim($item['rateType']))=='ESPECTACULAR')
+						{
+							$varMapSecondFloorBack .= 'e';
+						}
+						if(trim(trim($item['rateType']))=='COMODA')
 						{
 							$varMapSecondFloorBack .= 'c';
+						}
+						if(trim(trim($item['rateType']))=='CHEVERE')
+						{
+							$varMapSecondFloorBack .= 'v';
 						}
 					}
 					$varMapSecondFloorBack .= '_end';
@@ -1548,7 +1858,15 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 			{
 				if($j<10)
 				{
-					$varRowsBackS[] = "0".$j;
+					if($j==0)
+					{
+						$j = 1;
+						$varRowsBackS[] = "0".$j;
+					}
+					else
+					{
+						$varRowsBackS[] = "0".$j;
+					}
 				}
 				else
 				{
@@ -1594,14 +1912,19 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 
 		return array(
 			'#theme' => 'page_selection_template',
-			'#tripsCitiesData' => ['idOriginCity'=> $saleAgencyId, 'idDestinationCity'=>$destinationAgencyId, 'originCity'=>$saleAgencyName, 'destinationCity'=>$destinationAgencyName, 'tripService'=>$tripServiceGo, 'tripServiceB'=>$tripServiceBack],
+			'#tripsCitiesData' => ['idOriginCity'=> $saleAgencyId, 'idDestinationCity'=>$destinationAgencyId, 'originCity'=>$saleAgencyName, 'destinationCity'=>$destinationAgencyName, 'tripService'=>$tripServiceGo, 'tripServiceB'=>$tripServiceBack, 'tripKeyGo' => $tripKeyGo, 'tripKeyBack' => $tripKeyBack],
 			'#tripsDatesData' => ['tripDateGo'=>$tripDateGo, 'tripDateBack'=>$tripDateBack],
 			'#attached' => ['library' => ['bootstrap_bolivariano_subtheme/seat-charts'], 'drupalSettings'=> ['bootstrap_bolivariano_subtheme' => ['seatCharts' => ['countColumnsFF' => $varColumnsGo, 'countColumnsSF' => $varColumnsGoS, 'countRowsFF' => $varRowsGo, 'countRowsSF' => $varRowsGoS, 'countRates' => $varRatesGo, 'countBlocked' => $countBlockedGo, 'chairsMapFirstFloor' => $varChairsFirstFloorGo, 'chairsMapSecondFloor' => $varChairsSecondFloorGo,  /*back*/ 'tripBackT' => $tripBackT, 'countColumnsFFB' => $varColumnsBack, 'countColumnsSFB' => $varColumnsBackS, 'countRowsFFB' => $varRowsBack, 'countRowsSFB' => $varRowsBackS, 'countRatesB' => $varRatesBack, 'countBlockedB' => $countBlockedBack, 'chairsMapFirstFloorB' => $varChairsFirstFloorBack, 'chairsMapSecondFloorB' => $varChairsSecondFloorBack]]]],
 		);
 	}
 
-	/*Page Checkout*/
-	public function page_checkout() {
+	/*Create Reservation Process*/
+	public function create_reservation_one_way($idCityOrigin,$idCityDestiny,$chairsSelected,$tripKeyGo,$dateGo) {
+		
+		$variables['#cache']['max-age'] = 0;
+		$user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
+      	$uid = $user->get('uid')->value;
+		$chairs = explode(',', $chairsSelected);
 		
 		$response = $this->managerServices->getToken();
 		if($response['statusName']=='OK')
@@ -1614,57 +1937,295 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 		}
 		$mapType = 1;
 		$companyId = 1;
-		$tripKey = 4254063;
-		$saleAgencyId = 1;
-		$destinationAgencyId = 2;
-		
+		$tripKey = (integer)$tripKeyGo;
+		$saleAgencyId = (integer)$idCityOrigin;
+		$destinationAgencyId = (integer)$idCityDestiny;
+		//Begins to Find consecutive Id for the selected chairs.
 		$responseTripChairs = $this->managerServices->getAvailableTripChairs($tokenId,$mapType,$companyId,$tripKey,$saleAgencyId,$destinationAgencyId);
-		//print_r($responseTripChairs);
-		//die();
-
 		if($responseTripChairs['statusName']=='OK')
 		{
 			$responseTripChairs = $responseTripChairs['data'];
+		}
+		foreach ($responseTripChairs as $key => $item)
+		{
+			if(trim($item['elementCode'])=='S')
+				{
+					$consecutivesId[$item['baseCodeSeat']] = $item['homologatedSeatCode'];
+				}
+		}
+		for ($i=0; $i < count($chairs); $i++) 
+		{
+			if($i<count($chairs)-1)
+			{
+				$indice = array_search($chairs[$i],$consecutivesId,true);
+				$chairsId .= trim($indice).',';
+				$documentsClients .= $uid.',';
+				$promotionalCodes .= "'',";
+			}
+			else
+			{
+				$indice = array_search($chairs[$i],$consecutivesId,true);
+				$chairsId .= trim($indice);
+				$documentsClients .= $uid;
+				$promotionalCodes .= "''";
+			}
+			
+		}
+		//var_dump($chairsId);
+		//die();
+		//End Find consecutive Id for the selected chairs.
+		$clientDocument = (integer)$uid;
+      	$agencyReservation = 999;
+		$date = $dateGo.'T00:00:00';
+		$passengers = count($chairs);
+
+		$responseReservations = $this->managerServices->getReservationCount($tokenId,$uid,'999');
+	    if($responseReservations['statusName']=='OK')
+	    {
+	        foreach($responseReservations as $key => $value)
+	        {
+	            $reservations = $value['countRegisters'];
+	        }
+	    }
+	    if($reservations<=12)
+	    {
+	    	$responseGenerateReservation = $this->managerServices->setGenerateReservationOneWay($tokenId,$agencyReservation,$clientDocument,$saleAgencyId,$destinationAgencyId,$tripKey,$date,$passengers,$documentsClients,$chairsId,$promotionalCodes);
+		
+			if($responseGenerateReservation['statusName']=='OK')
+			{
+				$responseGenerateReservation = $responseGenerateReservation['data'];
+				if($responseGenerateReservation['oneWayPurshasedId']!=0)
+				{
+					$responseReservation = $responseGenerateReservation['oneWayPurshasedId'];
+				}
+				else
+				{
+					$responseReservation = 'Error';
+				}
+			}	
+	    }
+	    else
+	    {
+	    	$responseReservation = 'Reservas';
+	    }
+		return new Response($responseReservation);	
+	}
+
+	/*Create Reservation Process*/
+	public function create_reservation_two_way($idCityOrigin,$idCityDestiny,$chairsSelected,$tripKeyGo,$dateGo,$chairsSelectedBack,$tripKeyBack,$dateBack) {
+		
+		$variables['#cache']['max-age'] = 0;
+		//var_dump($chairsSelected);
+		//var_dump($chairsSelectedBack);
+		//die();
+		$user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
+      	$uid = $user->get('uid')->value;
+		$chairs = explode(',', $chairsSelected);
+		$chairsBack = explode(',', $chairsSelectedBack);
+		
+		$response = $this->managerServices->getToken();
+		if($response['statusName']=='OK')
+		{
+			foreach($response as $key => $value) 
+			{
+				$tokenId = $value['token'];
+			    $dateExpires = $value['expires'];
+			}
+		}
+		$mapType = 1;
+		$companyId = 1;
+		$tripKey = (integer)$tripKeyGo;
+		$tripKeyB = (integer)$tripKeyBack;
+		$saleAgencyId = (integer)$idCityOrigin;
+		$destinationAgencyId = (integer)$idCityDestiny;
+		$saleAgencyIdB = (integer)$idCityDestiny;
+		$destinationAgencyIdB = (integer)$idCityOrigin;
+		//Begins to Find consecutive Id for the selected chairs.
+		$responseTripChairs = $this->managerServices->getAvailableTripChairs($tokenId,$mapType,$companyId,$tripKey,$saleAgencyId,$destinationAgencyId);
+		if($responseTripChairs['statusName']=='OK')
+		{
+			$responseTripChairs = $responseTripChairs['data'];
+		}
+		foreach ($responseTripChairs as $key => $item)
+		{
+			if(trim($item['elementCode'])=='S')
+				{
+					$consecutivesId[$item['baseCodeSeat']] = $item['homologatedSeatCode'];
+				}
+		}
+		for ($i=0; $i < count($chairs); $i++) 
+		{
+			if($i<count($chairs)-1)
+			{
+				$indice = array_search($chairs[$i],$consecutivesId,true);
+				$chairsId .= trim($indice).',';
+				$documentsClients .= $uid.',';
+				$promotionalCodes .= "'',";
+			}
+			else
+			{
+				$indice = array_search($chairs[$i],$consecutivesId,true);
+				$chairsId .= trim($indice);
+				$documentsClients .= $uid;
+				$promotionalCodes .= "''";
+			}
+			
+		}
+		//Begins to Find consecutive Id for the Back selected chairs.
+		$responseTripChairsBack = $this->managerServices->getAvailableTripChairs($tokenId,$mapType,$companyId,$tripKeyB,$saleAgencyIdB,$destinationAgencyIdB);
+		//var_dump($tripKeyB);
+		if($responseTripChairsBack['statusName']=='OK')
+		{
+			$responseTripChairsBack = $responseTripChairsBack['data'];
+		}
+		foreach ($responseTripChairsBack as $key => $item)
+		{
+			if(trim($item['elementCode'])=='S')
+				{
+					$consecutivesIdB[$item['baseCodeSeat']] = $item['homologatedSeatCode'];
+				}
+		}
+		for ($i=0; $i < count($chairsBack); $i++) 
+		{
+			if($i<count($chairsBack)-1)
+			{
+				$indiceB = array_search($chairsBack[$i],$consecutivesIdB,true);
+				$chairsIdB .= trim($indiceB).',';
+				$documentsClientsB .= $uid.',';
+				$promotionalCodesB .= "'',";
+			}
+			else
+			{
+				$indiceB = array_search($chairsBack[$i],$consecutivesIdB,true);
+				$chairsIdB .= trim($indiceB);
+				$documentsClientsB .= $uid;
+				$promotionalCodesB .= "''";
+			}
+			
+		}
+		//var_dump($chairsId);
+		//var_dump($chairsIdB);
+		//die();
+		//End Find consecutive Id for the selected chairs.
+		$clientDocument = (integer)$uid;
+      	$agencyReservation = 999;
+		$date = $dateGo.'T00:00:00';
+		$dateB = $dateBack.'T00:00:00';
+		$passengers = count($chairs);
+		$passengersB = count($chairsBack);
+
+		$responseReservations = $this->managerServices->getReservationCount($tokenId,$uid,'999');
+	    if($responseReservations['statusName']=='OK')
+	    {
+	        foreach($responseReservations as $key => $value)
+	        {
+	            $reservations = $value['countRegisters'];
+	        }
+	    }
+	    if($reservations<=12)
+	    {
+	    	$responseGenerateReservation = $this->managerServices->setGenerateReservationTwoWay($tokenId,$agencyReservation,$clientDocument,$saleAgencyId,$destinationAgencyId,$saleAgencyIdB,$destinationAgencyIdB,$tripKey,$tripKeyB,$date,$dateB,$passengers,$passengersB,$documentsClients,$documentsClientsB,$chairsId,$chairsIdB,$promotionalCodes,$promotionalCodesB);
+		
+			if($responseGenerateReservation['statusName']=='OK')
+			{
+				$responseGenerateReservation = $responseGenerateReservation['data'];
+				if($responseGenerateReservation['oneWayPurshasedId']!=0)
+				{
+					$responseReservation = $responseGenerateReservation['oneWayPurshasedId'];
+				}
+				else
+				{
+					$responseReservation = 'Error';
+				}
+			}	
+	    }
+	    else
+	    {
+	    	$responseReservation = 'Reservas';
+	    }
+		return new Response($responseReservation);
+	}
+
+	/*Page Checkout*/
+	public function page_checkout($purchaseId) {
+		
+		$variables['#cache']['max-age'] = 0;
+		$response = $this->managerServices->getToken();
+		if($response['statusName']=='OK')
+		{
+			foreach($response as $key => $value) 
+			{
+				$tokenId = $value['token'];
+			    $dateExpires = $value['expires'];
+			}
+		}
+		$purchasedId = (integer)$purchaseId;
+		$agencyWebId = 999;
+		$responseTrip = $this->managerServices->getTicketDetail($tokenId,$purchasedId,$agencyWebId);
+		if($responseTrip['statusName']=='OK')
+		{
+			$responseTripData = $responseTrip['data'];
+			
+			$countTravel = count($responseTripData);
+			foreach ($responseTripData as $arr) 
+			{
+				if (!$tripDataFull[$arr['purshaseId']]) 
+				{
+			    	$tripDataFull[$arr['purshaseId']] = array();
+			  	}
+			  	if($countTravel>1)
+			  	{
+			  		$tripDataFull[$arr['purshaseId']]['typeTravel'] = 'R';
+			  		if(trim($arr['oneWayOrReturn'])=='I')
+				  	{
+				  		$tripDataFull[$arr['purshaseId']]['purshaseId'] = $arr['purshaseId'];
+					 	$name = strtolower($arr['clientName'])." ".strtolower($arr['clientLastName']);
+					 	$tripDataFull[$arr['purshaseId']]['clientName'] = ucwords($name);
+					 	$tripDataFull[$arr['purshaseId']]['totalRate'] += $arr['rate'];
+					 	$tripDataFull[$arr['purshaseId']]['agencyOriginName'] = $arr['agencyOriginName'];
+					 	$tripDataFull[$arr['purshaseId']]['agencyDestinationName'] = $arr['agencyDestinationName'];
+					 	$tripDataFull[$arr['purshaseId']]['homologationSeat'] .= $arr['homologationSeat'];
+					 	$tripDataFull[$arr['purshaseId']]['tripDate'] = $arr['tripDate'];
+					 	$tripDataFull[$arr['purshaseId']]['tripHour'] = $arr['tripHour'];
+					 	$tripDataFull[$arr['purshaseId']]['busServiceId'] = $arr['busServiceId'];
+					 	$tripDataFull[$arr['purshaseId']]['typeTravel'] = $arr['oneWayOrReturn'];	
+				  	}
+				  	if(trim($arr['oneWayOrReturn'])=='R')
+				  	{
+				  		$tripDataFull[$arr['purshaseId']]['totalRate'] += $arr['rate'];
+					 	$tripDataFull[$arr['purshaseId']]['agencyOriginNameBack'] = $arr['agencyOriginName'];
+					 	$tripDataFull[$arr['purshaseId']]['agencyDestinationNameBack'] = $arr['agencyDestinationName'];
+					 	$tripDataFull[$arr['purshaseId']]['homologationSeatBack'] .= $arr['homologationSeat'];
+					 	$tripDataFull[$arr['purshaseId']]['tripDateBack'] = $arr['tripDate'];
+					 	$tripDataFull[$arr['purshaseId']]['tripHourBack'] = $arr['tripHour'];
+					 	$tripDataFull[$arr['purshaseId']]['busServiceIdBack'] = $arr['busServiceId'];	
+				  	}
+			  	}
+			  	else
+			  	{
+			  		$tripDataFull[$arr['purshaseId']]['purshaseId'] = $arr['purshaseId'];
+				 	$name = strtolower($arr['clientName'])." ".strtolower($arr['clientLastName']);
+				 	$tripDataFull[$arr['purshaseId']]['clientName'] = ucwords($name);
+				 	$tripDataFull[$arr['purshaseId']]['totalRate'] += $arr['rate'];
+				 	$tripDataFull[$arr['purshaseId']]['agencyOriginName'] = $arr['agencyOriginName'];
+				 	$tripDataFull[$arr['purshaseId']]['agencyDestinationName'] = $arr['agencyDestinationName'];
+				 	$tripDataFull[$arr['purshaseId']]['homologationSeat'] .= $arr['homologationSeat'];
+				 	$tripDataFull[$arr['purshaseId']]['tripDate'] = $arr['tripDate'];
+				 	$tripDataFull[$arr['purshaseId']]['tripHour'] = $arr['tripHour'];
+				 	$tripDataFull[$arr['purshaseId']]['busServiceId'] = $arr['busServiceId'];
+				 	$tripDataFull[$arr['purshaseId']]['typeTravel'] = $arr['oneWayOrReturn'];	
+			  	}
+			  	
+			}
 		}
 		return array(
 			'#theme' => 'page_checkout_template',
-			'#tripChairsData' => $responseTripChairs,
+			'#tripResumeData' => $tripDataFull,
+			'#cache' => ['max-age' => 0],
 		);		
 	}	
 
-	/*Page Express Traveler*/
-	public function page_express_traveler() {
-		
-		$response = $this->managerServices->getToken();
-		if($response['statusName']=='OK')
-		{
-			foreach($response as $key => $value) 
-			{
-				$tokenId = $value['token'];
-			    $dateExpires = $value['expires'];
-			}
-		}
-		/*
-		$mapType = 1;
-		$companyId = 1;
-		$tripKey = 4323576;
-		$saleAgencyId = 1;
-		$destinationAgencyId = 2;
-		
-		$responseTripChairs = $this->managerServices->getAvailableTripChairs($tokenId,$mapType,$companyId,$tripKey,$saleAgencyId,$destinationAgencyId);
-		*/
-		//print_r($responseTripChairs);
-		//die();
 
-		if($responseTripChairs['statusName']=='OK')
-		{
-			$responseTripChairs = $responseTripChairs['data'];
-		}
-		return array(
-			'#theme' => 'page_express_traveler_template',
-			'#expressTravelerData' => $responseTripChairs,
-		);		
-	}
 	/*Page Agencies */
 	public function page_agencies() {
 		
@@ -1827,11 +2388,11 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 		/*Period*/
       	$period = date("Y-m"); 
 		$responsePoints = $this->managerServices->getPointsExpressClient($tokenId,$uid,$period);
-	     if($responsePoints['statusName']=='OK')
+		 if($responsePoints['statusName']=='OK')
 	     {
 	        foreach($responsePoints as $key => $value) 
 	        {
-	        	$points = $value['points'];
+	        	$points = $value['earnedPoints'];
 	        }
 	    }
 	    $responseReservations = $this->managerServices->getReservationCount($tokenId,$uid,'999');
@@ -1848,12 +2409,6 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 		return array(
 				'#theme' => 'page_user_template',
 				'#userData' => $userData,
-				/*'#idDepts' => $responseIdDepts,
-				'#depts' => $responseDepts,
-				'#locations' => $responseMapPoints,
-				'#agenciesList' => $responseListAgencies,
-				'#multiservicesList' => $responseListMultiservices,
-				'#dataMask' => $responseDatamask,*/
 			);
 	}
 	/*Page Express Traveler*/
@@ -1866,55 +2421,7 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 		);		
 	}
 	/*Page Edit Basic Data*/
-	/*
-	public function page_user_reset_pass($uid, $timestamp,$hash) {
-		
-		// The current user is not logged in, so check the parameters.
-	    $current = REQUEST_TIME;
-	    // @var \Drupal\user\UserInterface $user
-	    //$user = $this->userStorage->load($uid);
-	    $user = User::load($uid);
-	   	// Verify that the user exists and is active.
-	    if ($user === NULL || !$user->isActive()) {
-	      // Blocked or invalid user ID, so deny access. The parameters will be in
-	      // the watchdog's URL for the administrator to check.
-	    	\Drupal::messenger()->addError(t('Usted no esta registrado en Expreso Bolivariano.'));
-	      	$url = \Drupal::url("user.register");
-		    $response = new RedirectResponse($url);
-		    $response->send();
-	    }
-	    // Time out, in seconds, until login URL expires.
-	    $timeout = \Drupal::config('user.settings')->get('password_reset_timeout');
-	    // No time out for first time login.
-	    if ($user->getLastLoginTime() && $current - $timestamp > $timeout) {
-	    	//$this->messenger()->addError($this->t('You have tried to use a one-time login link that has expired. Please request a new one using the form below.'));
-	      	\Drupal::messenger()->addError(t('Usted esta usando un link de cambio de clave que esta Expirado. Por favor solicite uno nuevo.'));
-	      	//return $this->redirect('user.pass');
-	      	$url = \Drupal::url("user.pass", ['uid' => $uid]);
-	      	$response = new RedirectResponse($url);
-          	$response->send();
-	    }
-	    elseif ($user->isAuthenticated() && ($timestamp >= $user->getLastLoginTime()) && ($timestamp <= $current) && Crypt::hashEquals($hash, user_pass_rehash($user, $timestamp))) {
-	    	user_login_finalize($user);
-	      	//$this->logger->notice('User %name used one-time login link at time %timestamp.', ['%name' => $user->getDisplayName(), '%timestamp' => $timestamp]);
-	      	//$this->messenger()->addStatus($this->t('You have just used your one-time login link. It is no longer necessary to use this link to log in. Please change your password.'));
-	      	\Drupal::messenger()->addStatus(t('Usted esta usando un link de unico uso, no es el link para iniciar sesión. Por favor cambie su contraseña.'));
-	      	// Let the user's password be changed without the current password
-	      	// check.
-	      	$form = \Drupal::formBuilder()->getForm('Drupal\expreso_bolivariano_forms\Form\ChangePasswordFirstTime');
-	      	return array(
-				'#theme' => 'page_user_reset_pass_template',
-				'#formData' => $form,
-				'#uid' => $uid,
-			);
-	    }
-	    \Drupal::messenger()->addError(t('Usted esta usando un link de cambio de clave que no es valido. Por favor solicite uno nuevo.'));
-	    //$this->messenger()->addError($this->t('You have tried to use a one-time login link that has either been used or is no longer valid. Please request a new one using the form below.'));
-	    $url = \Drupal::url("user.pass", ['uid' => $uid]);
-	    $response = new RedirectResponse($url);
-	    $response->send();
-	}
-	*/
+
 	/*Page Express Traveler*/
 	public function page_notfound() {
 		
@@ -1972,12 +2479,73 @@ class ExpresoBolivarianoPagesController extends ControllerBase {
 		return array(
 				'#theme' => 'page_user_template',
 				'#userData' => $userData,
-				/*'#idDepts' => $responseIdDepts,
-				'#depts' => $responseDepts,
-				'#locations' => $responseMapPoints,
-				'#agenciesList' => $responseListAgencies,
-				'#multiservicesList' => $responseListMultiservices,
-				'#dataMask' => $responseDatamask,*/
 			);
+	}
+	/*Ajax to Save the Reservation*/
+	public function save_reservation_go($saleAgencyId,$destinationAgencyId,$tripKeyGo,$tripDateGo,$tripCountPassengers,$tripClientDocuments,$tripSeats,$tripDiscount) {
+		
+		$variables['#cache']['max-age'] = 0;
+      	$user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
+      	$uid = $user->get('uid')->value;
+		$response = $this->managerServices->getToken();
+		if($response['statusName']=='OK')
+		{
+			$tokenId = $response['data']['token'];
+			$dateExpires = $response['data']['expires'];
+		}
+		$saleAgencyId = (int)$saleAgencyId;
+		$destinationAgencyId = (int)$destinationAgencyId;
+		$tripDate = explode('-', $tripDate);
+		$tripDate = $tripDate[2]."-".$tripDate[1]."-".$tripDate[0];
+			
+		$userCode = (int) $uid;
+		$agencyWeb = 999;
+		
+		$responseReservation = $this->managerServices->setReservationGo($tokenId,$agencyWeb,$userCode,$saleAgencyId,$destinationAgencyId,$tripKeyGo,$tripDateGo,$tripCountPassengers,$tripClientDocuments,$tripSeats,$tripDiscount);
+		
+		$responseReservationStatus = $responseReservation['statusName'];
+
+		return new Response($responseReservationStatus);
+				
+	}
+	/*Page GPS*/
+	public function page_gps() {
+		
+		return array(
+			'#theme' => 'page_gps_template',
+			//'#expressTravelerData' => $responseTripChairs,
+		);		
+	}
+	/*Page Services*/
+	public function page_services() {
+		
+		return array(
+			'#theme' => 'page_services_template',
+		);		
+	}
+	/*Page Services*/
+	public function route_filter($originCity) {
+		$origin = ucfirst($originCity);
+		$originName = $origin.", CO";
+		/* Data for the Content */
+		$query = \Drupal::entityQuery('node');
+        $query->condition('status', 1);
+        $query->condition('type', 'route');
+        $query->condition('field_route_city_origin', $originName);
+        $query->sort('field_route_city_destiny', 'ASC');
+		$entity_ids = $query->execute();
+        foreach ($entity_ids as $nid) {
+        	$node = \Drupal::entityTypeManager()->getStorage('node')->load($nid);
+        	/* All for make the Map */
+        	$city = $node->get('field_route_city_destiny')->getValue();
+        	$cityName = explode(",", $city[0]['value']);
+        	$destinyCity = strtolower($cityName[0]);
+        	$responseCity[] = $destinyCity;
+        }
+		$build = array(
+			'#theme' => 'route_filter_template',
+			'#filterCities' => $responseCity,
+		);
+		return new Response(render($build));
 	}
 }

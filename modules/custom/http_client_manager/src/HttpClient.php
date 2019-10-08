@@ -209,8 +209,12 @@ class HttpClient implements HttpClientInterface {
   public function getClientConfig() {
     $api = $this->getApi();
     $config = !empty($api['config']) ? $api['config'] : [];
-
     $config['handler'] = HandlerStack::create();
+
+    if (!empty($config['debug']) && is_file($config['debug'])) {
+      $config['debug'] = fopen($config['debug'], 'a');
+    }
+
     $event = new HttpClientHandlerStackEvent($config['handler'], $this->serviceApi);
     $this->eventDispatcher->dispatch(HttpClientEvents::HANDLER_STACK, $event);
     return $config;

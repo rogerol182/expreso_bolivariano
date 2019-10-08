@@ -1,0 +1,9 @@
+expreso_bolivariano_redemption.page_redemption:
+  path: '/pages/redemption'
+  defaults:
+    _controller:
+      '\Drupal\expreso_bolivariano_redemption\Controller\ExpresoBolivarianoRedemptionController::page_redemption'
+    _title: 'Redemption Points Page'  
+  requirements:
+    _permission: 'access content'
+    _role: 'authenticated'

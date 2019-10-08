@@ -1,0 +1,39 @@
+<!-- Template for List Tickets -->
+<div class="subtitle mt-4">
+    {{ title }}
+</div>
+<div class="bg-light-blue light-shadow py-1" style="text-align: center;">
+    {% if ticketsData|length > 0 %}
+    <ul class="destinos">
+        <li>
+            <div>
+                <div style="color: #ffffff;"># Compra</div>
+                <div style="color: #ffffff;">Ruta</div>
+                <div style="color: #ffffff;">Fecha Viaje</div>
+                <div style="color: #ffffff;">Hora</div>
+                <div style="color: #ffffff;">Silla(s)</div>
+                <div style="color: #ffffff;">Total</div>
+                <div style="color: #ffffff;">Acción</div>
+            </div>
+        </li>
+    </ul>
+    <ul class="destinos misdestinos">
+        {% for tickets in ticketsData %}
+         <li>
+            <div>
+                <div>{{ (tickets.purshaseId) }}</div>
+                <div style="text-align: center;">{{ (tickets.agencyOriginName)|capitalize }} - {{ (tickets.agencyDestinationName)|capitalize }}</div>
+                <div>{{ (tickets.tripDate)|date("Y-m-d") }}</div>
+                <div>{{ (tickets.tripHour)|date("G:i:s") }}</div>
+                 {% set seats = tickets.homologationSeat|split("",3) %}
+                <div>{{ seats|length }}</div>
+                <div>{{ (tickets.totalRate)|number_format(0, ',', '.')  }}</div>
+                <div><a href="/pages/impression/tickets/{{ tickets.purshaseId }}"><button class="btn w-100 bg-light-blue">Tiquete</button></a></div>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>    
+    {% else %}
+    <div style="text-align: center;">No cuenta con Tiquetes Activos.</div>
+    {% endif %}
+</div>

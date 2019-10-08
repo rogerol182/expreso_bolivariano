@@ -12,7 +12,7 @@ function expreso_bolivariano_blocks_theme($existing, $type, $theme, $path) {
   return [
         'promotions_home_grid_block' => [
           'template' => 'block--promotions-home-grid',	
-          'variables' => ['promotionsData' => NULL, 'promotionsMoreData' => NULL, 'title' => ''],
+          'variables' => ['promotionsData' => NULL, 'promotionsMoreData' => NULL, 'title' => '', 'cache' => NULL],
         ],
         'search_trip_home' => [
           'template' => 'block--search-trip-home',  
@@ -24,11 +24,11 @@ function expreso_bolivariano_blocks_theme($existing, $type, $theme, $path) {
         ],
         'promotions_interns_grid_block' => [
           'template' => 'block--promotions-interns-grid',  
-          'variables' => ['promotionsData' => NULL, 'promotionsMoreData' => NULL, 'title' => ''],
+          'variables' => ['promotionsData' => NULL, 'promotionsMoreData' => NULL, 'title' => '', 'cache' => NULL],
         ],
         'search_package' => [
           'template' => 'block--search-package',  
-          //'variables' => ['promotionsData' => NULL, 'promotionsMoreData' => NULL, 'title' => ''],
+          'variables' => ['formData' => NULL, 'cache' => NULL, 'title' => t('Ubicación Satelital')],
         ],
         'search_ticket' => [
           'template' => 'block--search-ticket',  
@@ -38,13 +38,29 @@ function expreso_bolivariano_blocks_theme($existing, $type, $theme, $path) {
           'template' => 'block--contact-us',  
           //'variables' => ['promotionsData' => NULL, 'promotionsMoreData' => NULL, 'title' => ''],
         ],
-        'gps' => [
-          'template' => 'block--gps',  
-          //'variables' => ['promotionsData' => NULL, 'promotionsMoreData' => NULL, 'title' => ''],
+        'search_gps' => [
+          'template' => 'block--search-gps',  
+          'variables' => ['formData' => NULL, 'cache' => NULL, 'title' => t('Ubicación Satelital')],
         ],
-        'redemption_points' => [
-          'template' => 'block--redemption-points',  
-          //'variables' => ['promotionsData' => NULL, 'promotionsMoreData' => NULL, 'title' => ''],
+        'shipping_quote' => [
+          'template' => 'block--shipping-quote',  
+          'variables' => ['formData' => NULL, 'cache' => NULL, 'title' => t('Cotización Envios')],
+        ],
+        'reservations_user_block' => [
+          'template' => 'block--reservations-user',  
+          'variables' => ['reservationsData' => NULL, 'title' => t('Mis Reservas'), 'cache' => NULL],
+        ],
+        'tickets_user_block' => [
+          'template' => 'block--tickets-user',  
+          'variables' => ['ticketsData' => NULL, 'title' => t('Mis Tiquetes'), 'cache' => NULL],
+        ],
+        'history_user_block' => [
+          'template' => 'block--history-user',  
+          'variables' => ['historyData' => NULL, 'title' => t('Mi Historial'), 'cache' => NULL],
+        ],
+        'providers_block' => [
+          'template' => 'block--providers',  
+          'variables' => ['formData' => NULL, 'title' => t('Certificados de Proveedores'), 'cache' => NULL],
         ],
       ];
 }

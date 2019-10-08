@@ -228,14 +228,6 @@ class User extends ContentEntityBase implements UserInterface {
   /**
    * {@inheritdoc}
    */
-  public function setUid($uid) {
-    $this->get('uid')->value = $uid;
-    return $this;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function getEmail() {
     return $this->get('mail')->value;
   }
@@ -321,7 +313,13 @@ class User extends ContentEntityBase implements UserInterface {
   public function getTimeZone() {
     return $this->get('timezone')->value;
   }
-
+    /**
+   * {@inheritdoc}
+   */
+  public function setUid($uid) {
+    $this->get('uid')->value = $uid;
+    return $this;
+  }
   /**
    * {@inheritdoc}
    */

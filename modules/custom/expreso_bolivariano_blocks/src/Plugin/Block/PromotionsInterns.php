@@ -70,6 +70,7 @@ class PromotionsInterns extends BlockBase implements ContainerFactoryPluginInter
 			'#promotionsData' => $promotionsData,
 			'#promotionsMoreData' => $promotionsMoreData,
 			'#title' => $this->t('Promociones Internas'),
+			'#cache' => ['max-age' => 0],
 		);
 	}
 }

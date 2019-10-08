@@ -74,7 +74,11 @@
                         <div class="details py-4" style="margin-top: 0px;">
                             <div class="row">
                                 <div class="col-md-2 d-none d-md-block ">
+                                    {% if node.field_agency_type.0.value == 'A' or node.field_agency_type.0.value == 'T' %}
                                     <img src="{{ base_path }}/{{ active_theme_path() }}/images/misc/pin.png" alt="pin bolivariano">
+                                    {% elseif node.field_agency_type.0.value == 'M' %}
+                                    <img src="{{ base_path }}/{{ active_theme_path() }}/images/misc/pinb.png" alt="pin bolivariano">
+                                    {% endif %}
                                 </div>
                                 <div class="col-md-10">
                                     <p><b>Ubicación: </b>{{ node.field_agency_city.0.value|raw }}</p>
@@ -182,7 +186,7 @@
       // The marker, positioned at Uluru
         var marker = new google.maps.Marker({position: myLatlng, map: map, icon: '{{ base_path }}/{{ active_theme_path() }}/images/misc/pin_map.png'});
 
-        var card = document.getElementById('pac-card');
+        /*var card = document.getElementById('pac-card');
         var input = document.getElementById('pac-input');
         //var types = document.getElementById('type-selector');
         //var strictBounds = document.getElementById('strict-bounds-selector');
@@ -225,7 +229,7 @@
           infowindowContent.children['place-name'].textContent = place.name;
           infowindowContent.children['place-address'].textContent = address;
           infowindow.open(map, markerT);
-        });
+        });*/
 
     }
 

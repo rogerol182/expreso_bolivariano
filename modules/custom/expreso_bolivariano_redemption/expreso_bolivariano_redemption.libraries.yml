@@ -1,0 +1,15 @@
+redemption-points:
+  version: VERSION
+  js:
+    dist/inline.bundle.js: {}
+    dist/polyfills.bundle.js: {}
+    dist/styles.bundle.js: { scope: footer} 
+    dist/vendor.bundle.js: {}
+    dist/main.bundle.js: {}
+  dependencies:
+    - core/jquery
+    - core/jquery.once
+    - core/drupalSettings
+  css:
+    component:
+      dist/styles_redemption.css: {}

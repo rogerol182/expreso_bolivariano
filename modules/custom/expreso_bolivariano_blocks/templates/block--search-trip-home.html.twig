@@ -1,4 +1,6 @@
 {% set now = "now"|date("Y-m-d") %}
+{% set later = now|date_modify("+60 days")|date("Y-m-d") %}
+{% set tomorrow = now|date_modify("+1 day")|date("Y-m-d") %}
 <div class="row searcher__row searcher__row--filler">
     <div class="col-6 col-md-2 searcher__col">
         <p class="searcher__label">Origen</p>
@@ -28,11 +30,11 @@
     </div>
     <div class="col-6 col-md-2 searcher__col">
         <p class="searcher__label searcher__label--nomobile">Ida</p>
-        <input type="date" class="searcher__input searcher__input--date searcher__input--blue" name="fromof" id="fromof" value="{{ now }}">
+        <input type="date" class="searcher__input searcher__input--date searcher__input--blue" name="fromof" id="fromof" value="{{ now }}" required="required" min="{{ now }}">
     </div>
     <div class="col-6 col-md-2 searcher__col">
         <p class="searcher__label searcher__label--nomobile">Regreso (opcional)</p>
-        <input type="date" class="searcher__input searcher__input--date searcher__input--yellow" name="cameof" id="cameof">
+        <input type="date" class="searcher__input searcher__input--date searcher__input--yellow" name="cameof" id="cameof" min="{{ tomorrow }}" max="{{ later }}">
     </div>
     <div class="col-12 col-md-2 searcher__col justify-content-center d-flex">
         <button class="hvr-pulse-shrink searcher__btn searcher__btn--search" id="buttonSearchTrip">Buscar</button>

@@ -1,6 +1,6 @@
 <div class="wrapper__top bg-image"><img alt="" src="/sites/default/files/inline-images/chairSelection.jpg" />
     <div class="wrapper__topwrap">
-        <h2 class="wrapper__title wrapper__title--cities">Selección de Asientos</h2>
+        <h2 class="wrapper__title wrapper__title--cities">Selección de Sillas</h2>
     </div>
 </div>
 <input type="hidden" readonly="readonly" value="{{ tripsCitiesData['originCity'] }}" id="cityOrigin">
@@ -11,8 +11,10 @@
 <input type="hidden" readonly="readonly" value="{{ tripsDatesData['tripDateBack'] }}" id="tripDateBack">
 <input type="hidden" readonly="readonly" value="{{ tripsCitiesData['tripService'] }}" id="tripService">
 <input type="hidden" readonly="readonly" value="{{ tripsCitiesData['tripServiceB'] }}" id="tripServiceBack">
+<input type="hidden" readonly="readonly" value="{{ tripsCitiesData['tripKeyGo'] }}" id="tripKeyGo">
+<input type="hidden" readonly="readonly" value="{{ tripsCitiesData['tripKeyBack'] }}" id="tripKeyBack">
 <div class="wrapper__body pb-4">
-    <h3 class="wrapper__lead">Escoja su asiento <small>{{ tripsCitiesData['originCity'] }} - {{ tripsCitiesData['destinationCity'] }}</small></h3>
+    <h3 class="wrapper__lead">Escoja su silla <small>{{ tripsCitiesData['originCity'] }} - {{ tripsCitiesData['destinationCity'] }}</small></h3>
     <div class="wrapper__container container-fluid mb-4"><div class="row">
         <div class="col col-md-12">
             <div class="seats__toolbar row no-gutters justify-content-between">
@@ -69,7 +71,7 @@
                 <p class="legends__label">Ocupado<span class="legends__color legends__color--busy"></span></p>
                 <!--<p class="legends__label">Libre<span class="legends__color legends__color--free"></span></p>-->
             </section>
-            <section class="legend-prices col-md-6">
+            <section class="legends2 col-md-6">
                 <div class="row">
                     <div class="col-6">
                         <p class="legends__label"><span class="legends__color legends__color--increible"></span> Tarifa Increible</p>
@@ -89,7 +91,7 @@
             </section>
             <!-- Back -->
             <div id="backTravel" style="display: none;">
-            <h3 class="wrapper__lead trip__regreso">Escoja su asiento <small> {{ tripsCitiesData['destinationCity'] }} - {{ tripsCitiesData['originCity'] }}</small></h3>
+            <h3 class="wrapper__lead trip__regreso">Escoja su silla <small> {{ tripsCitiesData['destinationCity'] }} - {{ tripsCitiesData['originCity'] }}</small></h3>
             <div class="seats__toolbar row no-gutters justify-content-between">
                 <div class="col-lg-3">
                     <!--<p class="seats__labelpassengers">Pasajeros:</p>
@@ -100,6 +102,7 @@
                         {% endfor %}
                     </select>-->
                 </div>
+                {% if tripsCitiesData['tripServiceB']!='' %}
                 <div class="col-lg-6" style="margin-left: 30px;">
                     <div class="seats__title__bus">
                         <div></div>
@@ -107,6 +110,7 @@
                         <img src="{{ base_path }}/{{ active_theme_path() }}/images/bus_selection/{{ tripsCitiesData['tripServiceB'] }}-Right.png" alt="">
                     </div>
                 </div>
+                {% endif %}
             </div>
             <div class="tab-content seats__container" id="nav-tabContent">
                 <div id="floor1b">
@@ -192,6 +196,7 @@
                             </div>
                         </div>
                         <div class="shopchart__tag shopchart__tag--hide"><span id="counter" value="0"></span></div>
+                        <div class="shopchart__tag shopchart__tag--hide"><span id="counterBack" value="0"></span></div>
                         <div class="shopchart__tag"><strong>Subtotal:</strong> $ <span id="total">0</span></div>
                         <div class="shopchart__button">
                             <button class="shopchart__btn shopchart__btn--back" id="backSelection">Regresar</button>
@@ -200,6 +205,7 @@
                     </div>
                 </div>
             </section>
+            <div id="messagePop" style="display: none;"></div>
         </div>
     </div>
     <div class="division mt-4"></div>

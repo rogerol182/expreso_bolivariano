@@ -1,0 +1,7 @@
+{
+    "AppWebApiAuthUri":"http://localhost:51110",
+    "AppWebApiResourcesUri":"http://localhost:51131",
+    "AppWebApiCustomerLoyaltyUri":"http://localhost:51123",
+    "WebApiUserName":"webviaje",
+    "WebApiPasword":"ive?0987@."
+  }

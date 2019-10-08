@@ -1,0 +1,5 @@
+<select id="destiny_filter">
+{% for items in filterCities %}
+	<option value="{{ items }}">{{ items|capitalize }}</option>
+{% endfor %}
+</select>

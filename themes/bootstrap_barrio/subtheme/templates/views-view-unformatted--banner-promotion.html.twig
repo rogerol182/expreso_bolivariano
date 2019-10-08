@@ -19,9 +19,7 @@
 {% set photo = file_url(row['content']['#row']._entity.field_image.entity.fileuri) %}
 <div class="w-100 mt-4 mb-4 text-center">
 	<div class="container">
-		<a href="#">
-			<img src="{{ photo }}" alt="" class="w-100 mt-4 mb-4">
-		</a>
+		<img src="{{ photo }}" alt="" class="w-100 mt-4 mb-4">
 	</div>
 </div>
 {% endfor %}

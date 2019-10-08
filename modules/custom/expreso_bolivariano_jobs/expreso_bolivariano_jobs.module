@@ -15,6 +15,7 @@ use Drupal\Core\Url;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Session\Session;
 
+
 /**
  * Implements hook_form_alter().
  * @param $form
@@ -22,8 +23,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
  * @param $form_id
  */
 function expreso_bolivariano_jobs_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
-  //var_dump($form_id);
-  //die();
+  
   if ($form_id == 'user_login_form' ) {
     //print_r($form);
     //die();
@@ -47,37 +47,48 @@ function expreso_bolivariano_jobs_form_alter(&$form, \Drupal\Core\Form\FormState
   }
   if ($form_id == 'user_register_form' ) {
 
+    //$form['#attributes']['data-user-info-from-browser'] = FALSE;
     $form['field_name_user']['widget'][0]['value']['#attributes']['class'] = array('form-control', 'inputcito');
     $form['field_lastname_user']['widget'][0]['value']['#attributes']['class'] = array('form-control', 'inputcito');
     $form['field_email']['widget'][0]['value']['#attributes']['class'] = array('form-control', 'inputcito');
     $form['field_document']['widget'][0]['value']['#attributes']['class'] = array('form-control', 'inputcito');
     $form['field_phone_user']['widget'][0]['value']['#attributes']['class'] = array('form-control', 'inputcito');
     $form['field_birthday_user']['widget'][0]['value']['#attributes']['class'] = array('form-control', 'inputcito');
-    $form['field_document_type']['widget'][0]['value']['#attributes']['class'] = array('form-control', 'inputcito');
     $form['account']['mail']['#attributes']['class'] = array('form-control', 'inputcito');
     $form['account']['name']['#attributes']['class'] = array('form-control', 'inputcito');
     //
-    $form['field_document_type']['widget']['#options']['_none']  = t('Seleccione');
-    $form['field_gender_user']['widget']['#options']['_none'] = t('Seleccione');
-    $form['field_document_type']['#required'] = TRUE;
-    $form['field_gender_user']['#required'] = TRUE;
+    unset($form['field_document_type']['widget']['#options']['_none']);
+    $form['field_document_type']['widget']['#empty_option'] = t('- Seleccione -');
+    $form['field_document_type']['widget']['#empty_value'] = '';
+    $form['field_document_type']['widget']['#attributes']['required'] = 'required';
+    unset($form['field_gender_user']['widget']['#options']['_none']);
+    $form['field_gender_user']['widget']['#empty_option'] = t('- Seleccione -');
+    $form['field_gender_user']['widget']['#empty_value'] = '';
+    $form['field_gender_user']['widget']['#attributes']['required'] = 'required';
+    //
+    $form['field_document']['widget'][0]['value']['#default_value'] = '';
+    $form['field_email']['widget'][0]['value']['#default_value'] = '';
+    $date = date('Y-m-d');
+    $dateMaxT = strtotime($date.' -80 years');
+    $dateMinT = strtotime($date.' -18 years');
+    $dateMin = date('Y-m-d', $dateMinT);
+    $dateMax = date('Y-m-d', $dateMaxT);
+    $form['field_birthday_user']['widget'][0]['value']['#attributes']['min'] = $dateMax;
+    $form['field_birthday_user']['widget'][0]['value']['#attributes']['max'] = $dateMin;
+    //
     $form['field_name_user']['widget'][0]['value']['#attributes']['placeholder'] = t('Nombres');
     $form['field_lastname_user']['widget'][0]['value']['#attributes']['placeholder'] = t('Apellidos');
     $form['field_document']['widget'][0]['value']['#attributes']['placeholder'] = t('Documento o Cédula');
     $form['field_phone_user']['widget'][0]['value']['#attributes']['placeholder'] = t('3015557630');
     $form['field_gender_user']['widget'][0]['value']['#attributes']['placeholder'] = t('Género');
-    $form['field_document_type']['widget']['#attributes']['#required'] = TRUE;
-    $form['field_gender_user']['widget']['#attributes']['#required'] = TRUE;
     $form['account']['mail']['#attributes']['placeholder'] = t('Correo Electrónico');
     $form['account']['name']['#attributes']['placeholder'] = t('Documento o Cédula');
-    //$form['account']['name']['type'] = 'number';
     //
-    $form['field_name_user']['widget'][0]['value']['#title'] = '';
-    $form['field_lastname_user']['widget'][0]['value']['#title'] = '';
+    $form['account']['name']['#attributes']['title'] = 'Solo numeros. Min 4 Numeros - Max 12 Numeros';
+    $form['field_name_user']['widget'][0]['value']['#attributes']['title'] = 'Solo letras. Min 3 Caracteres - Max 30 Caracteres';
+    $form['field_lastname_user']['widget'][0]['value']['#attributes']['title'] = 'Solo letras. Min 3 Caracteres - Max 30 Caracteres';
     $form['field_phone_user']['widget'][0]['value']['#title'] = '';
     $form['field_birthday_user']['widget'][0]['value']['#title'] = '';
-    $form['field_document_type']['widget']['#title'] = t('Tipo de Documento');
-    $form['field_gender_user']['widget']['#title'] = t('Género');
     $form['contact']['#title'] = t('Acepto <a href="/pages/express_traveler" style="color:#fff;"> términos y condiciones </a> asi como el tratamiento de mis datos personales por parte de Expreso Bolivariano S.A.');
     //
     $form['field_name_user']['widget'][0]['value']['#description'] = '';
@@ -85,7 +96,6 @@ function expreso_bolivariano_jobs_form_alter(&$form, \Drupal\Core\Form\FormState
     $form['field_phone_user']['widget'][0]['value']['#description'] = '';
     $form['account']['mail']['#description'] = '';
     $form['account']['name']['#description'] = '';
-    //$form['field_document_type']['widget'][0]['value']['#description'] = t('');
     $form['contact']['contact']['#description']= '';
     $form['contact']['contact']['#title']= '';
     $form['contact']['contact']['#required'] = TRUE;
@@ -93,8 +103,13 @@ function expreso_bolivariano_jobs_form_alter(&$form, \Drupal\Core\Form\FormState
     $form['account']['mail']['#maxlength'] = 50;
     $form['account']['name']['#maxlength'] = 11;
     $form['field_phone_user']['#maxlength'] = 10;
-    $form['field_name_user']['widget'][0]['value']['#attributes']['maxlength'] = 50;
-    $form['field_lastname_user']['widget'][0]['value']['#attributes']['maxlength'] = 50;
+    $form['field_name_user']['widget'][0]['value']['#attributes']['maxlength'] = 30;
+    $form['field_lastname_user']['widget'][0]['value']['#attributes']['maxlength'] = 30;
+    //Pattern
+    $form['account']['name']['#pattern'] = '[0-9]{4,12}';
+    $form['field_name_user']['widget'][0]['value']['#pattern'] = '[A-Z a-z]{1,30}';
+    $form['field_lastname_user']['widget'][0]['value']['#pattern'] = '[A-Z a-z]{1,30}';
+    
     //
     $form['actions']['submit'] = array('#type' => 'submit', '#value' => t('Registrar'));
     $form['actions']['submit']['#attributes']['class'][] = 'btncito';
@@ -126,6 +141,7 @@ function expreso_bolivariano_jobs_form_alter(&$form, \Drupal\Core\Form\FormState
   }
   if ($form_id == 'user_form' ) {
     
+    //$form['#attributes']['data-user-info-from-browser'] = TRUE;
     unset($form['field_document_type']);
     unset($form['field_gender_user']);
     unset($form['field_name_user']);
@@ -147,7 +163,10 @@ function expreso_bolivariano_jobs_form_alter(&$form, \Drupal\Core\Form\FormState
     );
   }
   if ($form_id == 'newsletter_form' ) {
-
+    
+    unset($form['interestingNewsletter']['#options']['']);
+    $form['interestingNewsletter']['#empty_option'] = t('- Seleccione -');
+    $form['interestingNewsletter']['#empty_value'] = '';
     $form['interestingNewsletter']['#attributes']['class'] = array('formsubs__select');
     $form['nameNewsletter']['#attributes']['class'] = array('formsubs__input', 'inputcito');
     $form['mailNewsletter']['#attributes']['class'] = array('formsubs__input', 'inputcito');
@@ -164,6 +183,53 @@ function expreso_bolivariano_jobs_form_alter(&$form, \Drupal\Core\Form\FormState
     $form['actions']['submit'] = array('#type' => 'submit', '#value' => t('Filtrar'));
     $form['actions']['submit']['#attributes']['class'][] = 'btncito';
     $form['#attributes']['class'][] = 'btncito';
+  }
+  if ($form_id == 'gps_form' ) {
+
+    $form['documentGps']['#attributes']['class'] = array('formsubs__input', 'inputcito');
+    $form['ticketGps']['#attributes']['class'] = array('formsubs__input', 'inputcito');
+    //$form['actions']['submit'] = array('#type' => 'submit', '#value' => t('Buscar'));
+    $form['submit']['#attributes']['class'][] = 'btncito';
+    $form['documentGps']['#attributes']['maxlength'] = 11;
+    $form['ticketGps']['#attributes']['minlength'] = 5;
+    $form['ticketGps']['#attributes']['maxlength'] = 13;
+    $form['documentGps']['#attributes']['placeholder'] = t('Documento o Cédula');
+    $form['ticketGps']['#attributes']['placeholder'] = t('Número de Tiquete');
+  }
+  if ($form_id == 'shipping_quote_form' ) {
+
+    $form['areaShipping']['#attributes']['class'] = array('formsubs__input', 'inputcito');
+    $form['weigthShipping']['#attributes']['class'] = array('formsubs__input', 'inputcito');
+    $form['highShipping']['#attributes']['class'] = array('formsubs__input', 'inputcito');
+    $form['widthShipping']['#attributes']['class'] = array('formsubs__input', 'inputcito');
+    $form['longShipping']['#attributes']['class'] = array('formsubs__input', 'inputcito');
+    $form['valueShipping']['#attributes']['class'] = array('formsubs__input', 'inputcito');
+    $form['submit']['#attributes']['class'][] = 'btncito';
+    $form['areaShipping']['#attributes']['placeholder'] = t('Documento o Cédula');
+    $form['weigthShipping']['#attributes']['placeholder'] = t('Digitar Peso');
+    $form['highShipping']['#attributes']['placeholder'] = t('Digitar Alto');
+    $form['widthShipping']['#attributes']['placeholder'] = t('Digitar Ancho');
+    $form['longShipping']['#attributes']['placeholder'] = t('Digitar Largo');
+    $form['valueShipping']['#attributes']['placeholder'] = t('Digitar Valor Declarado');
+  }
+  if ($form_id == 'shipping_gps_form' ) {
+
+    $form['ticketGps']['#attributes']['class'] = array('formsubs__input', 'inputcito');
+    $form['submitTicket']['#attributes']['class'][] = 'btncito';
+    $form['ticketGps']['#attributes']['minlength'] = 5;
+    $form['ticketGps']['#attributes']['maxlength'] = 13;
+    $form['ticketGps']['#attributes']['placeholder'] = t('Número de Guía');
+  }
+  if ($form_id == 'providers_form' ) {
+
+    $form['providerEnterprise']['#attributes']['class'] = array('formsubs__input', 'inputcito');
+    $form['providerDocument']['#attributes']['class'] = array('formsubs__input', 'inputcito');
+    $form['providerYear']['#attributes']['class'] = array('formsubs__input', 'inputcito');
+    $form['providerMonth']['#attributes']['class'] = array('formsubs__input', 'inputcito');
+    $form['providerMonthEnd']['#attributes']['class'] = array('formsubs__input', 'inputcito');
+    $form['providerType']['#attributes']['class'] = array('formsubs__input', 'inputcito');
+    $form['submit']['#attributes']['class'][] = 'btncito';
+
   }
 }
 /**
@@ -338,19 +404,19 @@ function expreso_bolivariano_jobs_login_validate(&$form, FormStateInterface &$fo
 function expreso_bolivariano_jobs_register_validate(&$form, FormStateInterface &$form_state) {
     /*get select items*/
     $items = $form_state->getValues();
-
-    if(is_null($items['field_document_type'][0]['value']))
+    
+    if(!is_numeric($form_state->getValue('name')))
     {
-      $form_state->setErrorByName('field_document_type', t('Tipo Documento no Valido', ['%field_document_type' => $form_state->getValue('field_document_type')]));
+        $form_state->setErrorByName('name', t('Documento o Cédula debe ser solo numeros', ['%name' => $form_state->getValue('name')]));
     }
-    else if(is_null($items['field_gender_user'][0]['value']))
+    /*else if(!preg_match('/[^a-z A-Z\s]/',$form_state->getValue('field_name_user')))
     {
-      $form_state->setErrorByName('field_gender_user', t('Tipo Genero no Valido', ['%field_gender_user' => $form_state->getValue('field_gender_user')]));
+        $form_state->setErrorByName('field_name_user', t('Nombres deben ser solo letras', ['%field_name_user' => $form_state->getValue('field_name_user')]));
     }
-    else if(!is_numeric($form_state->getValue('name')))
+    else if(!preg_match('/[^a-Z\s]/',$form_state->getValue('field_lastname_user')))
     {
-      $form_state->setErrorByName('name', t('Documento o Cédula debe ser solo numeros', ['%name' => $form_state->getValue('name')]));
-    }
+        $form_state->setErrorByName('field_lastname_user', t('Apellidos deben ser solo letras', ['%field_lastname_user' => $form_state->getValue('field_lastname_user')]));
+    }*/
     else
     {
       $name = (integer) trim($form_state->getValue('name'));
@@ -365,7 +431,7 @@ function expreso_bolivariano_jobs_register_validate(&$form, FormStateInterface &
       $birthday = trim($items['field_birthday_user'][0]['value']);
       $dateB = explode(' ', $birthday);
       $birthdayDate = $dateB[0];
-      $gender = (integer) trim($items['field_gender_user'][0]['value']);
+      $gender = trim($items['field_gender_user'][0]['value']);
       $docType = (integer) trim($items['field_document_type'][0]['value']);
       $acceptance[] = trim($items['contact']);
 
@@ -480,6 +546,11 @@ function expreso_bolivariano_jobs_password_validate(&$form, FormStateInterface &
  * Implements hook_preprocess_user().
  */
 function bootstrap_bolivariano_subtheme_preprocess_menu__account(&$variables, $hook) {
+      /*if(session_status() == PHP_SESSION_NONE) 
+      {
+          $session = new Session();
+          $session->start();
+      }*/
       $variables['#cache']['max-age'] = 0;
       $user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
       if($user!=NULL)
@@ -496,21 +567,38 @@ function bootstrap_bolivariano_subtheme_preprocess_menu__account(&$variables, $h
         $response = $validate->getToken();
         if($response['statusName']=='OK')
         {
-          $tokenId = $response['data']['token'];
-          $dateExpires = $response['data']['expires'];
+            $tokenId = $response['data']['token'];
+            $expires = $response['data']['expires'];
+            /*$dateExpire = explode('T', $expires);
+            $dateExpireD = $dateExpire[0];
+            $dateExpireT = $dateExpire[1];
+            $dateExpireTime = explode('.', $dateExpireT);
+            $dateExpireTimeT = $dateExpireTime[0];
+            $dateNow = date('Y-m-d h:i:s');
+            //$timeNow = date('h:i:s');
+            $dateTokenExpires = $dateExpireD." ".$dateExpireTimeT;
+            $dateTokenExpires =  new DateTime($dateTokenExpires);
+            $dateNow = new DateTime($dateNow);
+            var_dump($dateTokenExpires);
+            echo "</br>";
+            var_dump($dateNow);
+            echo "</br>";
+            $limitToken = date_diff($dateTokenExpires, $dateNow);
+            var_dump($limitToken);
+            die();
+            $session->set('Token', $tokenId);
+            $session->set('Expires', $expires);*/
         }
+        //$details = $session->get('profile');
         $responsePoints = $validate->getPointsExpressClient($tokenId,$uid,$period);
         if($responsePoints['statusName']=='OK')
         {
-            $points = $responsePoints['data']['endBalance'];
+            $points = $responsePoints['data']['earnedPoints'];
         }
         else
         {
           $points = 0;
         }
-        //var_dump($validate->getPointsExpressClient($tokenId,$uid,$period));
-        //var_dump($responsePoints);
-        //die();
         $responseReservations = $validate->getReservationCount($tokenId,$uid,'999');
         if($responseReservations['statusName']=='OK')
         {

@@ -4,44 +4,48 @@
         <div class="row pt-4 pb-4 justify-content-center">
             <div class="col col-lg-11 pt-4">
                 <div class="row no-gutters panel seguimiento">
-                    <div class="col col-lg-6">
+                    <div class="col col-lg-4">
+                        <form class="shipping-gps-form formsubs__wrapper mb-4" data-drupal-selector="shipping-gps-form" action="/pages/services" method="post" id="shipping-gps-form" accept-charset="UTF-8" style="box-shadow: none;">
+                        {% for key, child in formData if key|first != '#' %}
+                        {% if key == 'ticketGps' %}
                         <div class="row no-gutters justify-content-between">
-                            <label class="col-md-5 text-right text-orange" for="">Nùmero de guìa </label>
-                            <input class="col-md-6 input orange pl-2" type="text" placeholder="ingrese número de gúia">
+                            <label class="col-md-12 text-right text-orange" for="">Número de Guía </label>
+                            {{ child }}
                         </div>
+                        {% elseif key == 'actions' %}
                         <div class="mt-4 row no-gutters justify-content-end">
-                            <button class="btn p-30 dark">Consultar guía</button>
+                            {{ child }}
                         </div>
-                    </div>
-                    <div class="col col-lg-6 bg-dark-blue text-orange">
-                        <div>Punto de salida: <span>Pasto (Nariño)</span></div>
-                        <div>Destino: <span>Bogotá (Bogotá D.C.)</span></div>
-                        <br>
-                        <div class="mt-4">Estado: <span>VIAJANDO (hora de salida 06:30 AM)</span></div>
-                        <div>
-                            <!-- 
-                            clases de acuerdo a la ubicación
-                            .salida
-                            .viajando
-                            .destino 
-                            -->
-                            <div id="seguimiento-timeline" class="viajando">
-                                <hr>
-                                <hr>
-                                <div>
-                                    <div><span>
-                                        <img src="images/misc/ser-caja.png" alt="">
-                                    </span>SALIDA</div>
-                                    <div><span>
-                                        <img src="images/misc/ser-caja.png" alt="">
-                                    </span>VIAJANDO</div>
-                                    <div><span>
-                                        <img src="images/misc/ser-caja.png" alt="">
-                                    </span>DESTINO</div>
-                                </div>
-                            </div>
+                        {% elseif key == 'submitTicket' %}
+                        <div class="mt-4 row no-gutters justify-content-end">
+                            {{ child }}
                         </div>
+                        {% elseif key == 'form_build_id' %}
+                        {{ child }}
+                        {% elseif key == 'form_id' %}
+                            {{ child }}    
+                        {% elseif key == 'form_token' %}
+                            {{ child }}
+                        {% endif %}
+                        {% endfor %} 
                     </div>
+                    {% for key, child in formData if key|first != '#' %}
+                    {% if key == 'messagePacket' %}
+                    <div class="col col-lg-8 bg-dark-blue text-orange">
+                        {{ child }}
+                    </div>
+                    {% endif %}
+                    {% endfor %} 
+                </form>
+                </div>
+                <div class="col-lg-12 mb-4 panel" style="margin-top: 20px;">
+                <h5><b>Convenciones</b></h5>
+                <ul class="orange-dots">
+                    <li>Admitida: <span> Es cuando el remitente coloca un envío y este no ha salido de la agencia origen. </span></li>
+                    <li>Despachada: <span>Es cuando el envío sale de la agencia y es transportada en un bus con una relación de envíos.</span></li>
+                    <li>Recibida: <span>Es cuando el envío llega a la agencia de destino y un funcionario de la agencia le da recibido en el sistema.</span></li>
+                    <li>Entregada: <span>Es cuando el destinatario recoge su mercancía y firma en constancia de recibido con nombre legible, número de cédula, fecha y hora de entrega. Una vez entregada la guía al destinatario se le debe dar entregado en el sistema de inmediato.</span></li>
+                </ul>
                 </div>
             </div>
         </div>

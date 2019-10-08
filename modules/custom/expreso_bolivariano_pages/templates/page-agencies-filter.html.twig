@@ -91,9 +91,10 @@
 <!-- End -->
 <!-- Agencies Multiservice List -->
 <div class="division mt-4 mb-4"></div>
-<div class="col col-lg-10 mx-auto mt-4">
-        <h2 class="block-title blue">Puntos Multiservicio en {{ departmentName }} {% if cityName != '0' %} - {{ cityName }} {% endif %} </h2>
+    <div class="col col-lg-10 mx-auto mt-4">
         <!--  Begins For -->
+        {% if multiservicesList|length > 0 %}
+        <h2 class="block-title blue">Puntos Multiservicio en {{ departmentName }} {% if cityName != '0' %} - {{ cityName }} {% endif %} </h2>
         {% for multiservices in multiservicesList %}
         {% set photo = file_url(multiservices[5]) %}
         <div class="agencias__panel panel panel-shadow mt-2">
@@ -101,7 +102,7 @@
                 <div class="col-md-6 mb-4 mt-4">
                     <div class="row">
                         <div class="col-md-2 d-flex align-items-center justify-content-center mb-2">
-                            <img src="{{ base_path }}/{{ active_theme_path() }}/images/misc/pin_blue.png" alt="" class="pin">
+                            <img src="{{ base_path }}/{{ active_theme_path() }}/images/misc/pinb.png" alt="" class="pin">
                         </div>
                         <div class="col-md-10">
                             <h2 class="block-title blue">{{ multiservices.0.1.0.value }}</h2>
@@ -128,8 +129,11 @@
             </div>
         </div>
         {% endfor %}
+        {% else %}
+        <h2 class="block-title blue">No se encuentran Puntos Multiservicio en {{ departmentName }} {% if cityName != '0' %} - {{ cityName }} {% endif %} </h2>
+        {% endif %}
         <!-- End For -->
-</div>
+    </div>
 <!-- End-->
 <!-- Begins Script Map -->
 <script>

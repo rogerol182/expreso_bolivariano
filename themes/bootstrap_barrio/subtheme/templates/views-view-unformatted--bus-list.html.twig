@@ -32,7 +32,7 @@
                     {% set active = '' %}
                     {% endif %}
                     <li class="nav-item">
-                        <a class="nav-link tabBus {{ active }}" href="#tab{{ i }}" role="tab" data-toggle="tab" id="tabSelector{{ i }}" value="tab{{ i }}" aria-selected="{{ aria }}">{{ row['content']['#row']._entity.field_service_bus_title.value }}</a>
+                        <a class="nav-link tabBus {{ active }}" href="#tab{{ i }}" role="tab" data-toggle="tab" id="tabSelector{{ i }}" value="tab{{ i }}" aria-selected="{{ aria }}" name="{{ row['content']['#row']._entity.field_service_bus_id.value }}">{{ row['content']['#row']._entity.field_service_bus_title.value }}</a>
                     </li>
                     {% endfor %}
                 </ul>
@@ -102,7 +102,7 @@
                         <div class="row justify-content-between">
                             <div class="col-lg-6 mt-2 features">
                                 <div class="panel pt-4">
-                                    <h6 class="mb-4"><b>Características adicionales</b></h6>
+                                    <h6 class="mb-4"><b>Experiencia a Bordo</b></h6>
                                     <div class="d-flex flex-wrap justify-content-center">
                                         {% if row['content']['#row']._entity.field_service_bus_air.value == '1' %}
                                         <div>
@@ -193,10 +193,9 @@
                             </div>
                             <div class=" col-lg-6 routes mt-2">
                                 <div class="panel pt-4">
-                                <h6><b>Rutas y horarios</b></h6>
-                                <div class="listwrapper mt-4">
-                                {{ row['content']['#row']._entity.field_service_bus_schedule.value|raw }}
-                                </div>
+                                    <h6><b>Rutas y horarios</b></h6>
+                                    <div class="listwrapper mt-4" id="schedule_bus_{{ row['content']['#row']._entity.field_service_bus_id.value }}">
+                                    </div>
                                 </div>
                             </div>
                         </div>

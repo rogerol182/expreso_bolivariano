@@ -1,0 +1,17 @@
+<base href="./redemption">
+<div class="wrapper__top bg-image">
+	<img alt="Viajero Expreso" data-align="center" data-entity-type="file" data-entity-uuid="bc22e6ac-b857-40a4-b4bb-4ce990e36dfc" src="/sites/default/files/inline-images/traveler.jpg" />
+	<div class="wrapper__topwrap">
+		<h2 class="wrapper__title wrapper__title--cities">Redención de Puntos Viajero Expreso</h2>
+	</div>
+</div>
+<div class="col col-lg-10 mx-auto mt-4">
+    <h2 class="block-title blue">Redención de Puntos Viajero Expreso</h2>
+    <div class="col col-lg-12 mx-auto panel-shadow bg-white">
+	<init-component indentification="{{ user }}" resourcesPath="{{ host }}/modules/custom/expreso_bolivariano_redemption/dist"></init-component>
+	<!-- Script to Chairs -->
+	{{ attach_library('expreso_bolivariano_redemption/redemption-points') }}
+	 <!-- End Script -->
+    </div>
+</div>
+<div class="division" style="margin-top: 100px;"></div>

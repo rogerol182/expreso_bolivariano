@@ -8,6 +8,7 @@
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\user\Entity\User;
 use Drupal\user\UserInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
 /**/
 /**
  * Implements hook_form_system_theme_settings_alter() for settings form.
@@ -53,7 +54,7 @@ function bootstrap_bolivariano_subtheme_preprocess_menu(&$variables, $hook) {
     {
       $url = $current_path;
     }
-    if($url == '/pages/reservation' || $url == '/pages/selection' || $url == '/pages/frequent_questions' || $url == '/pages/legal' || $url == '/pages/contract' || $url == '/pages/privacy' || $url == '/pages/management' || $url=='/pages/redemption' )
+    if($url == '/pages/reservation' || $url == '/pages/selection' || $url == '/pages/frequent_questions' || $url == '/pages/legal' || $url == '/pages/contract' || $url == '/pages/privacy' || $url == '/pages/management' || $url=='/pages/redemption' || $url=='/pages/user'  || $url=='/pages/checkout' )
     {
       $url = '/pages/express_traveler';
     }
@@ -102,26 +103,14 @@ function bootstrap_bolivariano_subtheme_theme_suggestions_alter(array &$suggesti
  */
 function bootstrap_bolivariano_subtheme_preprocess_breadcrumb(&$variables){
 
-  /*if(($node = \Drupal::routeMatch()->getParameter('node')) && $variables['breadcrumb']){
-// Adding the a divider of between home an the title of the page.
-      $variables['breadcrumb'][] = array(
-          'text' => '>'
-      );
-// Adding the title of the page in the breadcrumb
-      $variables['breadcrumb'][] = array(
-          'text' => $node->getTitle(),
-          'url' => $node->URL()
-      );
-      $variables['#cache']['contexts'][] = 'url';
-   }
-   */
+   $variables['#cache']['max-age'] = 0;
    $request = \Drupal::request();
    $route_match = \Drupal::routeMatch();
-   $page_title = \Drupal::service('title_resolver')->getTitle($request, $route_match->getRouteObject());
-   if($page_title!='Agencies - Filter')
-   {
-
-      if(($node = \Drupal::routeMatch()->getParameter('node')) && $variables['breadcrumb']){
+   //$page_title = \Drupal::service('title_resolver')->getTitle($request, $route_match->getRouteObject());
+   //if($page_title!='Agencias Filtro')
+   //{
+      if(($node = \Drupal::routeMatch()->getParameter('node')) && $variables['breadcrumb'])
+      {
         // Adding the a divider of between home an the title of the page.
         $variables['breadcrumb'][] = array(
             'text' => '>'
@@ -133,20 +122,66 @@ function bootstrap_bolivariano_subtheme_preprocess_breadcrumb(&$variables){
         );
         $variables['#cache']['contexts'][] = 'url';
      }
-   }
+     else
+     {
+        $current_url = \Drupal\Core\Url::fromRoute('<current>');
+        $url = $current_url->getInternalPath();
+        $urlPart = explode('/', $url);
+        if(count($urlPart)<=3)
+        {
+          if($urlPart[1]=='agencies') { $title = 'Nuestras Agencias'; $url = ''; }
+          if($urlPart[1]=='services') { $title = 'Nuestros Servicios'; $url = ''; }
+          if($urlPart[1]=='gps') { $title = 'Ubicación Satelital'; $url = ''; }
+          if($urlPart[1]=='reservation') { $title = 'Selección de Viaje'; $url = ''; }
+          if($urlPart[1]=='register') { $title = 'Registro de Usuarios'; $url = ''; }
+          if($urlPart[1]=='login') { $title = 'Inicio de Sesión'; $url = ''; }
+          if($urlPart[1]=='redemption') { $title = 'Redención de Puntos'; $url = ''; }
+          if($urlPart[1]=='user') { $title = 'Mi Cuenta'; $url = ''; }
+          if($urlPart[1]=='register') { $title = 'Registro'; $url = ''; }
+          if($urlPart[1]=='login') { $title = 'Iniciar Sesión'; $url = ''; }
+          if($urlPart[1]=='password') { $title = 'Recuperar Contraseña'; $url = ''; }
+          if($urlPart[1]=='reset') { $title = 'Link de Acceso'; $url = ''; }
+          if($urlPart[0]=='user' && $urlPart[2]=='edit'){ $title = 'Actualizar Contraseña'; $url = ''; }
+          if($urlPart[1]=='checkout') { $title = 'Checkout'; $url = ''; }
+        }
+        else
+        {
+          if($urlPart[1]=='reservation') { $title = 'Selección de Horario'; $url = ''; }
+          if($urlPart[1]=='selection') { $title = 'Selección de Sillas'; $url = ''; }
+          if($urlPart[1]=='agencies' && $urlPart[2]=='filter' && $urlPart[4]=='0') { $title = 'Filtro Agencias - '.$urlPart[3]; $url = ''; }
+          if($urlPart[1]=='agencies' && $urlPart[2]=='filter' && $urlPart[4]!='0') { $title = 'Filtro Agencias > '.$urlPart[3].' > '.$urlPart[4]; $url = ''; }
+          if($urlPart[1]=='user' && $urlPart[2]=='register') { $title = 'Confirmación Registro'; $url = ''; }
+
+        }
+        // Adding the a divider of between home an the title of the page.
+        $variables['breadcrumb'][] = array(
+            'text' => '>'
+        );
+        // Adding the title of the page in the breadcrumb
+        $variables['breadcrumb'][] = array(
+            'text' => $title,
+            'url' => $url
+        );
+        $variables['#cache']['contexts'][] = 'url';
+     }
+   /*}
    else
    {
+      $current_url = \Drupal\Core\Url::fromRoute('<current>');
+      $url = $current_url->getInternalPath();
+      $urlPart = explode('/', $url);
+      if($url='/pages/agencies/filter/')
       // Adding the a divider of between home an the title of the page.
         $variables['breadcrumb'][] = array(
             'text' => '>'
         );
         // Adding the title of the page in the breadcrumb
         $variables['breadcrumb'][] = array(
-            'text' => '',
-            'url' => ''
+            'text' => 'Filtro Agencias',
+            'url' => 'pages/agencies'
         );
         $variables['#cache']['contexts'][] = 'url';
-   }
+   }*/
 }
 /**
  * Implements preprocess home slider to place the block inside the slider().
@@ -249,6 +284,48 @@ function bootstrap_bolivariano_subtheme_preprocess_page_reservation_template(&$v
       ->view($block);
 }
 /**
+ * Implements preprocess home slider to place the block inside the slider().
+ */
+function bootstrap_bolivariano_subtheme_preprocess_page_gps_template(&$variables){
+
+      $block = \Drupal\block\Entity\Block::load('search_gps');
+      $variables['blockGps'] = \Drupal::entityTypeManager()
+      ->getViewBuilder('block')
+      ->view($block);
+}
+/**
+ * Implements preprocess home slider to place the block inside the slider().
+ */
+function bootstrap_bolivariano_subtheme_preprocess_page_services_template(&$variables){
+
+      $block = \Drupal\block\Entity\Block::load('shipping_quote');
+      $variables['blockShippingQuote'] = \Drupal::entityTypeManager()
+      ->getViewBuilder('block')
+      ->view($block);
+
+      $block = \Drupal\block\Entity\Block::load('services_image');
+      $variables['blockImageShippingQuote'] = \Drupal::entityTypeManager()
+      ->getViewBuilder('block')
+      ->view($block);
+      
+      $block = \Drupal\block\Entity\Block::load('express_messenger');
+      $variables['blockExpressMessenger'] = \Drupal::entityTypeManager()
+      ->getViewBuilder('block')
+      ->view($block);
+
+      $block = \Drupal\block\Entity\Block::load('search_package');
+      $variables['blockSearchPackage'] = \Drupal::entityTypeManager()
+      ->getViewBuilder('block')
+      ->view($block);
+
+      $block = \Drupal\block\Entity\Block::load('views_block__services_list_block');
+      $variables['blockServicesList'] = \Drupal::entityTypeManager()
+      ->getViewBuilder('block')
+      ->view($block);
+
+      
+}
+/**
  * Implements preprocess agencies to place the block map, agencies, and multiservices.
  */
 function bootstrap_bolivariano_subtheme_preprocess_page_agencies_template(&$variables){
@@ -276,6 +353,37 @@ function bootstrap_bolivariano_subtheme_preprocess_views_view_unformatted__expre
 
       $block = \Drupal\block\Entity\Block::load('info_express_traveler');
       $variables['blockExpressTraveler'] = \Drupal::entityTypeManager()
+      ->getViewBuilder('block')
+      ->view($block);
+}
+/**
+ * Implements preprocess page for redemption points.
+ */
+function bootstrap_bolivariano_subtheme_preprocess_page_redemption_template(&$variables){
+
+      // We're doing that for users.
+      $variables['#cache']['max-age'] = 0;
+}
+/**
+ * Implements preprocess page for user page.
+ */
+function bootstrap_bolivariano_subtheme_preprocess_page_user_template(&$variables){
+
+      // We're doing that for users.
+      $variables['#cache']['max-age'] = 0;
+
+      $block = \Drupal\block\Entity\Block::load('reservations_user');
+      $variables['blockReservations'] = \Drupal::entityTypeManager()
+      ->getViewBuilder('block')
+      ->view($block);
+
+      $block = \Drupal\block\Entity\Block::load('tickets_user');
+      $variables['blockTickets'] = \Drupal::entityTypeManager()
+      ->getViewBuilder('block')
+      ->view($block);
+
+      $block = \Drupal\block\Entity\Block::load('history_user');
+      $variables['blockHistory'] = \Drupal::entityTypeManager()
       ->getViewBuilder('block')
       ->view($block);
 }

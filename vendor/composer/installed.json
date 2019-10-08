@@ -60,12 +60,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/minkphp/Mink.git",
-            "reference": "6d637f7af4816c26ad8a943da2e3f7eef1231bea"
+            "reference": "a534fe7dac9525e8e10ca68e737c3d7e5058ec83"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/minkphp/Mink/zipball/6d637f7af4816c26ad8a943da2e3f7eef1231bea",
-            "reference": "6d637f7af4816c26ad8a943da2e3f7eef1231bea",
+            "url": "https://api.github.com/repos/minkphp/Mink/zipball/a534fe7dac9525e8e10ca68e737c3d7e5058ec83",
+            "reference": "a534fe7dac9525e8e10ca68e737c3d7e5058ec83",
             "shasum": ""
         },
         "require": {
@@ -73,7 +73,7 @@
             "symfony/css-selector": "^2.7|^3.0|^4.0"
         },
         "require-dev": {
-            "symfony/phpunit-bridge": "^3.3|^4.0"
+            "symfony/phpunit-bridge": "^4.2"
         },
         "suggest": {
             "behat/mink-browserkit-driver": "extremely fast headless driver for Symfony\\Kernel-based apps (Sf2, Silex)",
@@ -82,7 +82,7 @@
             "behat/mink-zombie-driver": "fast and JS-enabled headless driver for any app (requires node.js)",
             "dmore/chrome-mink-driver": "fast and JS-enabled driver for any app (requires chromium or google chrome)"
         },
-        "time": "2019-05-14T09:56:49+00:00",
+        "time": "2019-07-15T12:45:29+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -231,28 +231,28 @@
     },
     {
         "name": "behat/mink-selenium2-driver",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
+        "version": "1.3.x-dev",
+        "version_normalized": "1.3.9999999.9999999-dev",
         "source": {
             "type": "git",
             "url": "https://github.com/minkphp/MinkSelenium2Driver.git",
-            "reference": "8684ee4e634db7abda9039ea53545f86fc1e105a"
+            "reference": "0a09c4341621fca937a726827611b20ce3e2c259"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/minkphp/MinkSelenium2Driver/zipball/8684ee4e634db7abda9039ea53545f86fc1e105a",
-            "reference": "8684ee4e634db7abda9039ea53545f86fc1e105a",
+            "url": "https://api.github.com/repos/minkphp/MinkSelenium2Driver/zipball/0a09c4341621fca937a726827611b20ce3e2c259",
+            "reference": "0a09c4341621fca937a726827611b20ce3e2c259",
             "shasum": ""
         },
         "require": {
             "behat/mink": "~1.7@dev",
             "instaclick/php-webdriver": "~1.1",
-            "php": ">=5.3.1"
+            "php": ">=5.4"
         },
         "require-dev": {
             "mink/driver-testsuite": "dev-master"
         },
-        "time": "2018-10-10T12:39:06+00:00",
+        "time": "2019-09-02T09:46:54+00:00",
         "type": "mink-driver",
         "extra": {
             "branch-alias": {
@@ -271,14 +271,14 @@
         ],
         "authors": [
             {
-                "name": "Konstantin Kudryashov",
-                "email": "ever.zet@gmail.com",
-                "homepage": "http://everzet.com"
-            },
-            {
                 "name": "Pete Otaqui",
                 "email": "pete@otaqui.com",
                 "homepage": "https://github.com/pete-otaqui"
+            },
+            {
+                "name": "Konstantin Kudryashov",
+                "email": "ever.zet@gmail.com",
+                "homepage": "http://everzet.com"
             }
         ],
         "description": "Selenium2 (WebDriver) driver for Mink framework",
@@ -988,7 +988,7 @@
         "version_normalized": "8.3.1.0",
         "source": {
             "type": "git",
-            "url": "https://git.drupal.org/project/coder.git",
+            "url": "https://git.drupalcode.org/project/coder.git",
             "reference": "29a25627e7148b3119c84f18e087fc3b8c85b959"
         },
         "require": {
@@ -3377,70 +3377,6 @@
         ]
     },
     {
-        "name": "swiftmailer/swiftmailer",
-        "version": "v6.2.1",
-        "version_normalized": "6.2.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/swiftmailer/swiftmailer.git",
-            "reference": "5397cd05b0a0f7937c47b0adcb4c60e5ab936b6a"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/5397cd05b0a0f7937c47b0adcb4c60e5ab936b6a",
-            "reference": "5397cd05b0a0f7937c47b0adcb4c60e5ab936b6a",
-            "shasum": ""
-        },
-        "require": {
-            "egulias/email-validator": "~2.0",
-            "php": ">=7.0.0",
-            "symfony/polyfill-iconv": "^1.0",
-            "symfony/polyfill-intl-idn": "^1.10",
-            "symfony/polyfill-mbstring": "^1.0"
-        },
-        "require-dev": {
-            "mockery/mockery": "~0.9.1",
-            "symfony/phpunit-bridge": "^3.4.19|^4.1.8"
-        },
-        "suggest": {
-            "ext-intl": "Needed to support internationalized email addresses",
-            "true/punycode": "Needed to support internationalized email addresses, if ext-intl is not installed"
-        },
-        "time": "2019-04-21T09:21:45+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "6.2-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "files": [
-                "lib/swift_required.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Chris Corbyn"
-            },
-            {
-                "name": "Fabien Potencier",
-                "email": "fabien@symfony.com"
-            }
-        ],
-        "description": "Swiftmailer, free feature-rich PHP mailer",
-        "homepage": "https://swiftmailer.symfony.com",
-        "keywords": [
-            "email",
-            "mail",
-            "mailer"
-        ]
-    },
-    {
         "name": "symfony-cmf/routing",
         "version": "1.4.1",
         "version_normalized": "1.4.1.0",
@@ -3620,17 +3556,17 @@
     },
     {
         "name": "symfony/config",
-        "version": "v3.4.29",
-        "version_normalized": "3.4.29.0",
+        "version": "v3.4.32",
+        "version_normalized": "3.4.32.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/config.git",
-            "reference": "29a33f66194fbe2ed4555981810f15fd8440e4a8"
+            "reference": "717ad66b5257e9752ae3c5722b5810bb4c40b236"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/config/zipball/29a33f66194fbe2ed4555981810f15fd8440e4a8",
-            "reference": "29a33f66194fbe2ed4555981810f15fd8440e4a8",
+            "url": "https://api.github.com/repos/symfony/config/zipball/717ad66b5257e9752ae3c5722b5810bb4c40b236",
+            "reference": "717ad66b5257e9752ae3c5722b5810bb4c40b236",
             "shasum": ""
         },
         "require": {
@@ -3651,7 +3587,7 @@
         "suggest": {
             "symfony/yaml": "To use the yaml reference dumper"
         },
-        "time": "2019-05-30T15:47:52+00:00",
+        "time": "2019-09-19T15:32:51+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -4070,24 +4006,24 @@
     },
     {
         "name": "symfony/filesystem",
-        "version": "v4.3.2",
-        "version_normalized": "4.3.2.0",
+        "version": "v4.3.5",
+        "version_normalized": "4.3.5.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/filesystem.git",
-            "reference": "b9896d034463ad6fd2bf17e2bf9418caecd6313d"
+            "reference": "9abbb7ef96a51f4d7e69627bc6f63307994e4263"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/filesystem/zipball/b9896d034463ad6fd2bf17e2bf9418caecd6313d",
-            "reference": "b9896d034463ad6fd2bf17e2bf9418caecd6313d",
+            "url": "https://api.github.com/repos/symfony/filesystem/zipball/9abbb7ef96a51f4d7e69627bc6f63307994e4263",
+            "reference": "9abbb7ef96a51f4d7e69627bc6f63307994e4263",
             "shasum": ""
         },
         "require": {
             "php": "^7.1.3",
             "symfony/polyfill-ctype": "~1.8"
         },
-        "time": "2019-06-23T08:51:25+00:00",
+        "time": "2019-08-20T14:07:54+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -4456,70 +4392,6 @@
         ]
     },
     {
-        "name": "symfony/polyfill-intl-idn",
-        "version": "v1.11.0",
-        "version_normalized": "1.11.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/symfony/polyfill-intl-idn.git",
-            "reference": "c766e95bec706cdd89903b1eda8afab7d7a6b7af"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/symfony/polyfill-intl-idn/zipball/c766e95bec706cdd89903b1eda8afab7d7a6b7af",
-            "reference": "c766e95bec706cdd89903b1eda8afab7d7a6b7af",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.3",
-            "symfony/polyfill-mbstring": "^1.3",
-            "symfony/polyfill-php72": "^1.9"
-        },
-        "suggest": {
-            "ext-intl": "For best performance"
-        },
-        "time": "2019-03-04T13:44:35+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.9-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Symfony\\Polyfill\\Intl\\Idn\\": ""
-            },
-            "files": [
-                "bootstrap.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Symfony Community",
-                "homepage": "https://symfony.com/contributors"
-            },
-            {
-                "name": "Laurent Bassin",
-                "email": "laurent@bassin.info"
-            }
-        ],
-        "description": "Symfony polyfill for intl's idn_to_ascii and idn_to_utf8 functions",
-        "homepage": "https://symfony.com",
-        "keywords": [
-            "compatibility",
-            "idn",
-            "intl",
-            "polyfill",
-            "portable",
-            "shim"
-        ]
-    },
-    {
         "name": "symfony/polyfill-mbstring",
         "version": "v1.11.0",
         "version_normalized": "1.11.0.0",
@@ -4633,63 +4505,6 @@
             }
         ],
         "description": "Symfony polyfill backporting some PHP 7.0+ features to lower PHP versions",
-        "homepage": "https://symfony.com",
-        "keywords": [
-            "compatibility",
-            "polyfill",
-            "portable",
-            "shim"
-        ]
-    },
-    {
-        "name": "symfony/polyfill-php72",
-        "version": "v1.11.0",
-        "version_normalized": "1.11.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/symfony/polyfill-php72.git",
-            "reference": "ab50dcf166d5f577978419edd37aa2bb8eabce0c"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/symfony/polyfill-php72/zipball/ab50dcf166d5f577978419edd37aa2bb8eabce0c",
-            "reference": "ab50dcf166d5f577978419edd37aa2bb8eabce0c",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.3"
-        },
-        "time": "2019-02-06T07:57:58+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.11-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Symfony\\Polyfill\\Php72\\": ""
-            },
-            "files": [
-                "bootstrap.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Nicolas Grekas",
-                "email": "p@tchwork.com"
-            },
-            {
-                "name": "Symfony Community",
-                "homepage": "https://symfony.com/contributors"
-            }
-        ],
-        "description": "Symfony polyfill backporting some PHP 7.2+ features to lower PHP versions",
         "homepage": "https://symfony.com",
         "keywords": [
             "compatibility",

@@ -1,5 +1,5 @@
 <div class="wrapper__top bg-image">
-    <img src="/sites/default/files/inline-images/login.jpg" alt="" class="">
+    <img src="/sites/default/files/inline-images/user.jpg" alt="" class="">
     <div class="wrapper__topwrap">
         <h2 class="wrapper__title wrapper__title--cities">Mi Cuenta</h2>
     </div>
@@ -23,24 +23,30 @@
                 <div class="col col-md-6">
                     <p>Email: </br><b>{{ userData[2] }}</b></p>
                 </div>
-                <div class="col col-md-6">
+                <div class="col col-md-6" style="text-align: right;">
                 <p>Dirección: </br><b>{{ userData[6] }}</b></p>
                 </div>
                 <div class="col col-md-6">
                 <p>Teléfono: </br><b>{{ userData[5] }}</b></p>
                 </div>
-                <div class="col col-md-6">
+                <div class="col col-md-6" style="text-align: right;">
                 <p>Teléfono Adicional: </br><b>{{ userData[7] }}</b></p>
                 </div>
                 <div class="col col-md-12">
                     <div class="triada">
-                        <div><span>Puntos</span><div><a href="/pages/express_traveler">{{ userData[3] }}</a></div></div>
+                        <div>
+                            <a class="header__loginactions" href="/pages/redemption">
+                                <span class="header__linkuser"><strong>Puntos</strong></span> 
+                                <span class="header__icon header__icon--points"></span>
+                                <span class="header__linkuser ml-2"><strong>{{ userData[3]|number_format(0, '', '.') }}</strong></span> 
+                            </a>
+                        </div>
                         <div><span>Puntos<br>por vencer</span><div></div></div>
-                        <div><span>Reservas</span><div>{{ userData[3] }}</div></div>
+                        <div><span>Reservas</span><div>{{ userData[4] }}</div></div>
                     </div>
                 </div>
                 <div class="col col-md-12">
-                <div style="text-align: right;"><a href="/pages/user/edit"><button class="btn dark">Editar Datos</button></a></div>
+                <div style="text-align: right;"><a href="/pages/user/edit/{{ userData[0] }}"><button class="btn dark">Editar Datos</button></a></div>
                 </div>
             </div>
         </div>
@@ -48,136 +54,14 @@
     </section>
     <div class="wrapper__container col">
         <div class="container mx-auto">
-            <div class="subtitle mt-4">
-                Mis Reservas
+            <div id="reservations">
+                {{ blockReservations }}
             </div>
-            <div class="bg-light-blue light-shadow py-1">
-                <ul class="destinos misdestinos">
-                    <li>
-                        <div>
-                            <div>T1</div>
-                            <div>Bogotá - Medellín</div>
-                            <div>02/25/19</div>
-                            <div>8:30AM</div>
-                            <div><a href=""><button class="btn w-100 bg-light-blue">Pagar</button></a></div>
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <div>T1</div>
-                            <div>Bogotá - Medellín</div>
-                            <div>02/25/19</div>
-                            <div>8:30AM</div>
-                            <div><a href=""><button class="btn w-100 bg-light-blue">Pagar</button></a></div>
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <div>T1</div>
-                            <div>Bogotá - Medellín</div>
-                            <div>02/25/19</div>
-                            <div>8:30AM</div>
-                            <div><a href=""><button class="btn w-100 bg-light-blue">Pagar</button></a></div>
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <div>T1</div>
-                            <div>Bogotá - Medellín</div>
-                            <div>02/25/19</div>
-                            <div>8:30AM</div>
-                            <div><a href=""><button class="btn w-100 bg-light-blue">Pagar</button></a></div>
-                        </div>
-                    </li>
-                </ul>
+            <div id="tickets">
+                {{ blockTickets }}
             </div>
-
-            <div class="subtitle mt-4">
-                Mis Tiquetes
-            </div>
-            <div class="bg-light-blue light-shadow py-1">
-                <ul class="destinos misdestinos">
-                    <li>
-                        <div>
-                            <div>T1</div>
-                            <div>Bogotá - Medellín</div>
-                            <div>02/25/19</div>
-                            <div>8:30AM</div>
-                            <div><a href=""><button class="btn w-100 bg-light-blue">Ver</button></a></div>
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <div>T1</div>
-                            <div>Bogotá - Medellín</div>
-                            <div>02/25/19</div>
-                            <div>8:30AM</div>
-                            <div><a href=""><button class="btn w-100 bg-light-blue">Ver</button></a></div>
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <div>T1</div>
-                            <div>Bogotá - Medellín</div>
-                            <div>02/25/19</div>
-                            <div>8:30AM</div>
-                            <div><a href=""><button class="btn w-100 bg-light-blue">Ver</button></a></div>
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <div>T1</div>
-                            <div>Bogotá - Medellín</div>
-                            <div>02/25/19</div>
-                            <div>8:30AM</div>
-                            <div><a href=""><button class="btn w-100 bg-light-blue">Ver</button></a></div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            
-            <div class="subtitle mt-4">
-                Mi Historial
-            </div>
-            <div class="bg-light-blue light-shadow py-1">
-                <ul class="destinos misdestinos">
-                    <li>
-                        <div>
-                            <div>T1</div>
-                            <div>Bogotá - Medellín</div>
-                            <div>02/25/19</div>
-                            <div>8:30AM</div>
-                            <div><a href=""><button class="delete"><i class="fa fa-close"></i></button></a></div>
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <div>T1</div>
-                            <div>Bogotá - Medellín</div>
-                            <div>02/25/19</div>
-                            <div>8:30AM</div>
-                            <div><a href=""><button class="delete"><i class="fa fa-close"></i></button></a></div>
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <div>T1</div>
-                            <div>Bogotá - Medellín</div>
-                            <div>02/25/19</div>
-                            <div>8:30AM</div>
-                            <div><a href=""><button class="delete"><i class="fa fa-close"></i></button></a></div>
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <div>T1</div>
-                            <div>Bogotá - Medellín</div>
-                            <div>02/25/19</div>
-                            <div>8:30AM</div>
-                            <div><a href=""><button class="delete"><i class="fa fa-close"></i></button></a></div>
-                        </div>
-                    </li>
-                </ul>
+            <div id="history">
+                {{ blockHistory }}
             </div>
         </div>
     </div>

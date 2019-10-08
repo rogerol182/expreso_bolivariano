@@ -1,0 +1,9 @@
+name: Expreso Bolivariano Redemption
+type: module
+description: 'Module for Redemption Points.'
+package: Expreso Bolivariano
+core: 8.x
+base theme: bootstrap_barrio
+
+libraries:
+  - expreso_bolivariano_redemption/redemption-points

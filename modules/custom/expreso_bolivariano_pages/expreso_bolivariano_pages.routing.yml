@@ -3,10 +3,20 @@ expreso_bolivariano_pages.page_agencies:
   defaults:
     _controller:
       '\Drupal\expreso_bolivariano_pages\Controller\ExpresoBolivarianoPagesController::page_agencies'
-    _title: 'Agencies Page'
+    _title: 'Nuestras Agencias'
     _route: 'view.agencies.agencies_list_map'
   requirements:
     _permission: 'access content'
+    
+expreso_bolivariano_pages.route_schedule_bus:
+  path: '/route_schedule_bus/{idBus}/{tripDate}'
+  defaults:
+    _controller:
+      '\Drupal\expreso_bolivariano_pages\Controller\ExpresoBolivarianoPagesController::route_schedule_bus'
+    _title: 'Bus Schedule Page'
+  requirements:
+    _permission: 'access content'
+    _access: 'TRUE'
 
 expreso_bolivariano_pages.page_reservation:
   path: '/pages/reservation/{saleAgencyId}/{saleAgencyName}/{destinationAgencyId}/{destinationAgencyName}/{tripDate}/{tripDateBack}'
@@ -57,8 +67,38 @@ expreso_bolivariano_pages.page_selection_back:
     _permission: 'access content'
     _role: 'authenticated'    
 
+expreso_bolivariano_pages.create_reservation_one_way:
+  path: '/create_reservation_one_way/{idCityOrigin}/{idCityDestiny}/{chairsSelected}/{tripKeyGo}/{dateGo}'
+  defaults:
+    _controller:
+      '\Drupal\expreso_bolivariano_pages\Controller\ExpresoBolivarianoPagesController::create_reservation_one_way'
+    _title: 'Create Reservation Page'  
+  requirements:
+    _permission: 'access content'
+    _role: 'authenticated'
+
+expreso_bolivariano_pages.create_reservation_two_way:
+  path: '/create_reservation_two_way/{idCityOrigin}/{idCityDestiny}/{chairsSelected}/{tripKeyGo}/{dateGo}/{chairsSelectedBack}/{tripKeyBack}/{dateBack}'
+  defaults:
+    _controller:
+      '\Drupal\expreso_bolivariano_pages\Controller\ExpresoBolivarianoPagesController::create_reservation_two_way'
+    _title: 'Create Reservation Page'  
+  requirements:
+    _permission: 'access content'
+    _role: 'authenticated'  
+
+expreso_bolivariano_pages.save_reservation_go:
+  path: '/pages/save_reservation_go/{saleAgencyId}/{destinationAgencyId}/{tripKeyGo}/{tripDateGo}/{tripCountPassengers}/{tripClientDocuments}/{tripSeats}/{tripDiscount}'
+  defaults:
+    _controller:
+      '\Drupal\expreso_bolivariano_pages\Controller\ExpresoBolivarianoPagesController::save_reservation_go'
+    _title: 'Reservation Go Page'
+  requirements:
+    _permission: 'access content'
+    _role: 'authenticated'
+
 expreso_bolivariano_pages.page_checkout:
-  path: '/pages/checkout'
+  path: '/pages/checkout/{purchaseId}'
   defaults:
     _controller:
       '\Drupal\expreso_bolivariano_pages\Controller\ExpresoBolivarianoPagesController::page_checkout'
@@ -67,21 +107,12 @@ expreso_bolivariano_pages.page_checkout:
     _permission: 'access content'
     _role: 'authenticated'
 
-expreso_bolivariano_pages.page_express_traveler:
-  path: '/pages/express_traveler'
-  defaults:
-    _controller:
-      '\Drupal\expreso_bolivariano_pages\Controller\ExpresoBolivarianoPagesController::page_express_traveler'
-    _title: 'Express Traveler Page'
-  requirements:
-    _permission: 'access content'
-
 expreso_bolivariano_pages.page_agencies_filter:
   path: '/pages/agencies/filter/{departmentName}/{cityName}'
   defaults:
     _controller:
       '\Drupal\expreso_bolivariano_pages\Controller\ExpresoBolivarianoPagesController::page_agencies_filter'
-    _title: 'Agencies - Filter'
+    _title: 'Agencias Filtro'
   requirements:
     _permission: 'access content'
 
@@ -124,3 +155,31 @@ expreso_bolivariano_pages.page_notfound:
     _title: 'Page Not Found - 404'
   requirements:
     _permission: 'access content'
+
+expreso_bolivariano_pages.page_gps:
+  path: '/pages/gps'
+  defaults:
+    _controller:
+      '\Drupal\expreso_bolivariano_pages\Controller\ExpresoBolivarianoPagesController::page_gps'
+    _title: 'Ubicación Satelital'
+  requirements:
+    _permission: 'access content'
+
+expreso_bolivariano_pages.page_services:
+  path: '/pages/services'
+  defaults:
+    _controller:
+      '\Drupal\expreso_bolivariano_pages\Controller\ExpresoBolivarianoPagesController::page_services'
+    _title: 'Nuestros Servicios'
+  requirements:
+    _permission: 'access content'
+
+expreso_bolivariano_pages.route_filter:
+  path: '/route_filter/{originCity}'
+  defaults:
+    _controller:
+      '\Drupal\expreso_bolivariano_pages\Controller\ExpresoBolivarianoPagesController::route_filter'
+    _title: 'Routes Page'
+  requirements:
+    _permission: 'access content'
+    _access: 'TRUE'

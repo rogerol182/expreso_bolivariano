@@ -1,0 +1,7 @@
+{
+    "AppWebApiAuthUri":"https://ebol.sigatt.co/authentication-server",
+    "AppWebApiResourcesUri":"https://ebol.sigatt.co/resources-server",
+    "AppWebApiCustomerLoyaltyUri":"https://ebol.sigatt.co/customerloyalty-server",
+    "WebApiUserName":"webviaje",
+    "WebApiPasword":"ive?0987@."
+  }
